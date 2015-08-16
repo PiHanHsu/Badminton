@@ -81,6 +81,7 @@
 }
 
 - (void) shuffleList{
+    
     int n1 = (int)self.malePlaylistArray.count;
     
     for (int i = 0;  i < n1 ; i++) {
