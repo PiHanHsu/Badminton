@@ -8,6 +8,8 @@
 
 #import "GameScheduleTableViewController.h"
 #import "GameScheduleTableViewCell.h"
+#import "PlayListDataSource.h"
+
 @interface GameScheduleTableViewController ()
 
 @end
@@ -18,7 +20,7 @@
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 62;
-   
+    
     [self shuffleList];
 }
 
@@ -83,32 +85,37 @@
 
 - (void) shuffleList{
     
-    int n1 = (int)self.malePlaylistArray.count;
-    
-    for (int i = 0;  i < n1 ; i++) {
-        int m = (int)self.malePlaylistArray.count;
-        int r = arc4random_uniform(m);
-        [self.malePlaylistArrayNew addObject:self.malePlaylistArray[r]];
-        [self.malePlaylistArray removeObject:self.malePlaylistArray[r]];
-        if (i == n1-1) {
-            [self.malePlaylistArray addObjectsFromArray:self.malePlaylistArrayNew];
-            [self.tableView reloadData];
-        }
-    }
-    
-    int n2 = (int)self.femalePlaylistArray.count;
-    
-    for (int i = 0;  i < n2 ; i++) {
-        int m = (int)self.femalePlaylistArray.count;
-        int r = arc4random_uniform(m);
-        [self.femalePlaylistArrayNew addObject:self.femalePlaylistArray[r]];
-        [self.femalePlaylistArray removeObject:self.femalePlaylistArray[r]];
-        if (i == n2-1) {
-            [self.femalePlaylistArray addObjectsFromArray:self.femalePlaylistArrayNew];
-            [self.tableView reloadData];
-
-        }
-    }
+    self.malePlaylistArray = [PlayListDataSource sharedInstance].maleSelectedArray;
+    self.femalePlaylistArray =[PlayListDataSource sharedInstance].femaleSelectedArray;
+    self.malePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.malePlaylistArray];
+    self.femalePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.femalePlaylistArray];
+    [self.tableView reloadData];
+//    int n1 = (int)self.malePlaylistArray.count;
+//    
+//    for (int i = 0;  i < n1 ; i++) {
+//        int m = (int)self.malePlaylistArray.count;
+//        int r = arc4random_uniform(m);
+//        [self.malePlaylistArrayNew addObject:self.malePlaylistArray[r]];
+//        [self.malePlaylistArray removeObject:self.malePlaylistArray[r]];
+//        if (i == n1-1) {
+//            [self.malePlaylistArray addObjectsFromArray:self.malePlaylistArrayNew];
+//            [self.tableView reloadData];
+//        }
+//    }
+//    
+//    int n2 = (int)self.femalePlaylistArray.count;
+//    
+//    for (int i = 0;  i < n2 ; i++) {
+//        int m = (int)self.femalePlaylistArray.count;
+//        int r = arc4random_uniform(m);
+//        [self.femalePlaylistArrayNew addObject:self.femalePlaylistArray[r]];
+//        [self.femalePlaylistArray removeObject:self.femalePlaylistArray[r]];
+//        if (i == n2-1) {
+//            [self.femalePlaylistArray addObjectsFromArray:self.femalePlaylistArrayNew];
+//            [self.tableView reloadData];
+//
+//        }
+//    }
  
 }
 
