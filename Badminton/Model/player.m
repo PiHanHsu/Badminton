@@ -1,14 +1,13 @@
 //
-//  player.m
+//  Player.m
 //  Badminton
 //
-//  Created by PiHan Hsu on 2015/8/15.
+//  Created by PiHan Hsu on 2015/8/16.
 //  Copyright (c) 2015年 PiHan Hsu. All rights reserved.
 //
 
-#import "player.h"
+#import "Player.h"
 
-@implementation player
+@implementation Player
 
 @end
-

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Player.h"
 
 @interface PlayerButton : UIButton
 @property BOOL buttonToggled;
+@property BOOL isChosen;
 @end

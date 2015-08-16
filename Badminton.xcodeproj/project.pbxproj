@@ -17,6 +17,8 @@
 		E85EB22E1B7F97BA0094875E /* PlayerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB22D1B7F97BA0094875E /* PlayerButton.m */; };
 		E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */; };
 		E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2331B7FA4DE0094875E /* GameScheduleTableViewCell.m */; };
+		E85EB2691B80BC7F0094875E /* PlayList.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2681B80BC7F0094875E /* PlayList.m */; };
+		E85EB26C1B80C0260094875E /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB26B1B80C0260094875E /* Player.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,10 @@
 		E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScheduleTableViewController.m; sourceTree = "<group>"; };
 		E85EB2321B7FA4DE0094875E /* GameScheduleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScheduleTableViewCell.h; path = Views/GameScheduleTableViewCell.h; sourceTree = "<group>"; };
 		E85EB2331B7FA4DE0094875E /* GameScheduleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GameScheduleTableViewCell.m; path = Views/GameScheduleTableViewCell.m; sourceTree = "<group>"; };
+		E85EB2671B80BC7F0094875E /* PlayList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayList.h; path = Model/PlayList.h; sourceTree = "<group>"; };
+		E85EB2681B80BC7F0094875E /* PlayList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayList.m; path = Model/PlayList.m; sourceTree = "<group>"; };
+		E85EB26A1B80C0260094875E /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Model/Player.h; sourceTree = "<group>"; };
+		E85EB26B1B80C0260094875E /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Model/Player.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +162,10 @@
 			children = (
 				E85EB22C1B7F97BA0094875E /* PlayerButton.h */,
 				E85EB22D1B7F97BA0094875E /* PlayerButton.m */,
+				E85EB2671B80BC7F0094875E /* PlayList.h */,
+				E85EB2681B80BC7F0094875E /* PlayList.m */,
+				E85EB26A1B80C0260094875E /* Player.h */,
+				E85EB26B1B80C0260094875E /* Player.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -267,6 +277,8 @@
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
 				E85EB22B1B7F7A9B0094875E /* PlayerListViewController.m in Sources */,
+				E85EB26C1B80C0260094875E /* Player.m in Sources */,
+				E85EB2691B80BC7F0094875E /* PlayList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
