@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.rowHeight = 62;
    
     [self shuffleList];
 }
@@ -164,12 +165,17 @@
                 cell.player2Label.text = self.malePlaylistArrayNew[2];
                 cell.player3Label.text = self.malePlaylistArrayNew[3];
                 cell.player4Label.text = self.malePlaylistArrayNew[4];
+                cell.player1Label.textColor = [UIColor redColor];
+                cell.player2Label.textColor = [UIColor redColor];
+                cell.player3Label.textColor = [UIColor redColor];
+                cell.player4Label.textColor = [UIColor redColor];
                 break;
             case 4:
                 cell.player1Label.text = self.femalePlaylistArrayNew[0];
                 cell.player2Label.text = self.femalePlaylistArrayNew[1];
                 cell.player3Label.text = self.malePlaylistArrayNew[1];
                 cell.player4Label.text = self.malePlaylistArrayNew[2];
+               
                 break;
             case 5:
                 cell.player1Label.text = self.femalePlaylistArrayNew[1];
@@ -188,6 +194,10 @@
                 cell.player2Label.text = self.malePlaylistArrayNew[2];
                 cell.player3Label.text = self.malePlaylistArrayNew[3];
                 cell.player4Label.text = self.malePlaylistArrayNew[4];
+                cell.player1Label.textColor = [UIColor redColor];
+                cell.player2Label.textColor = [UIColor redColor];
+                cell.player3Label.textColor = [UIColor redColor];
+                cell.player4Label.textColor = [UIColor redColor];
                 break;
                 
             default:
@@ -218,6 +228,10 @@
                     cell.player2Label.text = self.malePlaylistArrayNew[1];
                     cell.player3Label.text = self.malePlaylistArrayNew[2];
                     cell.player4Label.text = self.malePlaylistArrayNew[3];
+                    cell.player1Label.textColor = [UIColor redColor];
+                    cell.player2Label.textColor = [UIColor redColor];
+                    cell.player3Label.textColor = [UIColor redColor];
+                    cell.player4Label.textColor = [UIColor redColor];
                     break;
                 case 4:
                     cell.player1Label.text = self.femalePlaylistArrayNew[0];
@@ -242,6 +256,10 @@
                     cell.player2Label.text = self.malePlaylistArrayNew[1];
                     cell.player3Label.text = self.malePlaylistArrayNew[2];
                     cell.player4Label.text = self.malePlaylistArrayNew[3];
+                    cell.player1Label.textColor = [UIColor redColor];
+                    cell.player2Label.textColor = [UIColor redColor];
+                    cell.player3Label.textColor = [UIColor redColor];
+                    cell.player4Label.textColor = [UIColor redColor];
                     break;
                     
                 default:
@@ -272,6 +290,10 @@
                 cell.player2Label.text = self.malePlaylistArrayNew[2];
                 cell.player3Label.text = self.malePlaylistArrayNew[3];
                 cell.player4Label.text = self.malePlaylistArrayNew[4];
+                cell.player1Label.textColor = [UIColor redColor];
+                cell.player2Label.textColor = [UIColor redColor];
+                cell.player3Label.textColor = [UIColor redColor];
+                cell.player4Label.textColor = [UIColor redColor];
                 break;
                 
             default:
@@ -280,6 +302,7 @@
 
     }
     
+    cell.gameNumberLabel.text = [NSString stringWithFormat:@"Game %li",indexPath.row+1];
     
     return cell;
 }
