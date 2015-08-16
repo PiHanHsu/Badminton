@@ -244,6 +244,7 @@
                                         </switch>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <connections>
                                     <outlet property="playerLabel" destination="1qv-39-XAm" id="Euu-Fx-xN3"/>
                                     <outlet property="switchButton" destination="g4m-v0-gc4" id="DJf-gR-B0S"/>
