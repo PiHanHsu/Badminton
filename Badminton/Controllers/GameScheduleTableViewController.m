@@ -90,32 +90,6 @@
     self.malePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.malePlaylistArray];
     self.femalePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.femalePlaylistArray];
     [self.tableView reloadData];
-//    int n1 = (int)self.malePlaylistArray.count;
-//    
-//    for (int i = 0;  i < n1 ; i++) {
-//        int m = (int)self.malePlaylistArray.count;
-//        int r = arc4random_uniform(m);
-//        [self.malePlaylistArrayNew addObject:self.malePlaylistArray[r]];
-//        [self.malePlaylistArray removeObject:self.malePlaylistArray[r]];
-//        if (i == n1-1) {
-//            [self.malePlaylistArray addObjectsFromArray:self.malePlaylistArrayNew];
-//            [self.tableView reloadData];
-//        }
-//    }
-//    
-//    int n2 = (int)self.femalePlaylistArray.count;
-//    
-//    for (int i = 0;  i < n2 ; i++) {
-//        int m = (int)self.femalePlaylistArray.count;
-//        int r = arc4random_uniform(m);
-//        [self.femalePlaylistArrayNew addObject:self.femalePlaylistArray[r]];
-//        [self.femalePlaylistArray removeObject:self.femalePlaylistArray[r]];
-//        if (i == n2-1) {
-//            [self.femalePlaylistArray addObjectsFromArray:self.femalePlaylistArrayNew];
-//            [self.tableView reloadData];
-//
-//        }
-//    }
  
 }
 
@@ -172,10 +146,10 @@
                 cell.player2Label.text = self.malePlaylistArrayNew[2];
                 cell.player3Label.text = self.malePlaylistArrayNew[3];
                 cell.player4Label.text = self.malePlaylistArrayNew[4];
-                cell.player1Label.textColor = [UIColor redColor];
-                cell.player2Label.textColor = [UIColor redColor];
-                cell.player3Label.textColor = [UIColor redColor];
-                cell.player4Label.textColor = [UIColor redColor];
+                cell.player1Label.textColor = [UIColor blueColor];
+                cell.player2Label.textColor = [UIColor blueColor];
+                cell.player3Label.textColor = [UIColor blueColor];
+                cell.player4Label.textColor = [UIColor blueColor];
                 break;
             case 4:
                 cell.player1Label.text = self.femalePlaylistArrayNew[0];
@@ -201,10 +175,10 @@
                 cell.player2Label.text = self.malePlaylistArrayNew[2];
                 cell.player3Label.text = self.malePlaylistArrayNew[3];
                 cell.player4Label.text = self.malePlaylistArrayNew[4];
-                cell.player1Label.textColor = [UIColor redColor];
-                cell.player2Label.textColor = [UIColor redColor];
-                cell.player3Label.textColor = [UIColor redColor];
-                cell.player4Label.textColor = [UIColor redColor];
+                cell.player1Label.textColor = [UIColor blueColor];
+                cell.player2Label.textColor = [UIColor blueColor];
+                cell.player3Label.textColor = [UIColor blueColor];
+                cell.player4Label.textColor = [UIColor blueColor];
                 break;
                 
             default:
@@ -235,10 +209,10 @@
                     cell.player2Label.text = self.malePlaylistArrayNew[1];
                     cell.player3Label.text = self.malePlaylistArrayNew[2];
                     cell.player4Label.text = self.malePlaylistArrayNew[3];
-                    cell.player1Label.textColor = [UIColor redColor];
-                    cell.player2Label.textColor = [UIColor redColor];
-                    cell.player3Label.textColor = [UIColor redColor];
-                    cell.player4Label.textColor = [UIColor redColor];
+                    cell.player1Label.textColor = [UIColor blueColor];
+                    cell.player2Label.textColor = [UIColor blueColor];
+                    cell.player3Label.textColor = [UIColor blueColor];
+                    cell.player4Label.textColor = [UIColor blueColor];
                     break;
                 case 4:
                     cell.player1Label.text = self.femalePlaylistArrayNew[0];
@@ -263,10 +237,10 @@
                     cell.player2Label.text = self.malePlaylistArrayNew[1];
                     cell.player3Label.text = self.malePlaylistArrayNew[2];
                     cell.player4Label.text = self.malePlaylistArrayNew[3];
-                    cell.player1Label.textColor = [UIColor redColor];
-                    cell.player2Label.textColor = [UIColor redColor];
-                    cell.player3Label.textColor = [UIColor redColor];
-                    cell.player4Label.textColor = [UIColor redColor];
+                    cell.player1Label.textColor = [UIColor blueColor];
+                    cell.player2Label.textColor = [UIColor blueColor];
+                    cell.player3Label.textColor = [UIColor blueColor];
+                    cell.player4Label.textColor = [UIColor blueColor];
                     break;
                     
                 default:
@@ -297,10 +271,10 @@
                 cell.player2Label.text = self.malePlaylistArrayNew[2];
                 cell.player3Label.text = self.malePlaylistArrayNew[3];
                 cell.player4Label.text = self.malePlaylistArrayNew[4];
-                cell.player1Label.textColor = [UIColor redColor];
-                cell.player2Label.textColor = [UIColor redColor];
-                cell.player3Label.textColor = [UIColor redColor];
-                cell.player4Label.textColor = [UIColor redColor];
+                cell.player1Label.textColor = [UIColor blueColor];
+                cell.player2Label.textColor = [UIColor blueColor];
+                cell.player3Label.textColor = [UIColor blueColor];
+                cell.player4Label.textColor = [UIColor blueColor];
                 break;
                 
             default:

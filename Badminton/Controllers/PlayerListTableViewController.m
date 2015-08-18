@@ -133,7 +133,7 @@
       [[PlayListDataSource sharedInstance]removeFromMalePlayerList:name];
     }
     
-    NSLog(@"Male List: %@", [PlayListDataSource sharedInstance].maleSelectedArray);
+    //NSLog(@"Male List: %@", [PlayListDataSource sharedInstance].maleSelectedArray);
 }
 
 - (void) addToFemaleList: (UISwitch *)sender{
