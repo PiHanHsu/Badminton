@@ -13,8 +13,6 @@
 		E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8484CCB1B6BA5B100B39463 /* Main.storyboard */; };
 		E8484CCF1B6BA5B100B39463 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8484CCE1B6BA5B100B39463 /* Images.xcassets */; };
 		E8484CDE1B6BA5B100B39463 /* BadmintonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CDD1B6BA5B100B39463 /* BadmintonTests.m */; };
-		E85EB22B1B7F7A9B0094875E /* PlayerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB22A1B7F7A9B0094875E /* PlayerListViewController.m */; };
-		E85EB22E1B7F97BA0094875E /* PlayerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB22D1B7F97BA0094875E /* PlayerButton.m */; };
 		E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */; };
 		E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2331B7FA4DE0094875E /* GameScheduleTableViewCell.m */; };
 		E85EB26F1B80E0EC0094875E /* PlayerListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB26E1B80E0EC0094875E /* PlayerListTableViewController.m */; };
@@ -45,10 +43,6 @@
 		E8484CD71B6BA5B100B39463 /* BadmintonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadmintonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8484CDC1B6BA5B100B39463 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8484CDD1B6BA5B100B39463 /* BadmintonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BadmintonTests.m; sourceTree = "<group>"; };
-		E85EB2291B7F7A9B0094875E /* PlayerListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerListViewController.h; sourceTree = "<group>"; };
-		E85EB22A1B7F7A9B0094875E /* PlayerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewController.m; sourceTree = "<group>"; };
-		E85EB22C1B7F97BA0094875E /* PlayerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerButton.h; path = Model/PlayerButton.h; sourceTree = "<group>"; };
-		E85EB22D1B7F97BA0094875E /* PlayerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerButton.m; path = Model/PlayerButton.m; sourceTree = "<group>"; };
 		E85EB22F1B7F9CA90094875E /* GameScheduleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScheduleTableViewController.h; sourceTree = "<group>"; };
 		E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScheduleTableViewController.m; sourceTree = "<group>"; };
 		E85EB2321B7FA4DE0094875E /* GameScheduleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScheduleTableViewCell.h; path = Views/GameScheduleTableViewCell.h; sourceTree = "<group>"; };
@@ -154,8 +148,6 @@
 		E8484CED1B6BA75200B39463 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E85EB2291B7F7A9B0094875E /* PlayerListViewController.h */,
-				E85EB22A1B7F7A9B0094875E /* PlayerListViewController.m */,
 				E85EB22F1B7F9CA90094875E /* GameScheduleTableViewController.h */,
 				E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */,
 				E85EB26D1B80E0EC0094875E /* PlayerListTableViewController.h */,
@@ -167,8 +159,6 @@
 		E85EB2251B7F6D6C0094875E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E85EB22C1B7F97BA0094875E /* PlayerButton.h */,
-				E85EB22D1B7F97BA0094875E /* PlayerButton.m */,
 				E85EB2731B80EF480094875E /* PlayListDataSource.h */,
 				E85EB2741B80EF480094875E /* PlayListDataSource.m */,
 			);
@@ -276,14 +266,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */,
-				E85EB22E1B7F97BA0094875E /* PlayerButton.m in Sources */,
 				E85EB26F1B80E0EC0094875E /* PlayerListTableViewController.m in Sources */,
 				E8484CCA1B6BA5B100B39463 /* ViewController.m in Sources */,
 				E85EB2751B80EF480094875E /* PlayListDataSource.m in Sources */,
 				E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
-				E85EB22B1B7F7A9B0094875E /* PlayerListViewController.m in Sources */,
 				E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
