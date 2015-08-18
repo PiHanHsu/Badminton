@@ -10,7 +10,7 @@
 #import "GameScheduleTableViewCell.h"
 #import "PlayListDataSource.h"
 
-@interface GameScheduleTableViewController ()
+@interface GameScheduleTableViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -27,20 +27,54 @@
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==3) {
-        
     }else if (self.malePlaylistArrayNew.count == 4 && self.femalePlaylistArrayNew.count ==3){
-        
     }else if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==2){
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 0){
+        NSString * title = @"沒人是要打個鬼啊！";
+        [self alertViewWithTitle:title withMessage:nil];
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 1){
+        NSString * title = @"1個人？ 在開玩笑吧！";
+        [self alertViewWithTitle:title withMessage:nil];
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 2){
+        NSString * title = @"請不要污辱程式設計師的智商！";
+        [self alertViewWithTitle:title withMessage:nil];
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 3){
+        NSString * title = @"3個人? 有點複雜，要花點時間算一下，不如你們先開打吧！";
+        [self alertViewWithTitle:title withMessage:nil];
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) ==4 ){
+        NSString * title = @"雙打打累打單打\n單打打累打雙打";
+        NSString * message = @"請大聲唸10遍！！";
+        [self alertViewWithTitle:title withMessage:message];
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) ==5 ){
+        NSString * title = @"大哥大姐～\n 人這麼少自己輪一下好唄！";
+        [self alertViewWithTitle:title withMessage:nil];
+    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count)==6){
+        NSString * title = @"動點腦，6個人很好排，腦子久不動可是會生鏽滴～";
+        [self alertViewWithTitle:title withMessage:nil];
     }else{
-        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Oops Sorry！" message:@"Please reselcet the players." preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction * okAlertAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
-        [alert addAction:okAlertAction];
-        [self presentViewController:alert animated:YES completion:nil];
+        NSString * title = @"Oops! Sorry!";
+        NSString * message = @"Please reselect again!";
+        [self alertViewWithTitle:title withMessage:message];
+
     }
 
+}
+
+- (void)alertViewWithTitle:(NSString *)title withMessage:(NSString *)mesg {
+ 
+    UIAlertView * av = [[UIAlertView alloc]initWithTitle:title
+                                                 message:mesg
+                                                delegate:self
+                                       cancelButtonTitle:@"OK"
+                                       otherButtonTitles:nil,
+                        nil];
+    [av show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
