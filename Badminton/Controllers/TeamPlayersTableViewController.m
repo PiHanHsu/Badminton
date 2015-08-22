@@ -1,21 +1,19 @@
 //
-//  LoginTableViewController.m
+//  TeamPlayersTableViewController.m
 //  Badminton
 //
 //  Created by PiHan Hsu on 2015/8/22.
 //  Copyright (c) 2015年 PiHan Hsu. All rights reserved.
 //
 
-#import "LoginTableViewController.h"
-#import <Parse.h>
-#import <ParseFacebookUtils/PFFacebookUtils.h>
-#import <FBSDKCoreKit.h>
+#import "TeamPlayersTableViewController.h"
+#import "PlayListDataSource.h"
 
-@interface LoginTableViewController ()
+@interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 
 @end
 
-@implementation LoginTableViewController
+@implementation TeamPlayersTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,60 +29,42 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)AddPlayer:(UIBarButtonItem *)sender {
+    
+    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"請輸入新增球員姓名" delegate:self cancelButtonTitle:@"女子球員" otherButtonTitles:@"男子球員", nil];
+    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [av textFieldAtIndex:0].delegate = self;
+    [av show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        
+        [[PlayListDataSource sharedInstance] addToFemalePlayerArray:[alertView textFieldAtIndex:0].text];
+        [PlayListDataSource sharedInstance].teamName = self.teamName;
+        
+        [[PlayListDataSource sharedInstance] updateTeamPlayersToParse];
+        
+    }if (buttonIndex ==1) {
+        [[PlayListDataSource sharedInstance] addToMalePlayerArray:[alertView textFieldAtIndex:0].text];
+        [PlayListDataSource sharedInstance].teamName = self.teamName;
+        [[PlayListDataSource sharedInstance] updateTeamPlayersToParse];
+        
+    }
+}
 
 #pragma mark - Table view data source
-- (IBAction)FBLogin:(UIButton *)sender {
-    // Set permissions required from the facebook user account
-    NSArray *permissionsArray = @[@"email"];
-    
-    // Login PFUser using Facebook
-    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
-        
-        if (!user) {
-            NSString *errorMessage = nil;
-            if (!error) {
-                NSLog(@"Uh oh. The user cancelled the Facebook login.");
-                errorMessage = @"Uh oh. The user cancelled the Facebook login.";
-            } else {
-                NSLog(@"Uh oh. An error occurred: %@", error);
-                errorMessage = [error localizedDescription];
-            }
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Error"
-                                                            message:errorMessage
-                                                           delegate:nil
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:@"Dismiss", nil];
-            [alert show];
-        } else {
-            if (user.isNew) {
-                NSLog(@"User with facebook signed up and logged in!");
-                [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
-            } else {
-                NSLog(@"User with facebook logged in!");
-                [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
-                //[self saveUserDataToParse];
-                //[self getFBfriends];
-            }
-            
-            
-        }
-    }];
-    
-
-    
-    
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 2;
+    return 0;
 }
 
 /*

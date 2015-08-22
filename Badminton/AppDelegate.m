@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <Parse/Parse.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 @interface AppDelegate ()
 
@@ -17,12 +20,44 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Parse setApplicationId:@"uo31zGwFmmJXG5kNhaBpDtBZXanFQwl2xsB5N8kU"
+                  clientKey:@"OCyHbEhhBfyBzdYVWMRhYZKx9f2KnW9g9gnUQpdO"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [PFFacebookUtils initializeFacebook];
+    
+    // Register for Push Notitications
+    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                    UIUserNotificationTypeBadge |
+                                                    UIUserNotificationTypeSound);
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                             categories:nil];
+    [application registerUserNotificationSettings:settings];
+    [application registerForRemoteNotifications];
+
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [FBAppCall handleOpenURL:url
+                  sourceApplication:sourceApplication
+                        withSession:[PFFacebookUtils session]];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -40,6 +75,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[PFFacebookUtils session] close];
 }
 
 @end

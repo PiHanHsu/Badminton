@@ -1,9 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="HBl-pQ-OhP">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
+        <!--Team Players Table View Controller-->
+        <scene sceneID="EJE-kG-7Hs">
+            <objects>
+                <tableViewController storyboardIdentifier="TeamPlayersTableViewController" id="Xym-La-3O3" customClass="TeamPlayersTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jcG-t9-R0c">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Fhv-dd-ov9">
+                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fhv-dd-ov9" id="lxB-0c-qWt">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Xym-La-3O3" id="j5d-1v-7Wd"/>
+                            <outlet property="delegate" destination="Xym-La-3O3" id="nrt-Jy-aJE"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="L9P-MH-feh">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vau-Wg-qP2">
+                            <connections>
+                                <action selector="AddPlayer:" destination="Xym-La-3O3" id="3Qq-5a-oz1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pEf-oK-XDX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2666" y="409"/>
+        </scene>
         <!--Player List Table View Controller-->
         <scene sceneID="zSe-cU-Ow6">
             <objects>
@@ -55,7 +91,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NfC-Oa-xQG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2448" y="409"/>
+            <point key="canvasLocation" x="2423" y="1062"/>
         </scene>
         <!--Schedule-->
         <scene sceneID="ei2-Bu-TTM">
@@ -147,7 +183,7 @@
                     </items>
                 </navigationBar>
             </objects>
-            <point key="canvasLocation" x="2822" y="409"/>
+            <point key="canvasLocation" x="2767" y="1062"/>
         </scene>
         <!--Login Table View Controller-->
         <scene sceneID="oaJ-ds-Iic">
@@ -166,24 +202,34 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Sp5-ab-sij">
                             <rect key="frame" x="0.0" y="288" width="320" height="280"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EJA-dw-I9q">
-                                    <rect key="frame" x="75" y="26" width="170" height="30"/>
+                                    <rect key="frame" x="40" y="19" width="115" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Login">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
-                                        <segue destination="Trq-CY-DLj" kind="modal" id="mzb-Ga-jbI"/>
+                                        <segue destination="Trq-CY-DLj" kind="modal" identifier="Show Home Screen" id="mzb-Ga-jbI"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lkA-lM-Zra">
+                                    <rect key="frame" x="40" y="68" width="240" height="45"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Login with Facebook" image="facebookLogin">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="FBLogin:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="7Na-9Y-fPf"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QAu-mB-PGr">
-                                    <rect key="frame" x="126" y="121" width="69" height="30"/>
+                                    <rect key="frame" x="211" y="19" width="69" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <state key="normal" title="Sign up">
@@ -191,15 +237,8 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lkA-lM-Zra">
-                                    <rect key="frame" x="75" y="76" width="170" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Login with Facebook">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
                             </subviews>
-                            <color key="backgroundColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <sections>
                             <tableViewSection id="4Kg-Vw-lVu">
@@ -219,7 +258,8 @@
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <inset key="separatorInset" minX="320" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="7js-yR-WOM" userLabel="Password">
                                         <rect key="frame" x="0.0" y="244" width="320" height="44"/>
@@ -236,7 +276,7 @@
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -271,7 +311,7 @@
                                             <rect key="frame" x="0.0" y="5" width="320" height="110"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="8Hq-Pc-LWO">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teams.png" id="8Hq-Pc-LWO">
                                                     <rect key="frame" x="10" y="5" width="100" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -291,7 +331,8 @@
                                 <color key="backgroundColor" red="0.9137254901960784" green="0.91764705882352937" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="320" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <segue destination="tST-if-afd" kind="push" id="MMy-bI-4S9"/>
+                                    <outlet property="teamImage" destination="8Hq-Pc-LWO" id="Zdm-4w-nZb"/>
+                                    <outlet property="teamName" destination="ogp-Lw-GyI" id="Sgi-0D-lnz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -301,12 +342,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="My Teams" id="kgd-ek-o3N">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3CY-A6-96X"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3CY-A6-96X">
+                            <connections>
+                                <action selector="AddTeam:" destination="yMJ-sW-adm" id="tW8-JF-OO3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Xym-La-3O3" kind="push" identifier="Show Team Players" id="Noq-SN-PVT"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIq-OI-HLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2062" y="409"/>
+            <point key="canvasLocation" x="2211" y="409"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Aab-Ob-nbu">
@@ -326,33 +374,6 @@
             </objects>
             <point key="canvasLocation" x="2062" y="1062"/>
         </scene>
-        <!--Table View Controller-->
-        <scene sceneID="FEk-co-nsM">
-            <objects>
-                <tableViewController id="qtR-es-4dy" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Gha-nZ-0c1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="0hQ-zf-6fX">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0hQ-zf-6fX" id="Sus-62-BkS">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="qtR-es-4dy" id="vJ6-mM-jsy"/>
-                            <outlet property="delegate" destination="qtR-es-4dy" id="y7N-K0-dbJ"/>
-                        </connections>
-                    </tableView>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OWT-6m-wj4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="fDR-9a-f7Y">
             <objects>
@@ -369,18 +390,17 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NTe-B7-ImP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1648" y="409"/>
+            <point key="canvasLocation" x="1742" y="409"/>
         </scene>
     </scenes>
     <resources>
         <image name="LoginPageImage.png" width="1241" height="1475"/>
+        <image name="facebookLogin" width="320" height="61"/>
+        <image name="teams.png" width="222" height="227"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="MMy-bI-4S9"/>
-    </inferredMetricsTieBreakers>
 </document>
