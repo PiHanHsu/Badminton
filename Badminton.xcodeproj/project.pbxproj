@@ -18,6 +18,10 @@
 		E85EB26F1B80E0EC0094875E /* PlayerListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB26E1B80E0EC0094875E /* PlayerListTableViewController.m */; };
 		E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */; };
 		E85EB2751B80EF480094875E /* PlayListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2741B80EF480094875E /* PlayListDataSource.m */; };
+		E8C283551B8892AC0018F3A1 /* LoginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283541B8892AC0018F3A1 /* LoginTableViewController.m */; };
+		E8C283581B8892CC0018F3A1 /* MyTeamListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283571B8892CC0018F3A1 /* MyTeamListTableViewController.m */; };
+		E8C2835B1B8893990018F3A1 /* MyTeamListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C2835A1B8893990018F3A1 /* MyTeamListTableViewCell.m */; };
+		E8C283611B88A0C90018F3A1 /* LoginPageImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C283601B88A0C90018F3A1 /* LoginPageImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +57,13 @@
 		E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerTableViewCell.m; path = Views/PlayerTableViewCell.m; sourceTree = "<group>"; };
 		E85EB2731B80EF480094875E /* PlayListDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayListDataSource.h; path = Model/PlayListDataSource.h; sourceTree = "<group>"; };
 		E85EB2741B80EF480094875E /* PlayListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayListDataSource.m; path = Model/PlayListDataSource.m; sourceTree = "<group>"; };
+		E8C283531B8892AC0018F3A1 /* LoginTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginTableViewController.h; sourceTree = "<group>"; };
+		E8C283541B8892AC0018F3A1 /* LoginTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginTableViewController.m; sourceTree = "<group>"; };
+		E8C283561B8892CC0018F3A1 /* MyTeamListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTeamListTableViewController.h; sourceTree = "<group>"; };
+		E8C283571B8892CC0018F3A1 /* MyTeamListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeamListTableViewController.m; sourceTree = "<group>"; };
+		E8C283591B8893990018F3A1 /* MyTeamListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTeamListTableViewCell.h; sourceTree = "<group>"; };
+		E8C2835A1B8893990018F3A1 /* MyTeamListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeamListTableViewCell.m; sourceTree = "<group>"; };
+		E8C283601B88A0C90018F3A1 /* LoginPageImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginPageImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +122,7 @@
 		E8484CC11B6BA5B100B39463 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E8C283601B88A0C90018F3A1 /* LoginPageImage.png */,
 				E8484CC21B6BA5B100B39463 /* Info.plist */,
 				E8484CC31B6BA5B100B39463 /* main.m */,
 			);
@@ -141,6 +153,8 @@
 				E85EB2331B7FA4DE0094875E /* GameScheduleTableViewCell.m */,
 				E85EB2701B80E2AD0094875E /* PlayerTableViewCell.h */,
 				E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */,
+				E8C283591B8893990018F3A1 /* MyTeamListTableViewCell.h */,
+				E8C2835A1B8893990018F3A1 /* MyTeamListTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -152,6 +166,10 @@
 				E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */,
 				E85EB26D1B80E0EC0094875E /* PlayerListTableViewController.h */,
 				E85EB26E1B80E0EC0094875E /* PlayerListTableViewController.m */,
+				E8C283531B8892AC0018F3A1 /* LoginTableViewController.h */,
+				E8C283541B8892AC0018F3A1 /* LoginTableViewController.m */,
+				E8C283561B8892CC0018F3A1 /* MyTeamListTableViewController.h */,
+				E8C283571B8892CC0018F3A1 /* MyTeamListTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -246,6 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8C283611B88A0C90018F3A1 /* LoginPageImage.png in Resources */,
 				E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */,
 				E8484CCF1B6BA5B100B39463 /* Images.xcassets in Resources */,
 			);
@@ -266,9 +285,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */,
+				E8C2835B1B8893990018F3A1 /* MyTeamListTableViewCell.m in Sources */,
 				E85EB26F1B80E0EC0094875E /* PlayerListTableViewController.m in Sources */,
+				E8C283581B8892CC0018F3A1 /* MyTeamListTableViewController.m in Sources */,
 				E8484CCA1B6BA5B100B39463 /* ViewController.m in Sources */,
 				E85EB2751B80EF480094875E /* PlayListDataSource.m in Sources */,
+				E8C283551B8892AC0018F3A1 /* LoginTableViewController.m in Sources */,
 				E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
