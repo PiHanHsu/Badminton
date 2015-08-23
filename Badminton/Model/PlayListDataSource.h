@@ -30,6 +30,7 @@
 - (NSMutableArray *) removeFromFemalePlayerArray:(NSString *)name;
 - (NSMutableArray *) addToTeamArray:(NSString *)name;
 
+- (void) loadingTeamDataFromParse;
 - (void) updateTeamPlayersToParse;
 
 @end

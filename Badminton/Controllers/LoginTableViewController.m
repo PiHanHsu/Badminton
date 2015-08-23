@@ -10,6 +10,7 @@
 #import <Parse.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <FBSDKCoreKit.h>
+#import "PlayListDataSource.h"
 
 @interface LoginTableViewController ()
 
@@ -19,6 +20,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:@"loadingDataFinished"
+     object:nil
+     queue:[NSOperationQueue mainQueue]
+     usingBlock:^(NSNotification *notification) {
+         if ([notification.name isEqualToString:@"loadingDataFinished"]) {
+             NSLog(@"Loading Data Finished!");
+             [self _ViewControllerAnimated:YES];
+         }
+     }];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -58,10 +71,13 @@
         } else {
             if (user.isNew) {
                 NSLog(@"User with facebook signed up and logged in!");
-                [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
+                [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                
             } else {
                 NSLog(@"User with facebook logged in!");
-                [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
+                
+                [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                
                 //[self saveUserDataToParse];
                 //[self getFBfriends];
             }
@@ -70,9 +86,11 @@
         }
     }];
     
+}
 
+- (void)_ViewControllerAnimated:(BOOL)animated {
     
-    
+    [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

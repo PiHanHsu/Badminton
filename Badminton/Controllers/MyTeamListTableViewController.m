@@ -30,7 +30,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    [self updateDataFromParse];
+    self.teamArray = [PlayListDataSource sharedInstance].teamArray;
     
 }
 
@@ -75,11 +75,11 @@
 -(void) updateDataFromParse{
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query whereKey:@"createBy" equalTo:@"NHOifOc9iQ"];
+    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
          if (!error) {
-             NSLog(@"hihi");
+             //NSLog(@"hihi");
              [self.teamArray removeAllObjects];
              [self.teamArray addObjectsFromArray:objects];
              [self.tableView reloadData];
@@ -137,6 +137,8 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        //[self.teamArray removeObject:self.teamArray[indexPath.row]];
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

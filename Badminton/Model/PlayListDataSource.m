@@ -111,6 +111,19 @@
     return newArray;
 }
 
+- (void) loadingTeamDataFromParse{
+    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error){
+        if (!error) {
+            [self.teamArray addObjectsFromArray:objects];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
+            
+        }
+        
+    }];
+}
+
 - (void) updateTeamPlayersToParse{
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
