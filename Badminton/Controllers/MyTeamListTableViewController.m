@@ -33,6 +33,24 @@
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.teamArray = [PlayListDataSource sharedInstance].teamArray;
     
+    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query fromLocalDatastore];
+    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
+    [query findObjectsInBackgroundWithBlock:
+     ^(NSArray * objects, NSError *error){
+         if (!error) {
+             NSLog(@"objects: %@", objects);
+//             for (PFObject * object in objects) {
+//                 [object unpin];
+//             }
+             
+         }else{
+             NSLog(@"error: %@" ,error);
+         }
+         
+     }];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,28 +81,51 @@
        teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
        teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
        
-       
-       [teamObject saveInBackgroundWithBlock:^(BOOL succeed, NSError * error){
-           if (succeed) {
-             [self updateDataFromParse];
-               
-           }
+       //[teamObject saveEventually];
+       [teamObject pinInBackgroundWithBlock:^(BOOL succeed, NSError *error){
+           [self updateData];
        }];
-    }
+       
+          }
 }
 
--(void) updateDataFromParse{
+-(void) updateData{
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query fromLocalDatastore];
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
          if (!error) {
-             //NSLog(@"hihi");
+             for (PFObject * object in objects) {
+                 [object saveEventually];
+             }
              [self.teamArray removeAllObjects];
              [self.teamArray addObjectsFromArray:objects];
              [self.tableView reloadData];
-             NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
+             //NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
+         }else{
+             NSLog(@"error: %@" ,error);
+         }
+         
+     }];
+}
+
+-(void) deleteTeam{
+    
+    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query fromLocalDatastore];
+    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
+    [query findObjectsInBackgroundWithBlock:
+     ^(NSArray * objects, NSError *error){
+         if (!error) {
+             for (PFObject * object in objects) {
+                 [object saveEventually];
+             }
+             [self.teamArray removeAllObjects];
+             [self.teamArray addObjectsFromArray:objects];
+             [self.tableView reloadData];
+             //NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
          }else{
              NSLog(@"error: %@" ,error);
          }
@@ -138,8 +179,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        //[self.teamArray removeObject:self.teamArray[indexPath.row]];
+        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self.teamArray removeObjectAtIndex:indexPath.row];
+        [self.tableView reloadData];
+        
+        //delete from Parse
+        PFObject * objectToBeDelete = self.teamArray[indexPath.row];
+        PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+        [query fromLocalDatastore];
+        [query whereKey:@"objectId" equalTo:objectToBeDelete.objectId];
+         [query getObjectInBackgroundWithId:objectToBeDelete.objectId block:^(PFObject * toBeDeleteObj, NSError * error){
+            [toBeDeleteObj unpin];
+            [toBeDeleteObj delete];
+        }];
         
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view

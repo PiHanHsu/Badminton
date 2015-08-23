@@ -34,6 +34,28 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query fromLocalDatastore];
+    //[query whereKey:@"objectId" equalTo:self.teamObject.objectId];
+    [query getObjectInBackgroundWithId:self.teamObject.objectId
+                                 block:^(PFObject * obj, NSError *error) {
+                                     
+                                     obj[@"malePlayers"] = self.malePlayerArray;
+                                     obj[@"femalePlayers"] = self.femalePlayerArray;
+                                     [obj saveEventually];
+                                     //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                                 }];
+//    NSMutableArray * teamArray = [PlayListDataSource sharedInstance].teamArray;
+//    for (PFObject * object in teamArray){
+//        if ([object.objectId isEqualToString:self.teamObject.objectId]) {
+//            object[@"malePlayers"] = self.malePlayerArray;
+//            object[@"femalePlayers"] = self.femalePlayerArray;
+//        }
+//    };
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -62,16 +84,14 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         
-        [[PlayListDataSource sharedInstance] addToFemalePlayerArray:[alertView textFieldAtIndex:0].text];
-        [PlayListDataSource sharedInstance].teamName = self.teamName;
-        
-        [[PlayListDataSource sharedInstance] updateTeamPlayersToParse];
+        [self.femalePlayerArray addObject:[alertView textFieldAtIndex:0].text];
+        self.teamObject[@"femalePlayers"] = self.femalePlayerArray;
+        [self.tableView reloadData];
         
     }if (buttonIndex ==1) {
-        [[PlayListDataSource sharedInstance] addToMalePlayerArray:[alertView textFieldAtIndex:0].text];
-        [PlayListDataSource sharedInstance].teamName = self.teamName;
-        [[PlayListDataSource sharedInstance] updateTeamPlayersToParse];
-        
+        [self.malePlayerArray addObject:[alertView textFieldAtIndex:0].text];
+        self.teamObject[@"malePlayers"] = self.malePlayerArray;
+        [self.tableView reloadData];
     }
 }
 
@@ -104,6 +124,28 @@
     return 0;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
+    headerView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
+    tableView.sectionHeaderHeight = 44;
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 21)];
+    if(section == 0)
+        label.text = @"男子選手";
+    else
+        label.text = @"女子選手";
+    
+    label.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
+    
+    [headerView addSubview:label];
+    
+    return headerView;
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
@@ -132,17 +174,29 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+       
+        if (indexPath.section == 1) {
+            //[tableView deleteRowsAtIndexPaths:self.femalePlayerArray[indexPath.row] withRowAnimation:UITableViewRowAnimationFade];
+            [self.femalePlayerArray removeObjectAtIndex:indexPath.row];
+            [self.tableView reloadData];
+        }else if (indexPath.section == 0){
+            [self.malePlayerArray removeObjectAtIndex:indexPath.row];
+            [self.tableView reloadData];
+        }
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

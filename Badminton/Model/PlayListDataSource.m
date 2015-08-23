@@ -116,13 +116,17 @@
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error){
         if (!error) {
+            for (PFObject * obj in objects){
+                [obj pinInBackground];
+            }
             [self.teamArray addObjectsFromArray:objects];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
             
         }
-        
     }];
+     
 }
+     
 
 - (void) updateTeamPlayersToParse{
     
