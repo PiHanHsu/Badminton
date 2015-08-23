@@ -7,9 +7,13 @@
 //
 
 #import "TeamPlayersTableViewController.h"
-#import "PlayListDataSource.h"
+#import "PlayerTableViewCell.h"
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
+@property BOOL hasMalePlayer;
+@property BOOL hasFemalePlayer;
+@property (strong, nonatomic) NSMutableArray * malePlayerArray;
+@property (strong, nonatomic) NSMutableArray * femalePlayerArray;
 
 @end
 
@@ -17,6 +21,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    [self.malePlayerArray addObjectsFromArray: self.teamObject[@"malePlayers"]];
+    [self.femalePlayerArray addObjectsFromArray: self.teamObject[@"femalePlayers"]];
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -29,6 +38,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (NSMutableArray *) malePlayerArray {
+    if(!_malePlayerArray)
+        _malePlayerArray = [@[] mutableCopy];
+    return _malePlayerArray;
+}
+
+- (NSMutableArray *) femalePlayerArray {
+    if(!_femalePlayerArray)
+        _femalePlayerArray = [@[] mutableCopy];
+    return _femalePlayerArray;
+}
+
 - (IBAction)AddPlayer:(UIBarButtonItem *)sender {
     
     UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"請輸入新增球員姓名" delegate:self cancelButtonTitle:@"女子球員" otherButtonTitles:@"男子球員", nil];
@@ -56,26 +78,51 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    if (self.malePlayerArray.count > 0 && self.femalePlayerArray.count >0) {
+        return 2;
+    }else if (self.malePlayerArray.count > 0 && self.femalePlayerArray.count == 0){
+        return 1;
+    }else if (self.malePlayerArray.count == 0 && self.femalePlayerArray.count > 0){
+        return 1;
+    }else
+        return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
+    switch (section) {
+        case 0:
+            return self.malePlayerArray.count;
+            break;
+            
+        case 1:
+            return self.femalePlayerArray.count;
+            break;
+            
+        default:
+            break;
+    }
     return 0;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    PlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
     
     // Configure the cell...
-    
+    switch (indexPath.section) {
+        case 0:
+            cell.playerLabel.text = self.malePlayerArray[indexPath.row];
+            break;
+        case 1:
+            cell.playerLabel.text = self.femalePlayerArray[indexPath.row];
+            break;
+            
+        default:
+            break;
+    }
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

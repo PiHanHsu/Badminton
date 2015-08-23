@@ -15,6 +15,7 @@
 @interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSString * teamName;
 @property (strong, nonatomic) NSMutableArray * teamArray;
+@property (strong, nonatomic) PFObject * teamObject;
 
 @end
 
@@ -116,6 +117,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.teamName = self.teamArray[indexPath.row][@"name"];
+    self.teamObject = self.teamArray[indexPath.row];
     [self performSegueWithIdentifier:@"Show Team Players" sender:nil];
     
 //    TeamPlayersTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TeamPlayersTableViewController"];
@@ -169,6 +171,7 @@
     if ([segue.destinationViewController isKindOfClass:[TeamPlayersTableViewController class]]) {
         TeamPlayersTableViewController * vc = segue.destinationViewController;
         vc.teamName = self.teamName;
+        vc.teamObject = self.teamObject;
         
     }
 
