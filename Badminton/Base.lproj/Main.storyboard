@@ -28,10 +28,15 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="wi1-Q7-OTt">
+                                            <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </switch>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="playerLabel" destination="Ldc-xS-sBc" id="M01-SK-gJB"/>
+                                    <outlet property="switchButton" destination="wi1-Q7-OTt" id="eWZ-Oj-2vb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -248,14 +253,14 @@
         <!--Schedule-->
         <scene sceneID="ei2-Bu-TTM">
             <objects>
-                <tableViewController id="Ie1-SR-KSk" customClass="GameScheduleTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="GameScheduleVC" id="Ie1-SR-KSk" customClass="GameScheduleTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="NkO-kK-Esy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="playListCell" rowHeight="62" id="awi-FR-WdK" customClass="GameScheduleTableViewCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="62"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="62"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="awi-FR-WdK" id="Qow-qB-Nsp">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
@@ -335,7 +340,7 @@
                     </items>
                 </navigationBar>
             </objects>
-            <point key="canvasLocation" x="2767" y="1062"/>
+            <point key="canvasLocation" x="3182" y="1057"/>
         </scene>
         <!--Login Table View Controller-->
         <scene sceneID="oaJ-ds-Iic">

@@ -10,13 +10,15 @@
 #import "PlayListDataSource.h"
 
 @interface SignupTableViewController ()<UITextFieldDelegate>
-
+@property (strong, nonatomic) UIActivityIndicatorView * indicator;
 @end
 
 @implementation SignupTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
+    self.indicator.hidden = YES;
     
     //user login with FB
     if ([PFUser currentUser]) {
@@ -64,13 +66,14 @@
 #pragma mark Sign up
 
 - (IBAction)goPressed:(id)sender {
+    [self.indicator startAnimating];
     if(![self isPasswordsMatch]) {
         //[self.activityIndicatorView stopAnimating];
         //[self.activityIndicatorView removeFromSuperview];
         return;
     }
     PFUser *user = [PFUser user];
-    user.username = self.emailTextField.text;
+    user.username = [self.emailTextField.text lowercaseString];
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
     
@@ -78,8 +81,9 @@
     
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
+            [self.indicator stopAnimating];
+            [self.indicator hidesWhenStopped];
             
-            //[self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
 
         } else {
             NSString *errorString = [error userInfo][@"error"];

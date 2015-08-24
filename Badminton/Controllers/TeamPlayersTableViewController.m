@@ -7,6 +7,7 @@
 //
 
 #import "TeamPlayersTableViewController.h"
+#import "GameScheduleTableViewController.h"
 #import "PlayerTableViewCell.h"
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
@@ -14,24 +15,27 @@
 @property BOOL hasFemalePlayer;
 @property (strong, nonatomic) NSMutableArray * malePlayerArray;
 @property (strong, nonatomic) NSMutableArray * femalePlayerArray;
-
+@property (strong, nonatomic) UIButton * playBallButton;
 @end
 
 @implementation TeamPlayersTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    //set up playball Button
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    self.tableView.tableFooterView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
+    self.playBallButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 30)];
+    [self.playBallButton setTitle:@"PlayBall" forState:UIControlStateNormal];
+    [self.playBallButton addTarget:self action:@selector(playBallPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.tableView.tableFooterView addSubview:self.playBallButton];
+    self.playBallButton.hidden = NO;
     
     [self.malePlayerArray addObjectsFromArray: self.teamObject[@"malePlayers"]];
     [self.femalePlayerArray addObjectsFromArray: self.teamObject[@"femalePlayers"]];
     
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -56,6 +60,10 @@
 //    };
 }
 
+- (void) playBallPressed: (id)sender{
+    GameScheduleTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameScheduleVC"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -121,6 +129,9 @@
         default:
             break;
     }
+    if ((self.malePlayerArray.count + self.femalePlayerArray.count) > 2) {
+        self.playBallButton.hidden = NO;
+    }
     return 0;
 }
 
@@ -146,6 +157,17 @@
     return headerView;
 }
 
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+//    
+//    if (section == 1) {
+//        UIView * footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
+//         return footerView;
+//    }
+//    
+//    
+//    
+//   
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
@@ -162,7 +184,38 @@
         default:
             break;
     }
+    
+    //TODO, can't switch new cell
+    cell.switchButton.tag = indexPath.row;
+    if (indexPath.section == 0) {
+        [cell.switchButton addTarget:self action:@selector(addToMaleList:) forControlEvents:UIControlEventTouchUpInside];
+    }else if (indexPath.section == 1){
+        [cell.switchButton addTarget:self action:@selector(addToFemaleList:) forControlEvents:UIControlEventTouchUpInside];
+    }
+
     return cell;
+}
+
+- (void) addToMaleList: (UISwitch *)sender{
+    
+    NSString * name = self.malePlayerArray[sender.tag];
+    if ([sender isOn]) {
+        [[PlayListDataSource sharedInstance]addToMalePlayerList:name];
+    }else {
+        [[PlayListDataSource sharedInstance]removeFromMalePlayerList:name];
+    }
+    
+    //NSLog(@"Male List: %@", [PlayListDataSource sharedInstance].maleSelectedArray);
+}
+
+- (void) addToFemaleList: (UISwitch *)sender{
+    
+    NSString * name = self.femalePlayerArray[sender.tag];
+    if ([sender isOn]) {
+        [[PlayListDataSource sharedInstance]addToFemalePlayerList:name];
+    }else {
+        [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:name];
+    }
 }
 
 

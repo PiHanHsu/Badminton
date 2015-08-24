@@ -15,7 +15,7 @@
 @interface LoginTableViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
-
+@property (strong, nonatomic) UIActivityIndicatorView * indicator;
 @end
 
 @implementation LoginTableViewController
@@ -23,7 +23,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
+    self.indicator.hidden = YES;
     
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+         [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+    }
+
     [[NSNotificationCenter defaultCenter]
      addObserverForName:@"loadingDataFinished"
      object:nil
@@ -31,6 +38,8 @@
      usingBlock:^(NSNotification *notification) {
          if ([notification.name isEqualToString:@"loadingDataFinished"]) {
              NSLog(@"Loading Data Finished!");
+             [self.indicator stopAnimating];
+             [self.indicator hidesWhenStopped];
              [self _ViewControllerAnimated:YES];
          }
      }];
@@ -39,14 +48,51 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (void)_ViewControllerAnimated:(BOOL)animated {
+    [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
 }
 
 #pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 2;
+}
+
+#pragma mark Login
+
+- (IBAction)LoginPressed:(id)sender {
+    
+    [self.indicator startAnimating];
+    [PFUser logInWithUsernameInBackground:[self.emailTextField.text lowercaseString]
+                                 password:self.passwordTextField.text
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                           [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                                        } else {
+                                            UIAlertView * av = [[UIAlertView alloc]
+                                                                initWithTitle:@"Oops, Sorry!"
+                                                                      message:@"Can not login. Please Try Again."
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"OK"
+                                                            otherButtonTitles:nil, nil];
+                                            [av show];
+                                        }
+                                    }];
+}
+
+#pragma mark FB Login
+
 - (IBAction)FBLogin:(UIButton *)sender {
     // Set permissions required from the facebook user account
     NSArray *permissionsArray = @[@"email"];
-    
+    [self.indicator startAnimating];
     // Login PFUser using Facebook
     [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
         
@@ -69,49 +115,18 @@
             if (user.isNew) {
                 NSLog(@"User with facebook signed up and logged in!");
                 //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
-                
+                [self.indicator stopAnimating];
                 [self saveUserDataToParse];
             } else {
                 NSLog(@"User with facebook logged in!");
-                
+                [self.indicator stopAnimating];
                 [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
-                
-                
-                //[self getFBfriends];
             }
-            
-            
         }
     }];
     
 }
 
-- (void)_ViewControllerAnimated:(BOOL)animated {
-    
-    [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
-}
-
-- (IBAction)LoginPressed:(id)sender {
-    
-    [PFUser logInWithUsernameInBackground:self.emailTextField.text
-                                 password:self.passwordTextField.text
-                                    block:^(PFUser *user, NSError *error) {
-                                        if (user) {
-                                           [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
-                                        } else {
-                                            // The login failed. Check error to see why.
-                                        }
-                                    }];
-}
 
 -(void) saveUserDataToParse
 {
@@ -149,15 +164,6 @@
             NSLog(@"Some other error: %@", error);
         }
     }];
-}
-
-
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 
 
