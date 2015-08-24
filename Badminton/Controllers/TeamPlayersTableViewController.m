@@ -24,10 +24,11 @@
     [super viewDidLoad];
     
     //set up playball Button
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     self.tableView.tableFooterView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
-    self.playBallButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 30)];
+    self.playBallButton = [[UIButton alloc]initWithFrame:CGRectMake(110, 15, 100, 30)];
     [self.playBallButton setTitle:@"PlayBall" forState:UIControlStateNormal];
+    [self.playBallButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [self.playBallButton addTarget:self action:@selector(playBallPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.tableView.tableFooterView addSubview:self.playBallButton];

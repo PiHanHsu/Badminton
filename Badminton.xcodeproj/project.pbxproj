@@ -142,10 +142,6 @@
 				E85EB2251B7F6D6C0094875E /* Model */,
 				E8484CED1B6BA75200B39463 /* Controllers */,
 				E8484CEC1B6BA71D00B39463 /* Views */,
-				E8484CC51B6BA5B100B39463 /* AppDelegate.h */,
-				E8484CC61B6BA5B100B39463 /* AppDelegate.m */,
-				E8484CC81B6BA5B100B39463 /* ViewController.h */,
-				E8484CC91B6BA5B100B39463 /* ViewController.m */,
 				E8484CCB1B6BA5B100B39463 /* Main.storyboard */,
 				E8484CCE1B6BA5B100B39463 /* Images.xcassets */,
 				E8484CC11B6BA5B100B39463 /* Supporting Files */,
@@ -156,6 +152,10 @@
 		E8484CC11B6BA5B100B39463 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E8484CC51B6BA5B100B39463 /* AppDelegate.h */,
+				E8484CC61B6BA5B100B39463 /* AppDelegate.m */,
+				E8484CC81B6BA5B100B39463 /* ViewController.h */,
+				E8484CC91B6BA5B100B39463 /* ViewController.m */,
 				E8C283641B88AE7E0018F3A1 /* teams.png */,
 				E8C283621B88AD6B0018F3A1 /* Badminton1.jpg */,
 				E8C283601B88A0C90018F3A1 /* LoginPageImage.png */,

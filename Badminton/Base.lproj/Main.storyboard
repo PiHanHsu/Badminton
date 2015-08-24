@@ -340,7 +340,7 @@
                     </items>
                 </navigationBar>
             </objects>
-            <point key="canvasLocation" x="3182" y="1057"/>
+            <point key="canvasLocation" x="3182" y="1062"/>
         </scene>
         <!--Login Table View Controller-->
         <scene sceneID="oaJ-ds-Iic">
@@ -561,6 +561,7 @@
         <!--Navigation Controller-->
         <scene sceneID="gJB-Yw-lbG">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lEn-cO-0iA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9aH-HY-2lz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="lJZ-zo-ift"/>
@@ -573,7 +574,6 @@
                         <segue destination="yMJ-sW-adm" kind="relationship" relationship="rootViewController" id="M9A-GL-MZg"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lEn-cO-0iA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2274" y="401"/>
         </scene>
@@ -589,6 +589,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DRm-IJ-1QT"/>
+        <segue reference="LHR-JI-j4f"/>
     </inferredMetricsTieBreakers>
 </document>
