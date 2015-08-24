@@ -13,6 +13,8 @@
 #import "PlayListDataSource.h"
 
 @interface LoginTableViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
+@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @end
 
@@ -20,7 +22,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[self navigationController] setNavigationBarHidden:YES animated:YES];
     
     [[NSNotificationCenter defaultCenter]
      addObserverForName:@"loadingDataFinished"
@@ -32,12 +34,7 @@
              [self _ViewControllerAnimated:YES];
          }
      }];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -103,6 +100,18 @@
     return 2;
 }
 
+- (IBAction)LoginPressed:(id)sender {
+    
+    [PFUser logInWithUsernameInBackground:self.emailTextField.text
+                                 password:self.passwordTextField.text
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                           [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                                        } else {
+                                            // The login failed. Check error to see why.
+                                        }
+                                    }];
+}
 
 -(void) saveUserDataToParse
 {

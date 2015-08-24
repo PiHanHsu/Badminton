@@ -9,8 +9,7 @@
 #import "SignupTableViewController.h"
 #import "PlayListDataSource.h"
 
-@interface SignupTableViewController ()
-
+@interface SignupTableViewController ()<UITextFieldDelegate>
 
 @end
 
@@ -18,7 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //user login with FB
     if ([PFUser currentUser]) {
+        NSLog(@"currentUser!!");
         self.nameTextField.text = [PFUser currentUser][@"name"];
         self.emailTextField.text = [PFUser currentUser][@"email"];
         NSString *userProfilePhotoURLString = [PFUser currentUser][@"pictureURL"];
@@ -41,12 +43,6 @@
         }
 
     }
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,49 +61,131 @@
     return 4;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
+#pragma mark Sign up
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
+- (IBAction)goPressed:(id)sender {
+    if(![self isPasswordsMatch]) {
+        //[self.activityIndicatorView stopAnimating];
+        //[self.activityIndicatorView removeFromSuperview];
+        return;
+    }
+    PFUser *user = [PFUser user];
+    user.username = self.emailTextField.text;
+    user.password = self.passwordTextField.text;
+    user.email = self.emailTextField.text;
+    
+    
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            
+            //[self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
+
+        } else {
+            NSString *errorString = [error userInfo][@"error"];
+            // Show the errorString somewhere and let the user try again.
+        }
+    }];
+    
+    
+    
+    
+}
+
+#pragma mark textField delegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    
+    if( [self hasEmptyFieldExcept:textField newString:newString])
+        self.goButton.enabled = NO;
+    else
+        self.goButton.enabled = YES;
+    
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+-(BOOL)textFieldShouldReturn:(UITextField*)textField;
+{
+    NSInteger nextTag = textField.tag + 1;
+    UIResponder* nextResponder = [self.tableView viewWithTag:nextTag];
+    if (nextResponder) {
+        [nextResponder becomeFirstResponder];
+    } else {
+        [textField resignFirstResponder];
+    }
+    return NO;
 }
-*/
+-(BOOL) hasEmptyFieldExcept:(UITextField *) textFieldInEdit newString:(NSString *) newString {
+    
+    BOOL hasEmptyField = NO;
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    
+    NSArray *textFieldArray = @[self.nickNameTextField,self.nameTextField,self.emailTextField,self.passwordTextField,self.reTypePasswordTextField];
+    
+    for( UITextField *oneTextField in textFieldArray) {
+        if(oneTextField != textFieldInEdit )
+            hasEmptyField = hasEmptyField || [self isTextFieldInputEmpty:oneTextField];
+        else {
+            hasEmptyField = hasEmptyField || ([[newString stringByTrimmingCharactersInSet:whitespace] length] == 0);
+        }
+    }
+    
+    
+    return hasEmptyField;
+}
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+- (BOOL) isPasswordsMatch {
+    BOOL isPasswordsMatch = NO;
+    
+    if([self isTextFieldInputEmpty:self.passwordTextField]) {
+        [self.passwordTextField becomeFirstResponder];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Empty Password"
+                                                     message:@"Please type your password."
+                                                    delegate:self
+                                           cancelButtonTitle:@"OK"
+                                           otherButtonTitles:nil];
+        [av show];
+    } else if([self isTextFieldInputEmpty:self.reTypePasswordTextField]) {
+        [self.reTypePasswordTextField becomeFirstResponder];
+        UIAlertView *av = [[UIAlertView alloc]
+                           initWithTitle:@"Empty Password"
+                           message:@"Please type your password."
+                           delegate:self
+                           cancelButtonTitle:@"OK"
+                           otherButtonTitles:nil];
+        [av show];
+    }
+    else {
+        if([self.passwordTextField.text isEqualToString:self.reTypePasswordTextField.text])
+            isPasswordsMatch = YES;
+        else {
+            self.reTypePasswordTextField.text = nil;
+            [self.reTypePasswordTextField becomeFirstResponder];
+            UIAlertView *av = [[UIAlertView alloc]
+                               initWithTitle:@"Passwords Not Match"
+                               message:@"Please retype your password."
+                               delegate:self
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles:nil];
+            [av show];
+        }
+    }
+    
+    return isPasswordsMatch;
 }
-*/
+
+- (BOOL) isTextFieldInputEmpty:(UITextField*)textField {
+    BOOL isEmpty = NO;
+    
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    if((textField.text == nil) || ([[textField.text stringByTrimmingCharactersInSet:whitespace] length] == 0)) {
+        isEmpty = YES;
+    }
+    
+    return isEmpty;
+}
 
 /*
 #pragma mark - Navigation
