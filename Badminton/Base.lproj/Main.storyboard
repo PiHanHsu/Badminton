@@ -349,7 +349,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="i6Y-Sy-mPG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="rDL-bf-oP3">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -359,24 +359,14 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </imageView>
                             </subviews>
-                            <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.50980392159999999" green="0.70588235290000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Sp5-ab-sij">
                             <rect key="frame" x="0.0" y="288" width="320" height="280"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EJA-dw-I9q">
-                                    <rect key="frame" x="40" y="19" width="115" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <state key="normal" title="Login">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="LoginPressed:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="ZcD-jw-dxQ"/>
-                                    </connections>
-                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lkA-lM-Zra">
-                                    <rect key="frame" x="40" y="68" width="240" height="45"/>
+                                    <rect key="frame" x="80" y="125" width="160" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <state key="normal" title="Login with Facebook" image="facebookLogin">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -386,15 +376,29 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QAu-mB-PGr">
-                                    <rect key="frame" x="211" y="19" width="69" height="30"/>
+                                    <rect key="frame" x="80" y="80" width="160" height="30"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <state key="normal" title="Sign up">
-                                        <color key="titleColor" red="0.91764705879999997" green="0.62352941179999999" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Create an account">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <connections>
                                         <segue destination="GJl-YX-PwT" kind="push" identifier="Go to Sign up Page" id="QD7-w2-U1s"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EJA-dw-I9q">
+                                    <rect key="frame" x="80" y="35" width="160" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" red="1" green="0.74686038406188171" blue="0.1180237003058104" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="Login">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="LoginPressed:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="ZcD-jw-dxQ"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -449,7 +453,9 @@
                     <navigationItem key="navigationItem" id="Wfq-Sq-bHB"/>
                     <connections>
                         <outlet property="emailTextField" destination="OSZ-Ob-78Y" id="gK1-Aj-qL2"/>
+                        <outlet property="loginButton" destination="EJA-dw-I9q" id="eqK-nP-qJt"/>
                         <outlet property="passwordTextField" destination="7HN-af-cWd" id="OgE-qY-wVp"/>
+                        <outlet property="signUpButton" destination="QAu-mB-PGr" id="4fw-zd-CGT"/>
                         <segue destination="9aH-HY-2lz" kind="modal" identifier="Show Home Screen" id="LHR-JI-j4f"/>
                     </connections>
                 </tableViewController>
@@ -561,7 +567,6 @@
         <!--Navigation Controller-->
         <scene sceneID="gJB-Yw-lbG">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lEn-cO-0iA" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="9aH-HY-2lz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="lJZ-zo-ift"/>
@@ -574,6 +579,7 @@
                         <segue destination="yMJ-sW-adm" kind="relationship" relationship="rootViewController" id="M9A-GL-MZg"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lEn-cO-0iA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2274" y="401"/>
         </scene>

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		C58066F4FBAB768813FF8B94 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A75B19B9E36D3E81268D288B /* libPods.a */; };
+		E83648C81B8C938F00F172A4 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648C71B8C938F00F172A4 /* Player.m */; };
+		E83648CB1B8C93A100F172A4 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648CA1B8C93A100F172A4 /* Team.m */; };
+		E83648CE1B8C93BF00F172A4 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648CD1B8C93BF00F172A4 /* Game.m */; };
 		E8484CC41B6BA5B100B39463 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CC31B6BA5B100B39463 /* main.m */; };
 		E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CC61B6BA5B100B39463 /* AppDelegate.m */; };
 		E8484CCA1B6BA5B100B39463 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CC91B6BA5B100B39463 /* ViewController.m */; };
@@ -43,6 +46,12 @@
 		416C2CF33F1170E2E823E9A3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A75B19B9E36D3E81268D288B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBD8DEAD5093EF78C73240F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E83648C61B8C938F00F172A4 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Model/Player.h; sourceTree = "<group>"; };
+		E83648C71B8C938F00F172A4 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Model/Player.m; sourceTree = "<group>"; };
+		E83648C91B8C93A100F172A4 /* Team.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Team.h; path = Model/Team.h; sourceTree = "<group>"; };
+		E83648CA1B8C93A100F172A4 /* Team.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Team.m; path = Model/Team.m; sourceTree = "<group>"; };
+		E83648CC1B8C93BF00F172A4 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Model/Game.h; sourceTree = "<group>"; };
+		E83648CD1B8C93BF00F172A4 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Model/Game.m; sourceTree = "<group>"; };
 		E8484CBE1B6BA5B100B39463 /* Badminton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Badminton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8484CC21B6BA5B100B39463 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8484CC31B6BA5B100B39463 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -219,6 +228,12 @@
 			children = (
 				E85EB2731B80EF480094875E /* PlayListDataSource.h */,
 				E85EB2741B80EF480094875E /* PlayListDataSource.m */,
+				E83648C61B8C938F00F172A4 /* Player.h */,
+				E83648C71B8C938F00F172A4 /* Player.m */,
+				E83648C91B8C93A100F172A4 /* Team.h */,
+				E83648CA1B8C93A100F172A4 /* Team.m */,
+				E83648CC1B8C93BF00F172A4 /* Game.h */,
+				E83648CD1B8C93BF00F172A4 /* Game.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -371,8 +386,11 @@
 				E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
+				E83648CB1B8C93A100F172A4 /* Team.m in Sources */,
+				E83648CE1B8C93BF00F172A4 /* Game.m in Sources */,
 				E8C283681B88B1640018F3A1 /* TeamPlayersTableViewController.m in Sources */,
 				E877D8121B8A205C007D9E53 /* SignupTableViewController.m in Sources */,
+				E83648C81B8C938F00F172A4 /* Player.m in Sources */,
 				E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

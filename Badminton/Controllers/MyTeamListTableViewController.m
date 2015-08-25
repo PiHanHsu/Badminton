@@ -27,7 +27,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 120;
     
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.teamArray = [PlayListDataSource sharedInstance].teamArray;
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
@@ -61,6 +61,14 @@
     return _teamArray;
 }
 
+- (IBAction)LogoutButtonPressed:(id)sender {
+    [PFUser logOut];
+    [PFUser unpinAllObjects];
+    [PFObject unpinAllObjects];
+    
+    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
+    
+}
 
 - (IBAction)AddTeam:(id)sender {
     

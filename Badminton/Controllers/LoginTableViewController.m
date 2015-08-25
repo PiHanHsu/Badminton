@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *signUpButton;
 @end
 
 @implementation LoginTableViewController
@@ -26,6 +28,13 @@
     self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
     self.indicator.hidden = YES;
     
+    self.loginButton.layer.cornerRadius = 5.0;
+    self.loginButton.clipsToBounds = YES;
+    
+    self.signUpButton.layer.borderWidth = 1.0f;
+    self.signUpButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.signUpButton.layer.cornerRadius = 5.0;
+    self.signUpButton.clipsToBounds = YES;
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
          [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
