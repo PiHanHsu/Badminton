@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "PlayListDataSource.h"
+#import "Team.h"
 
 @interface TeamPlayersTableViewController : UITableViewController
 @property (strong, nonatomic) NSString * teamName;
-@property (strong, nonatomic) PFObject * teamObject;
+@property (strong, nonatomic) Team * teamObject;
 
 @end

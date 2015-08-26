@@ -9,6 +9,8 @@
 #import "TeamPlayersTableViewController.h"
 #import "GameScheduleTableViewController.h"
 #import "PlayerTableViewCell.h"
+#import "Player.h"
+#import "AddPlayerViewController.h"
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 @property BOOL hasMalePlayer;
@@ -34,8 +36,20 @@
     [self.tableView.tableFooterView addSubview:self.playBallButton];
     self.playBallButton.hidden = NO;
     
-    [self.malePlayerArray addObjectsFromArray: self.teamObject[@"malePlayers"]];
-    [self.femalePlayerArray addObjectsFromArray: self.teamObject[@"femalePlayers"]];
+    //Fetch players Data
+    
+    for (Player * player in self.teamObject[@"malePlayers"]) {
+        [player fetch];
+        if ([player[@"isMale"] boolValue]) {
+            [self.malePlayerArray addObject:player];
+        }else{
+            [self.femalePlayerArray addObject:player];
+        }
+    }
+    
+//    
+//    [self.malePlayerArray addObjectsFromArray: self.teamObject[@"malePlayers"]];
+//    [self.femalePlayerArray addObjectsFromArray: self.teamObject[@"femalePlayers"]];
     
     [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
     [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
@@ -44,7 +58,7 @@
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query fromLocalDatastore];
+    //[query fromLocalDatastore];
     //[query whereKey:@"objectId" equalTo:self.teamObject.objectId];
     [query getObjectInBackgroundWithId:self.teamObject.objectId
                                  block:^(PFObject * obj, NSError *error) {
@@ -89,27 +103,27 @@
     return _femalePlayerArray;
 }
 
-- (IBAction)AddPlayer:(UIBarButtonItem *)sender {
-    
-    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"請輸入新增球員姓名" delegate:self cancelButtonTitle:@"女子球員" otherButtonTitles:@"男子球員", nil];
-    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [av textFieldAtIndex:0].delegate = self;
-    [av show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        
-        [self.femalePlayerArray addObject:[alertView textFieldAtIndex:0].text];
-        self.teamObject[@"femalePlayers"] = self.femalePlayerArray;
-        [self.tableView reloadData];
-        
-    }if (buttonIndex ==1) {
-        [self.malePlayerArray addObject:[alertView textFieldAtIndex:0].text];
-        self.teamObject[@"malePlayers"] = self.malePlayerArray;
-        [self.tableView reloadData];
-    }
-}
+//- (IBAction)AddPlayer:(UIBarButtonItem *)sender {
+//    
+//    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"請輸入新增球員姓名" delegate:self cancelButtonTitle:@"女子球員" otherButtonTitles:@"男子球員", nil];
+//    av.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [av textFieldAtIndex:0].delegate = self;
+//    [av show];
+//}
+//
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+//    if (buttonIndex == 0) {
+//        
+//        [self.femalePlayerArray addObject:[alertView textFieldAtIndex:0].text];
+//        self.teamObject[@"femalePlayers"] = self.femalePlayerArray;
+//        [self.tableView reloadData];
+//        
+//    }if (buttonIndex ==1) {
+//        [self.malePlayerArray addObject:[alertView textFieldAtIndex:0].text];
+//        self.teamObject[@"malePlayers"] = self.malePlayerArray;
+//        [self.tableView reloadData];
+//    }
+//}
 
 #pragma mark - Table view data source
 
@@ -152,9 +166,9 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 21)];
     if(section == 0)
-        label.text = @"男子選手";
+        label.text = @"Male Player";
     else
-        label.text = @"女子選手";
+        label.text = @"Female Player";
     
     label.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     label.backgroundColor = [UIColor clearColor];
@@ -165,17 +179,6 @@
     return headerView;
 }
 
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
-//    
-//    if (section == 1) {
-//        UIView * footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
-//         return footerView;
-//    }
-//    
-//    
-//    
-//   
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
@@ -183,10 +186,10 @@
     // Configure the cell...
     switch (indexPath.section) {
         case 0:
-            cell.playerLabel.text = self.malePlayerArray[indexPath.row];
+            cell.playerLabel.text = self.malePlayerArray[indexPath.row][@"userName"];
             break;
         case 1:
-            cell.playerLabel.text = self.femalePlayerArray[indexPath.row];
+            cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
             break;
             
         default:
@@ -194,10 +197,12 @@
     }
     
     //TODO, can't switch new cell
-    cell.switchButton.tag = indexPath.row;
+    //cell.switchButton.tag = indexPath.row;
     if (indexPath.section == 0) {
+        cell.switchButton.tag = indexPath.row;
         [cell.switchButton addTarget:self action:@selector(addToMaleList:) forControlEvents:UIControlEventTouchUpInside];
     }else if (indexPath.section == 1){
+        cell.switchButton.tag = indexPath.row;
         [cell.switchButton addTarget:self action:@selector(addToFemaleList:) forControlEvents:UIControlEventTouchUpInside];
     }
 
@@ -273,14 +278,19 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if ([segue.destinationViewController isKindOfClass:[AddPlayerViewController class]]) {
+        AddPlayerViewController * vc = segue.destinationViewController;
+        vc.teamObject = self.teamObject;
+        
+    }
+   
 }
-*/
+
 
 @end

@@ -8,6 +8,7 @@
 
 #import "SignupTableViewController.h"
 #import "PlayListDataSource.h"
+#import "MyTeamListTableViewController.h"
 
 @interface SignupTableViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
@@ -19,6 +20,21 @@
     [super viewDidLoad];
     self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
     self.indicator.hidden = YES;
+    self.photoImageView.image = [UIImage imageNamed:@"malePlayer@2x.jpg"];
+    self.photoImageView.backgroundColor = [UIColor grayColor];
+    self.photoImageView.layer.cornerRadius = 5.0;
+    self.photoImageView.clipsToBounds = YES;
+    
+    switch (self.genderSegmentedControl.selectedSegmentIndex) {
+        case 0:
+            self.photoImageView.image = [UIImage imageNamed:@"male Player"];
+            break;
+        case 1:
+            self.photoImageView.image = [UIImage imageNamed:@"female Player"];
+            break;
+        default:
+            break;
+    }
     
     //user login with FB
     if ([PFUser currentUser]) {
@@ -67,26 +83,42 @@
 
 - (IBAction)goPressed:(id)sender {
     [self.indicator startAnimating];
-    if(![self isPasswordsMatch]) {
-        //[self.activityIndicatorView stopAnimating];
-        //[self.activityIndicatorView removeFromSuperview];
-        return;
-    }
+//    if(![self isPasswordsMatch]) {
+//        //[self.activityIndicatorView stopAnimating];
+//        //[self.activityIndicatorView removeFromSuperview];
+//        return;
+//    }
+    
+    if (self.genderSegmentedControl.selectedSegmentIndex == 0) {
+        self.isMale = YES;
+    }else
+        self.isMale = NO;
+    
     PFUser *user = [PFUser user];
     user.username = [self.emailTextField.text lowercaseString];
     user.password = self.passwordTextField.text;
     user.email = self.emailTextField.text;
     
-    
-    
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (!error) {
             [self.indicator stopAnimating];
             [self.indicator hidesWhenStopped];
+            PFObject * player = [PFObject objectWithClassName:@"Player"];
+            player[@"name"] = self.nameTextField.text;
+            player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
+            player[@"userName"] = self.nickNameTextField.text;
+            player[@"email"] =self.emailTextField.text;
+            player[@"user"] = user.objectId;
+            //TODO player photo
             
+            [player saveInBackground];
+            
+            MyTeamListTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyTeamTableViewController"];
+            [self.navigationController pushViewController:vc animated:YES];
 
         } else {
             NSString *errorString = [error userInfo][@"error"];
+            NSLog(@"sign up error: %@", errorString);
             // Show the errorString somewhere and let the user try again.
         }
     }];

@@ -19,5 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *reTypePasswordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *goButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *genderSegmentedControl;
+@property (assign, nonatomic) BOOL isMale;
 
 @end

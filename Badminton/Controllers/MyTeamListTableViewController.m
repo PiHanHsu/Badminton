@@ -10,12 +10,13 @@
 #import "MyTeamListTableViewCell.h"
 #import "TeamPlayersTableViewController.h"
 #import "PlayListDataSource.h"
+#import "Team.h"
 
 
 @interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSString * teamName;
 @property (strong, nonatomic) NSMutableArray * teamArray;
-@property (strong, nonatomic) PFObject * teamObject;
+@property (strong, nonatomic) Team * teamObject;
 
 @end
 
@@ -27,11 +28,10 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 120;
     
-    //self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.teamArray = [PlayListDataSource sharedInstance].teamArray;
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query fromLocalDatastore];
+    //[query fromLocalDatastore];
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
@@ -57,14 +57,6 @@
     return _teamArray;
 }
 
-- (IBAction)LogoutButtonPressed:(id)sender {
-    [PFUser logOut];
-    [PFUser unpinAllObjects];
-    [PFObject unpinAllObjects];
-    
-    [self.navigationController.navigationController popToRootViewControllerAnimated:YES];
-    
-}
 
 - (IBAction)AddTeam:(id)sender {
     
@@ -82,18 +74,15 @@
        teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
        teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
        
-       //[teamObject saveEventually];
-       [teamObject pinInBackgroundWithBlock:^(BOOL succeed, NSError *error){
-           [self updateData];
-       }];
-       
-          }
+       [teamObject saveEventually];
+       [self updateData];
+    }
 }
 
 -(void) updateData{
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query fromLocalDatastore];
+    //[query fromLocalDatastore];
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
@@ -115,7 +104,7 @@
 -(void) deleteTeam{
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query fromLocalDatastore];
+    //[query fromLocalDatastore];
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
@@ -158,7 +147,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    self.teamName = self.teamArray[indexPath.row][@"name"];
+    
+    //self.teamName = self.teamArray[indexPath.row][@"name"];
     self.teamObject = self.teamArray[indexPath.row];
     [self performSegueWithIdentifier:@"Show Team Players" sender:nil];
     
@@ -181,17 +171,18 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        [self.teamArray removeObjectAtIndex:indexPath.row];
-        [self.tableView reloadData];
+        
         
         //delete from Parse
         PFObject * objectToBeDelete = self.teamArray[indexPath.row];
         PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-        [query fromLocalDatastore];
+        //[query fromLocalDatastore];
         [query whereKey:@"objectId" equalTo:objectToBeDelete.objectId];
          [query getObjectInBackgroundWithId:objectToBeDelete.objectId block:^(PFObject * toBeDeleteObj, NSError * error){
-            [toBeDeleteObj unpin];
+            //[toBeDeleteObj unpin];
             [toBeDeleteObj delete];
+             [self.teamArray removeObjectAtIndex:indexPath.row];
+             [self.tableView reloadData];
         }];
         
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {

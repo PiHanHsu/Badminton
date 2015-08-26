@@ -7,7 +7,7 @@
 //
 
 #import "PlayListDataSource.h"
-
+#import "Player.h"
 
 @implementation PlayListDataSource
 
@@ -114,17 +114,11 @@
 - (void) loadingTeamDataFromParse{
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error){
-        if (!error) {
-            for (PFObject * obj in objects){
-                [obj pinInBackground];
-            }
-            [self.teamArray addObjectsFromArray:objects];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
+            [self.teamArray addObjectsFromArray:teams];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
             
-        }
     }];
-     
 }
      
 
@@ -137,7 +131,7 @@
         obj[@"malePlayers"] = self.malePlayerArray;
         obj[@"femalePlayers"] = self.femalePlayerArray;
         
-        [obj saveInBackgroundWithBlock:^(BOOL succeed, NSError * error){
+        [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error){
             if (!error) {
                 NSLog(@"add in to list");
             }

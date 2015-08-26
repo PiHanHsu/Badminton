@@ -21,11 +21,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [Parse enableLocalDatastore];
+    //[Parse enableLocalDatastore];
     [Parse setApplicationId:@"uo31zGwFmmJXG5kNhaBpDtBZXanFQwl2xsB5N8kU"
                   clientKey:@"OCyHbEhhBfyBzdYVWMRhYZKx9f2KnW9g9gnUQpdO"];
     
     [PFUser enableRevocableSessionInBackground];
+    
     //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [PFFacebookUtils initializeFacebook];
     

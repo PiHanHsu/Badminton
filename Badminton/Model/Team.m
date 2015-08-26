@@ -15,6 +15,7 @@
 @dynamic createdBy;
 @dynamic malePlayers;
 @dynamic femalePlayers;
+@dynamic players;
 
 +(void)load {
     [self registerSubclass];
@@ -27,9 +28,13 @@
 
 +(Team *) createTeam {
     Team *teamObject = [Team object];
-    
-    
     return teamObject;
 }
 
+
+- (void)addPlayer: (Player *)player{
+    [self.malePlayers addObject:player];
+    NSLog(@"Team: %@", self);
+    [self saveEventually];
+}
 @end
