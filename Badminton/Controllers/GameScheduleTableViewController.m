@@ -60,31 +60,14 @@
 
 }
 
-- (void)alertViewWithTitle:(NSString *)title withMessage:(NSString *)mesg {
- 
-    UIAlertView * av = [[UIAlertView alloc]initWithTitle:title
-                                                 message:mesg
-                                                delegate:self
-                                       cancelButtonTitle:@"OK"
-                                       otherButtonTitles:nil,
-                        nil];
-    [av show];
-}
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)backButtonPressed:(id)sender {
 
-[self.navigationController popViewControllerAnimated:YES];
-}
+#pragma mark init MutableArray
 
 //lazy init array
 
@@ -111,7 +94,65 @@
         _femalePlaylistArrayNew = [@[] mutableCopy];
     return _femalePlaylistArrayNew;
 }
+
+- (IBAction)backButtonPressed:(id)sender {
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Notice!"
+                                                        message:@"This schedule won't be saved if you exit now."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"OK",
+                               nil];
+    alertView.tag =2;
+    [alertView show];
+}
+#pragma mark AlertView Delegate
+
+- (void)alertViewWithTitle:(NSString *)title withMessage:(NSString *)mesg {
+    
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:title
+                                                        message:mesg
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil,
+                               nil];
+    alertView.tag =0;
+    [alertView show];
+}
+
+
 - (IBAction)refreshButtonPressed:(id)sender {
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save Schedule", @"Refresh Game", nil];
+    alertView.tag = 1;
+    [alertView show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (alertView.tag) {
+        case 0:
+            if (buttonIndex == 0) {
+            }
+            break;
+        case 1:
+            if (buttonIndex == 1) {
+                
+            }else if (buttonIndex ==2){
+                [self refreshGames];
+            }
+            break;
+        case 2:
+            if (buttonIndex == 1) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            break;
+
+        default:
+            break;
+    }
+    
+}
+
+- (void) refreshGames{
     [self.malePlaylistArrayNew removeAllObjects];
     [self.femalePlaylistArrayNew removeAllObjects];
     [self shuffleList];

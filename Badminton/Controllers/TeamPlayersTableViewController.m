@@ -37,6 +37,8 @@
     [self.malePlayerArray addObjectsFromArray: self.teamObject[@"malePlayers"]];
     [self.femalePlayerArray addObjectsFromArray: self.teamObject[@"femalePlayers"]];
     
+    [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
+    [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -52,6 +54,8 @@
                                      [obj saveEventually];
                                      //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
                                  }];
+    
+    
 //    NSMutableArray * teamArray = [PlayListDataSource sharedInstance].teamArray;
 //    for (PFObject * object in teamArray){
 //        if ([object.objectId isEqualToString:self.teamObject.objectId]) {
@@ -59,6 +63,9 @@
 //            object[@"femalePlayers"] = self.femalePlayerArray;
 //        }
 //    };
+}
+- (IBAction)backButtonPressed:(id)sender {
+     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) playBallPressed: (id)sender{

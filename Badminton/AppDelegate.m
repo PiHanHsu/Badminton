@@ -38,6 +38,17 @@
     [application registerUserNotificationSettings:settings];
     [application registerForRemoteNotifications];
 
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    //customized font for nav bar
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0]];
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [[UINavigationBar appearance] setTranslucent:NO];
+    }
+    
     return YES;
 }
 

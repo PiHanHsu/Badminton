@@ -24,7 +24,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationController] setNavigationBarHidden:YES animated:YES];
+    //[[self navigationController] setNavigationBarHidden:YES animated:YES];
+    
+//    UIView *statusBarUnderLay = [[UIView alloc] initWithFrame:[self statusBarFrameViewRect:self.view]];
+//    [statusBarUnderLay setBackgroundColor:[UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0]];
+//    [self.view addSubview:statusBarUnderLay];
+    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
     self.indicator.hidden = YES;
     
@@ -47,12 +52,24 @@
      usingBlock:^(NSNotification *notification) {
          if ([notification.name isEqualToString:@"loadingDataFinished"]) {
              NSLog(@"Loading Data Finished!");
-             [self.indicator stopAnimating];
-             [self.indicator hidesWhenStopped];
+             //[self.indicator stopAnimating];
+             //[self.indicator hidesWhenStopped];
              [self _ViewControllerAnimated:YES];
          }
      }];
 
+}
+
+- (void) viewDidDisappear:(BOOL)animated{
+    [self.indicator stopAnimating];
+}
+
+- (CGRect)statusBarFrameViewRect:(UIView*)view
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect statusBarWindowRect = [view.window convertRect:statusBarFrame fromWindow: nil];
+    CGRect statusBarViewRect = [view convertRect:statusBarWindowRect fromView: nil];
+    return statusBarViewRect;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,6 +79,7 @@
 - (void)_ViewControllerAnimated:(BOOL)animated {
     [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
 }
+
 
 #pragma mark - Table view data source
 
@@ -124,7 +142,7 @@
             if (user.isNew) {
                 NSLog(@"User with facebook signed up and logged in!");
                 //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
-                [self.indicator stopAnimating];
+                
                 [self saveUserDataToParse];
             } else {
                 NSLog(@"User with facebook logged in!");

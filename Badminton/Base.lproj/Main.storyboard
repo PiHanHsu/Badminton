@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Team Players Table View Controller-->
+        <!--Select Players-->
         <scene sceneID="EJE-kG-7Hs">
             <objects>
                 <tableViewController storyboardIdentifier="TeamPlayersTableViewController" id="Xym-La-3O3" customClass="TeamPlayersTableViewController" sceneMemberID="viewController">
@@ -45,7 +45,12 @@
                             <outlet property="delegate" destination="Xym-La-3O3" id="nrt-Jy-aJE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="L9P-MH-feh">
+                    <navigationItem key="navigationItem" title="Select Players" id="L9P-MH-feh">
+                        <barButtonItem key="leftBarButtonItem" image="Back_icon" id="GLn-Z2-yFg">
+                            <connections>
+                                <action selector="backButtonPressed:" destination="Xym-La-3O3" id="cXb-ti-Nej"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Vau-Wg-qP2">
                             <connections>
                                 <action selector="AddPlayer:" destination="Xym-La-3O3" id="3Qq-5a-oz1"/>
@@ -111,7 +116,7 @@
                             <tableViewSection id="ehJ-mo-2vG">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xj0-fN-GU6">
-                                        <rect key="frame" x="0.0" y="184" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="120" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xj0-fN-GU6" id="67T-yQ-uBX">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -127,7 +132,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="baR-xd-CnK">
-                                        <rect key="frame" x="0.0" y="228" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="164" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="baR-xd-CnK" id="qZE-DJ-8PP">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -143,7 +148,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="AGZ-vd-Vs7">
-                                        <rect key="frame" x="0.0" y="272" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="208" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AGZ-vd-Vs7" id="MBw-lG-5H2">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -159,7 +164,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ZLs-PJ-P78">
-                                        <rect key="frame" x="0.0" y="316" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="252" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZLs-PJ-P78" id="0Ks-6Q-7GQ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -318,13 +323,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Schedule" id="3ga-Cb-6Q5">
-                        <barButtonItem key="backBarButtonItem" title=" Back" id="hXl-I7-YWx"/>
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="fKJ-o5-JNv">
+                        <barButtonItem key="leftBarButtonItem" image="Back_icon" id="lUG-8M-MUt">
                             <connections>
-                                <action selector="backButtonPressed:" destination="Ie1-SR-KSk" id="sgF-Oh-Nlm"/>
+                                <action selector="backButtonPressed:" destination="Ie1-SR-KSk" id="rcN-Nu-sGo"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="ecH-8C-HXO">
+                        <barButtonItem key="rightBarButtonItem" image="More_icon" id="ecH-8C-HXO">
                             <connections>
                                 <action selector="refreshButtonPressed:" destination="Ie1-SR-KSk" id="mSq-q5-KXY"/>
                             </connections>
@@ -585,7 +589,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Back_icon" width="22" height="22"/>
         <image name="LoginPageImage.png" width="1241" height="1475"/>
+        <image name="More_icon" width="22" height="22"/>
         <image name="facebookLogin" width="320" height="61"/>
         <image name="teams.png" width="222" height="227"/>
     </resources>
