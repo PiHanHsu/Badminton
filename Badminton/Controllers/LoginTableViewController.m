@@ -11,6 +11,7 @@
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <FBSDKCoreKit.h>
 #import "PlayListDataSource.h"
+#import "MyTeamListTableViewController.h"
 
 @interface LoginTableViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -71,7 +72,10 @@
 }
 
 - (void)_ViewControllerAnimated:(BOOL)animated {
-    [self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
+    
+    MyTeamListTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyTeamTableViewController"];
+    [self.navigationController pushViewController:vc animated:YES];
+    //[self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
 }
 
 

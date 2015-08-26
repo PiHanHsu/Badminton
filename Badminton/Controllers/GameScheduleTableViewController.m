@@ -121,7 +121,7 @@
 
 
 - (IBAction)refreshButtonPressed:(id)sender {
-    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save Schedule", @"Refresh Game", nil];
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save Games", @"Refresh Game", @"Logout", nil];
     alertView.tag = 1;
     [alertView show];
     
@@ -138,6 +138,12 @@
                 
             }else if (buttonIndex ==2){
                 [self refreshGames];
+            }else if (buttonIndex ==3){
+                [PFUser logOut];
+                //[PFUser unpinAllObjects];
+                //[PFObject unpinAllObjects];
+                
+                [self.navigationController popToRootViewControllerAnimated:YES];
             }
             break;
         case 2:

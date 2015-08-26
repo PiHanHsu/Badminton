@@ -36,11 +36,7 @@
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
          if (!error) {
-             NSLog(@"objects: %@", objects);
-//             for (PFObject * object in objects) {
-//                 [object unpin];
-//             }
-             
+             //NSLog(@"objects: %@", objects);
          }else{
              NSLog(@"error: %@" ,error);
          }
