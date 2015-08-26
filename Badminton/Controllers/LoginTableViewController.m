@@ -24,15 +24,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //[[self navigationController] setNavigationBarHidden:YES animated:YES];
     
-//    UIView *statusBarUnderLay = [[UIView alloc] initWithFrame:[self statusBarFrameViewRect:self.view]];
-//    [statusBarUnderLay setBackgroundColor:[UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0]];
-//    [self.view addSubview:statusBarUnderLay];
+    //set up indicator
     self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
+    self.indicator.center = CGPointMake(160, 190);
     self.indicator.hidden = YES;
     
+    [self.view addSubview:self.indicator];
+    
+    //set up botton layout
     self.loginButton.layer.cornerRadius = 5.0;
     self.loginButton.clipsToBounds = YES;
     
@@ -40,11 +40,15 @@
     self.signUpButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.signUpButton.layer.cornerRadius = 5.0;
     self.signUpButton.clipsToBounds = YES;
+    
+    //if currentUser, byPass Login
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
+        [self.indicator startAnimating];
          [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
     }
-
+    
+    //Go to next Page after get data
     [[NSNotificationCenter defaultCenter]
      addObserverForName:@"loadingDataFinished"
      object:nil
@@ -52,8 +56,6 @@
      usingBlock:^(NSNotification *notification) {
          if ([notification.name isEqualToString:@"loadingDataFinished"]) {
              NSLog(@"Loading Data Finished!");
-             //[self.indicator stopAnimating];
-             //[self.indicator hidesWhenStopped];
              [self _ViewControllerAnimated:YES];
          }
      }];
@@ -62,14 +64,6 @@
 
 - (void) viewDidDisappear:(BOOL)animated{
     [self.indicator stopAnimating];
-}
-
-- (CGRect)statusBarFrameViewRect:(UIView*)view
-{
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGRect statusBarWindowRect = [view.window convertRect:statusBarFrame fromWindow: nil];
-    CGRect statusBarViewRect = [view convertRect:statusBarWindowRect fromView: nil];
-    return statusBarViewRect;
 }
 
 - (void)didReceiveMemoryWarning {
