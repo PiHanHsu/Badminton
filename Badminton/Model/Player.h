@@ -10,5 +10,10 @@
 #import <Parse/Parse.h>
 
 @interface Player : PFObject<PFSubclassing>
+@property (strong, nonatomic) NSString * objectId;
+@property (strong, nonatomic) NSString * userName;
+@property (strong, nonatomic) NSString * name;
+
+
 +(Player *) createPlayer;
 @end

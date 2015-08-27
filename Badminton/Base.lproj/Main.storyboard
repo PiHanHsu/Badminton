@@ -28,7 +28,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="wi1-Q7-OTt">
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="wi1-Q7-OTt" customClass="PlayerSwitch">
                                             <rect key="frame" x="263" y="6" width="51" height="31"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </switch>
@@ -36,7 +36,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="playerLabel" destination="Ldc-xS-sBc" id="M01-SK-gJB"/>
-                                    <outlet property="switchButton" destination="wi1-Q7-OTt" id="eWZ-Oj-2vb"/>
+                                    <outlet property="playerSwitch" destination="wi1-Q7-OTt" id="ZSQ-k9-jFZ"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -212,55 +212,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eW3-Q0-as8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2274" y="-271"/>
-        </scene>
-        <!--Player List Table View Controller-->
-        <scene sceneID="zSe-cU-Ow6">
-            <objects>
-                <tableViewController id="tST-if-afd" customClass="PlayerListTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="ELX-g2-q4R">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="PlayerTableViewCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlayerTableViewCell" id="tTq-QD-cYt" customClass="PlayerTableViewCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tTq-QD-cYt" id="0Cz-EG-6gz">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1qv-39-XAm">
-                                            <rect key="frame" x="8" y="11" width="160" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="g4m-v0-gc4">
-                                            <rect key="frame" x="263" y="6" width="51" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </switch>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
-                                <connections>
-                                    <outlet property="playerLabel" destination="1qv-39-XAm" id="Euu-Fx-xN3"/>
-                                    <outlet property="switchButton" destination="g4m-v0-gc4" id="DJf-gR-B0S"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="tST-if-afd" id="F7C-Rd-I87"/>
-                            <outlet property="delegate" destination="tST-if-afd" id="CLU-yT-K0z"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="Rzb-hw-InF">
-                        <barButtonItem key="rightBarButtonItem" title="PlayBall" id="rFH-0g-JuR"/>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NfC-Oa-xQG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2423" y="1062"/>
         </scene>
         <!--Add Player View Controller-->
         <scene sceneID="sl4-K8-KUT">
@@ -576,24 +527,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIq-OI-HLE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2806" y="401"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Aab-Ob-nbu">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="yZ7-p9-Voy" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fks-hv-isw">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="tST-if-afd" kind="relationship" relationship="rootViewController" id="8F5-3W-fdh"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="S7I-sy-qna" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2062" y="1062"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Kfg-jr-usi">

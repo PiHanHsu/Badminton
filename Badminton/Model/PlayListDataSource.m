@@ -7,7 +7,6 @@
 //
 
 #import "PlayListDataSource.h"
-#import "Player.h"
 
 @implementation PlayListDataSource
 
@@ -50,41 +49,41 @@
     return _teamArray;
 }
 
-- (NSMutableArray *) addToMalePlayerList:(NSString *)name{
-    [self.maleSelectedArray addObject:name];
+- (NSMutableArray *) addToMalePlayerList:(Player *)player{
+    [self.maleSelectedArray addObject:player];
     return self.maleSelectedArray;
 }
 
-- (NSMutableArray *) addToFemalePlayerList:(NSString *)name{
-    [self.femaleSelectedArray addObject:name];
+- (NSMutableArray *) addToFemalePlayerList:(Player *)player{
+    [self.femaleSelectedArray addObject:player];
     return self.femaleSelectedArray;
 }
 
-- (NSMutableArray *) removeFromMalePlayerList:(NSString *)name{
-    [self.maleSelectedArray removeObject:name];
+- (NSMutableArray *) removeFromMalePlayerList:(Player *)player{
+    [self.maleSelectedArray removeObject:player];
     return self.maleSelectedArray;
 }
-- (NSMutableArray *) removeFromFemalePlayerList:(NSString *)name{
-    [self.femaleSelectedArray removeObject:name];
+- (NSMutableArray *) removeFromFemalePlayerList:(Player *)player{
+    [self.femaleSelectedArray removeObject:player];
     return self.femaleSelectedArray;
 }
 
-- (NSMutableArray *) addToMalePlayerArray:(NSString *)name{
-    [self.malePlayerArray addObject:name];
+- (NSMutableArray *) addToMalePlayerArray:(Player *)player{
+    [self.malePlayerArray addObject:player];
     return self.malePlayerArray;
 }
 
-- (NSMutableArray *) addToFemalePlayerArray:(NSString *)name{
-    [self.femalePlayerArray addObject:name];
+- (NSMutableArray *) addToFemalePlayerArray:(Player *)player{
+    [self.femalePlayerArray addObject:player];
     return self.femalePlayerArray;
 }
 
-- (NSMutableArray *) removeFromMalePlayerArray:(NSString *)name{
-    [self.malePlayerArray removeObject:name];
+- (NSMutableArray *) removeFromMalePlayerArray:(Player *)player{
+    [self.malePlayerArray removeObject:player];
     return self.malePlayerArray;
 }
-- (NSMutableArray *) removeFromFemalePlayerArray:(NSString *)name{
-    [self.femalePlayerArray removeObject:name];
+- (NSMutableArray *) removeFromFemalePlayerArray:(Player *)player{
+    [self.femalePlayerArray removeObject:player];
     return self.femalePlayerArray;
 }
 
@@ -112,9 +111,11 @@
 }
 
 - (void) loadingTeamDataFromParse{
+    
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
     [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
+            [self.teamArray removeAllObjects];
             [self.teamArray addObjectsFromArray:teams];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
             

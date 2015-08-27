@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
+#import "Player.h"
+
 @interface PlayListDataSource : NSObject
 @property (strong, nonatomic) NSMutableArray * maleSelectedArray;
 @property (strong, nonatomic) NSMutableArray * femaleSelectedArray;
@@ -18,16 +20,16 @@
 @property (strong, nonatomic) NSMutableArray * teamArray;
 
 + (PlayListDataSource *)sharedInstance;
-- (NSMutableArray *) addToMalePlayerList:(NSString *)name;
-- (NSMutableArray *) addToFemalePlayerList:(NSString *)name;
-- (NSMutableArray *) removeFromMalePlayerList:(NSString *)name;
-- (NSMutableArray *) removeFromFemalePlayerList:(NSString *)name;
+- (NSMutableArray *) addToMalePlayerList:(Player *)player;
+- (NSMutableArray *) addToFemalePlayerList:(Player *)player;
+- (NSMutableArray *) removeFromMalePlayerList:(Player *)player;
+- (NSMutableArray *) removeFromFemalePlayerList:(Player *)player;
 - (NSMutableArray *) sheffleList:(NSMutableArray *)originalArray;
 
-- (NSMutableArray *) addToMalePlayerArray:(NSString *)name;
-- (NSMutableArray *) addToFemalePlayerArray:(NSString *)name;
-- (NSMutableArray *) removeFromMalePlayerArray:(NSString *)name;
-- (NSMutableArray *) removeFromFemalePlayerArray:(NSString *)name;
+- (NSMutableArray *) addToMalePlayerArray:(Player *)player;
+- (NSMutableArray *) addToFemalePlayerArray:(Player *)player;
+- (NSMutableArray *) removeFromMalePlayerArray:(Player *)player;
+- (NSMutableArray *) removeFromFemalePlayerArray:(Player *)player;
 - (NSMutableArray *) addToTeamArray:(NSString *)name;
 
 - (void) loadingTeamDataFromParse;

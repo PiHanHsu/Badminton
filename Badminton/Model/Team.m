@@ -33,7 +33,12 @@
 
 
 - (void)addPlayer: (Player *)player{
-    [self.malePlayers addObject:player];
+    
+    if ([player[@"isMale"] boolValue]) {
+        [self.malePlayers addObject:player];
+    }else
+        [self.femalePlayers addObject:player];
+    
     NSLog(@"Team: %@", self);
     [self saveEventually];
 }

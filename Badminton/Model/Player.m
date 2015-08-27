@@ -9,6 +9,9 @@
 #import "Player.h"
 
 @implementation Player
+@dynamic objectId;
+@dynamic userName;
+@dynamic name;
 
 
 +(void)load {

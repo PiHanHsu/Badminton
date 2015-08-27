@@ -29,20 +29,7 @@
     self.tableView.rowHeight = 120;
     
     self.teamArray = [PlayListDataSource sharedInstance].teamArray;
-    
-    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    //[query fromLocalDatastore];
-    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
-    [query findObjectsInBackgroundWithBlock:
-     ^(NSArray * objects, NSError *error){
-         if (!error) {
-             //NSLog(@"objects: %@", objects);
-         }else{
-             NSLog(@"error: %@" ,error);
-         }
-         
-     }];
-    
+        
     
 }
 
@@ -214,7 +201,7 @@
     // Pass the selected object to the new view controller.
     if ([segue.destinationViewController isKindOfClass:[TeamPlayersTableViewController class]]) {
         TeamPlayersTableViewController * vc = segue.destinationViewController;
-        vc.teamName = self.teamName;
+        //vc.teamName = self.teamName;
         vc.teamObject = self.teamObject;
         
     }

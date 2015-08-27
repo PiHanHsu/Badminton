@@ -11,6 +11,7 @@
 #import "PlayerTableViewCell.h"
 #import "Player.h"
 #import "AddPlayerViewController.h"
+#import "PlayerSwitch.h"
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 @property BOOL hasMalePlayer;
@@ -34,49 +35,60 @@
     [self.playBallButton addTarget:self action:@selector(playBallPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.tableView.tableFooterView addSubview:self.playBallButton];
-    self.playBallButton.hidden = NO;
-    
-    //Fetch players Data
-    
-    for (Player * player in self.teamObject[@"malePlayers"]) {
-        [player fetch];
-        if ([player[@"isMale"] boolValue]) {
-            [self.malePlayerArray addObject:player];
-        }else{
-            [self.femalePlayerArray addObject:player];
-        }
-    }
-    
-//    
-//    [self.malePlayerArray addObjectsFromArray: self.teamObject[@"malePlayers"]];
-//    [self.femalePlayerArray addObjectsFromArray: self.teamObject[@"femalePlayers"]];
+    self.tableView.tableFooterView.hidden = NO;
     
     [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
     [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
 }
 
+-(void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+   NSDate * time1 = [NSDate date];
+    
+    NSArray * playerArray = self.teamObject[@"malePlayers"];
+    NSLog(@"players count: %lu", (unsigned long)playerArray.count);
+    
+    [self.malePlayerArray removeAllObjects];
+    [self.femalePlayerArray removeAllObjects];
+    
+    for (Player * player in self.teamObject[@"malePlayers"]) {
+        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
+            
+                [self.malePlayerArray addObject:player];
+                [self.tableView reloadData];
+                
+                NSDate * time2 = [NSDate date];
+                NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
+                NSLog(@"Loading male players: %f", loadingTime);
+        }];
+        
+        if ((self.malePlayerArray.count + self.femalePlayerArray.count) > 2) {
+                self.tableView.tableFooterView.hidden = NO;
+        }
+    }
+    
+    for (Player * player in self.teamObject[@"femalePlayers"]) {
+        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
+            
+            [self.femalePlayerArray addObject:player];
+            [self.tableView reloadData];
+            
+            NSDate * time3 = [NSDate date];
+            NSTimeInterval loadingTime = [time3 timeIntervalSinceDate:time1];
+            NSLog(@"Loading female players: %f", loadingTime);
+        }];
+    }
+    
+}
+
+- (void) showFooterView{
+    if ((self.malePlayerArray.count + self.femalePlayerArray.count) > 2) {
+        self.tableView.tableFooterView.hidden = NO;
+    }
+}
+
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    //[query fromLocalDatastore];
-    //[query whereKey:@"objectId" equalTo:self.teamObject.objectId];
-    [query getObjectInBackgroundWithId:self.teamObject.objectId
-                                 block:^(PFObject * obj, NSError *error) {
-                                     
-                                     obj[@"malePlayers"] = self.malePlayerArray;
-                                     obj[@"femalePlayers"] = self.femalePlayerArray;
-                                     [obj saveEventually];
-                                     //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
-                                 }];
-    
-    
-//    NSMutableArray * teamArray = [PlayListDataSource sharedInstance].teamArray;
-//    for (PFObject * object in teamArray){
-//        if ([object.objectId isEqualToString:self.teamObject.objectId]) {
-//            object[@"malePlayers"] = self.malePlayerArray;
-//            object[@"femalePlayers"] = self.femalePlayerArray;
-//        }
-//    };
 }
 - (IBAction)backButtonPressed:(id)sender {
      [self.navigationController popViewControllerAnimated:YES];
@@ -103,27 +115,6 @@
     return _femalePlayerArray;
 }
 
-//- (IBAction)AddPlayer:(UIBarButtonItem *)sender {
-//    
-//    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"請輸入新增球員姓名" delegate:self cancelButtonTitle:@"女子球員" otherButtonTitles:@"男子球員", nil];
-//    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    [av textFieldAtIndex:0].delegate = self;
-//    [av show];
-//}
-//
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-//    if (buttonIndex == 0) {
-//        
-//        [self.femalePlayerArray addObject:[alertView textFieldAtIndex:0].text];
-//        self.teamObject[@"femalePlayers"] = self.femalePlayerArray;
-//        [self.tableView reloadData];
-//        
-//    }if (buttonIndex ==1) {
-//        [self.malePlayerArray addObject:[alertView textFieldAtIndex:0].text];
-//        self.teamObject[@"malePlayers"] = self.malePlayerArray;
-//        [self.tableView reloadData];
-//    }
-//}
 
 #pragma mark - Table view data source
 
@@ -151,9 +142,7 @@
         default:
             break;
     }
-    if ((self.malePlayerArray.count + self.femalePlayerArray.count) > 2) {
-        self.playBallButton.hidden = NO;
-    }
+   
     return 0;
 }
 
@@ -164,7 +153,7 @@
     headerView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
     tableView.sectionHeaderHeight = 44;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 21)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 11, 288, 21)];
     if(section == 0)
         label.text = @"Male Player";
     else
@@ -187,9 +176,11 @@
     switch (indexPath.section) {
         case 0:
             cell.playerLabel.text = self.malePlayerArray[indexPath.row][@"userName"];
+            cell.playerSwitch.player = self.malePlayerArray[indexPath.row];
             break;
         case 1:
             cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
+            cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
             break;
             
         default:
@@ -199,11 +190,11 @@
     //TODO, can't switch new cell
     //cell.switchButton.tag = indexPath.row;
     if (indexPath.section == 0) {
-        cell.switchButton.tag = indexPath.row;
-        [cell.switchButton addTarget:self action:@selector(addToMaleList:) forControlEvents:UIControlEventTouchUpInside];
+        //cell.switchButton.tag = indexPath.row;
+        [cell.playerSwitch addTarget:self action:@selector(addToMaleList:) forControlEvents:UIControlEventTouchUpInside];
     }else if (indexPath.section == 1){
-        cell.switchButton.tag = indexPath.row;
-        [cell.switchButton addTarget:self action:@selector(addToFemaleList:) forControlEvents:UIControlEventTouchUpInside];
+        //cell.switchButton.tag = indexPath.row;
+        [cell.playerSwitch addTarget:self action:@selector(addToFemaleList:) forControlEvents:UIControlEventTouchUpInside];
     }
 
     return cell;
@@ -211,23 +202,24 @@
 
 - (void) addToMaleList: (UISwitch *)sender{
     
-    NSString * name = self.malePlayerArray[sender.tag];
+    PlayerSwitch * playerSwitch = (PlayerSwitch *) sender;
+    
     if ([sender isOn]) {
-        [[PlayListDataSource sharedInstance]addToMalePlayerList:name];
+        [[PlayListDataSource sharedInstance]addToMalePlayerList:playerSwitch.player];
     }else {
-        [[PlayListDataSource sharedInstance]removeFromMalePlayerList:name];
+        [[PlayListDataSource sharedInstance]removeFromMalePlayerList:playerSwitch.player];
     }
     
-    //NSLog(@"Male List: %@", [PlayListDataSource sharedInstance].maleSelectedArray);
 }
 
 - (void) addToFemaleList: (UISwitch *)sender{
     
-    NSString * name = self.femalePlayerArray[sender.tag];
+    PlayerSwitch * playerSwitch = (PlayerSwitch *) sender;
+   
     if ([sender isOn]) {
-        [[PlayListDataSource sharedInstance]addToFemalePlayerList:name];
+        [[PlayListDataSource sharedInstance]addToFemalePlayerList:playerSwitch.player];
     }else {
-        [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:name];
+        [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:playerSwitch.player];
     }
 }
 
@@ -253,9 +245,11 @@
         if (indexPath.section == 1) {
             //[tableView deleteRowsAtIndexPaths:self.femalePlayerArray[indexPath.row] withRowAnimation:UITableViewRowAnimationFade];
             [self.femalePlayerArray removeObjectAtIndex:indexPath.row];
+            [self.teamObject[@"malePlayers"] removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
         }else if (indexPath.section == 0){
             [self.malePlayerArray removeObjectAtIndex:indexPath.row];
+            [self.teamObject[@"malePlayers"] removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
         }
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
