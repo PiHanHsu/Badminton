@@ -73,9 +73,16 @@
 
 - (void)_ViewControllerAnimated:(BOOL)animated {
     
-    MyTeamListTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyTeamTableViewController"];
-    [self.navigationController pushViewController:vc animated:YES];
+    //MyTeamListTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyTeamTableViewController"];
+    UITabBarController * tabbarVC =[self.storyboard instantiateViewControllerWithIdentifier:@"TabbarViewController"];
+
+    [tabbarVC setSelectedIndex:0];
+    [self presentViewController:tabbarVC animated:YES completion:nil];
+
+    //[self.navigationController pushViewController:vc animated:YES];
     //[self performSegueWithIdentifier:@"Show Home Screen" sender:nil];
+    
+    
 }
 
 
