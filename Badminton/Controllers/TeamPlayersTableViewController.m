@@ -37,6 +37,8 @@
     [self.tableView.tableFooterView addSubview:self.playBallButton];
     self.tableView.tableFooterView.hidden = NO;
     
+    [self.tabBarController.tabBar setHidden:YES];
+    
     [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
     [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
 }
@@ -257,7 +259,10 @@
     }   
 }
 
-
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    PlayerTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
+//    cell.contentView.backgroundColor = [UIColor yellowColor];
+}
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {

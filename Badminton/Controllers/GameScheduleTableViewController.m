@@ -9,8 +9,17 @@
 #import "GameScheduleTableViewController.h"
 #import "GameScheduleTableViewCell.h"
 #import "PlayListDataSource.h"
+#import "Game.h"
+#import "ScoreBoard.h"
+
+
 
 @interface GameScheduleTableViewController ()<UIAlertViewDelegate>
+
+@property (strong, nonatomic) ScoreBoard * scoreboard;
+@property(nonatomic,strong) UIDynamicAnimator *animator;
+@property(strong, nonatomic) UIView * scoreBoardDestinationView;
+@property (strong, nonatomic) Game *game;
 
 @end
 
@@ -18,9 +27,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 62;
     
+    [self.tabBarController.tabBar setHidden:YES];
     [self shuffleList];
 }
 
@@ -170,6 +181,9 @@
     self.femalePlaylistArray =[PlayListDataSource sharedInstance].femaleSelectedArray;
     self.malePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.malePlaylistArray];
     self.femalePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.femalePlaylistArray];
+    self.game = [Game new];
+    self.game.gameScheduleArray = [self.game createGameScheduleWithMalePlayers:self.malePlaylistArrayNew femalePlayer:self.femalePlaylistArrayNew];
+    
     [self.tableView reloadData];
  
 }
@@ -203,165 +217,174 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GameScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"playListCell" forIndexPath:indexPath];
     if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==3) {
-        switch (indexPath.row) {
-            case 0:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                break;
-            case 1:
-                cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                break;
-            case 2:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
-                break;
-            case 3:
-                cell.player1Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                cell.player2Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
-                cell.player1Label.textColor = [UIColor blueColor];
-                cell.player2Label.textColor = [UIColor blueColor];
-                cell.player3Label.textColor = [UIColor blueColor];
-                cell.player4Label.textColor = [UIColor blueColor];
-                break;
-            case 4:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[2][@"userName"];
-               
-                break;
-            case 5:
-                cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                break;
-            case 6:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[4][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                break;
-            case 7:
-                cell.player1Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
-                cell.player1Label.textColor = [UIColor blueColor];
-                cell.player2Label.textColor = [UIColor blueColor];
-                cell.player3Label.textColor = [UIColor blueColor];
-                cell.player4Label.textColor = [UIColor blueColor];
-                break;
-                
-            default:
-                break;
-        }
-    }else if (self.malePlaylistArrayNew.count == 4 && self.femalePlaylistArrayNew.count ==3) {
-            switch (indexPath.row) {
-                case 0:
-                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                    cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                    break;
-                case 1:
-                    cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                    break;
-                case 2:
-                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                    break;
-                case 3:
-                    cell.player1Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                    cell.player2Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                    cell.player1Label.textColor = [UIColor blueColor];
-                    cell.player2Label.textColor = [UIColor blueColor];
-                    cell.player3Label.textColor = [UIColor blueColor];
-                    cell.player4Label.textColor = [UIColor blueColor];
-                    break;
-                case 4:
-                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                    cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                    break;
-                case 5:
-                    cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                    break;
-                case 6:
-                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                    break;
-                case 7:
-                    cell.player1Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                    cell.player2Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                    cell.player1Label.textColor = [UIColor blueColor];
-                    cell.player2Label.textColor = [UIColor blueColor];
-                    cell.player3Label.textColor = [UIColor blueColor];
-                    cell.player4Label.textColor = [UIColor blueColor];
-                    break;
-                    
-                default:
-                    break;
-            }
-    }else if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==2) {
-        switch (indexPath.row) {
-            case 0:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                break;
-            case 1:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                break;
-            case 2:
-                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
-                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
-                break;
-            case 3:
-                cell.player1Label.text = self.malePlaylistArrayNew[1][@"userName"];
-                cell.player2Label.text = self.malePlaylistArrayNew[2][@"userName"];
-                cell.player3Label.text = self.malePlaylistArrayNew[3][@"userName"];
-                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
-                cell.player1Label.textColor = [UIColor blueColor];
-                cell.player2Label.textColor = [UIColor blueColor];
-                cell.player3Label.textColor = [UIColor blueColor];
-                cell.player4Label.textColor = [UIColor blueColor];
-                break;
-                
-            default:
-                break;
-        }
+        NSArray * tempPlayersArray = self.game.gameScheduleArray[indexPath.row];
+        NSLog(@"player: %@",tempPlayersArray[0][0]);
+        
+        cell.player1Label.text = self.game.gameScheduleArray[indexPath.row][0][0][@"userName"];
+        cell.player3Label.text = self.game.gameScheduleArray[indexPath.row][0][1][@"userName"];
+        cell.player2Label.text = self.game.gameScheduleArray[indexPath.row][1][0][@"userName"];
+        cell.player4Label.text = self.game.gameScheduleArray[indexPath.row][1][1][@"userName"];
     }
+        
+//        switch (indexPath.row) {
+//            case 0:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                break;
+//            case 1:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                break;
+//            case 2:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
+//                break;
+//            case 3:
+//                cell.player1Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                cell.player2Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
+//                cell.player1Label.textColor = [UIColor blueColor];
+//                cell.player2Label.textColor = [UIColor blueColor];
+//                cell.player3Label.textColor = [UIColor blueColor];
+//                cell.player4Label.textColor = [UIColor blueColor];
+//                break;
+//            case 4:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//               
+//                break;
+//            case 5:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                break;
+//            case 6:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[4][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                break;
+//            case 7:
+//                cell.player1Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
+//                cell.player1Label.textColor = [UIColor blueColor];
+//                cell.player2Label.textColor = [UIColor blueColor];
+//                cell.player3Label.textColor = [UIColor blueColor];
+//                cell.player4Label.textColor = [UIColor blueColor];
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//    }else if (self.malePlaylistArrayNew.count == 4 && self.femalePlaylistArrayNew.count ==3) {
+//            switch (indexPath.row) {
+//                case 0:
+//                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                    cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                    break;
+//                case 1:
+//                    cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                    break;
+//                case 2:
+//                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                    break;
+//                case 3:
+//                    cell.player1Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                    cell.player2Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                    cell.player1Label.textColor = [UIColor blueColor];
+//                    cell.player2Label.textColor = [UIColor blueColor];
+//                    cell.player3Label.textColor = [UIColor blueColor];
+//                    cell.player4Label.textColor = [UIColor blueColor];
+//                    break;
+//                case 4:
+//                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                    cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                    break;
+//                case 5:
+//                    cell.player1Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                    break;
+//                case 6:
+//                    cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                    cell.player2Label.text = self.femalePlaylistArrayNew[2][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                    break;
+//                case 7:
+//                    cell.player1Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                    cell.player2Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                    cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                    cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                    cell.player1Label.textColor = [UIColor blueColor];
+//                    cell.player2Label.textColor = [UIColor blueColor];
+//                    cell.player3Label.textColor = [UIColor blueColor];
+//                    cell.player4Label.textColor = [UIColor blueColor];
+//                    break;
+//                    
+//                default:
+//                    break;
+//            }
+//    }else if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==2) {
+//        switch (indexPath.row) {
+//            case 0:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                break;
+//            case 1:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                break;
+//            case 2:
+//                cell.player1Label.text = self.femalePlaylistArrayNew[0][@"userName"];
+//                cell.player2Label.text = self.femalePlaylistArrayNew[1][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[0][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
+//                break;
+//            case 3:
+//                cell.player1Label.text = self.malePlaylistArrayNew[1][@"userName"];
+//                cell.player2Label.text = self.malePlaylistArrayNew[2][@"userName"];
+//                cell.player3Label.text = self.malePlaylistArrayNew[3][@"userName"];
+//                cell.player4Label.text = self.malePlaylistArrayNew[4][@"userName"];
+//                cell.player1Label.textColor = [UIColor blueColor];
+//                cell.player2Label.textColor = [UIColor blueColor];
+//                cell.player3Label.textColor = [UIColor blueColor];
+//                cell.player4Label.textColor = [UIColor blueColor];
+//                break;
+//                
+//            default:
+//                break;
+//        }
+//    }
     
     cell.gameNumberLabel.text = [NSString stringWithFormat:@"Game %li",indexPath.row+1];
     
@@ -369,15 +392,78 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.scoreboard removeFromSuperview];
     
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Scroe Records" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-    [av setAlertViewStyle:UIAlertViewStyleLoginAndPasswordInput];
+    self.scoreboard = [[[NSBundle mainBundle] loadNibNamed:@"ScoreBoard" owner:self options:nil] objectAtIndex:0];
+    self.scoreBoardDestinationView = [[UIView alloc]init];
     
-    // Alert style customization
-    [[av textFieldAtIndex:1] setSecureTextEntry:NO];
-    [[av textFieldAtIndex:0] setPlaceholder:@"Team 1 score"];
-    [[av textFieldAtIndex:1] setPlaceholder:@"Team 2 score"];
-    [av show];
+    if (indexPath.row > 4) {
+        //self.scoreboard.frame = CGRectMake(5, 64 +62*(indexPath.row-1) - 135, 310, 130);
+        self.scoreBoardDestinationView.center =CGPointMake(160, 64 +62*indexPath.row - 130 -5);
+        
+    }else
+    self.scoreBoardDestinationView.center = CGPointMake(160, 64+62*indexPath.row + 62 + 5);
+    
+    
+    self.scoreboard.layer.cornerRadius = 10.0;
+    self.scoreboard.clipsToBounds = YES;
+    self.scoreboard.cancelButton.layer.cornerRadius = 5.0;
+    self.scoreboard.cancelButton.clipsToBounds = YES;
+    self.scoreboard.saveButton.layer.cornerRadius = 5.0;
+    self.scoreboard.saveButton.clipsToBounds = YES;
+    [self.scoreboard.cancelButton addTarget:self action:@selector(cancelScoreBoard:) forControlEvents:UIControlEventTouchUpInside];
+    [self.scoreboard.saveButton addTarget:self action:@selector(saveScoreBoard:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self.view addSubview:self.scoreboard];
+    [self willShow];
+}
+
+- (void) saveScoreBoard: (id) sedder {
+    [self.tabBarController.tabBar setHidden:YES];
+    //TODO Save Game to Parse
+    PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
+    
+    
+    
+    [self viewDismiss];
+    //TODO count unfinish Games
+    // if unfinish Game == 0 , show alrerview and back to Time VC
+}
+
+- (void) cancelScoreBoard: (id) sender {
+    
+    [self.scoreboard removeFromSuperview];
+}
+
+#pragma mark Animation
+-(void)willShow {
+    // Use UIKit Dynamics to make the alertView appear.
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+     UISnapBehavior *snapBehaviour = [[UISnapBehavior alloc] initWithItem:self.scoreboard snapToPoint:self.scoreBoardDestinationView.center];
+    
+//    UISnapBehavior *snapBehaviour = [[UISnapBehavior alloc] initWithItem:self.scoreboard snapToPoint:CGPointMake(self.scoreboard.center.x, self.scoreboard.center.y)];
+    NSLog(@"x: %f, y:%f",self.scoreboard.center.x, self.scoreboard.center.y);
+    NSLog(@"Dx: %f, Dy:%f",self.scoreBoardDestinationView.center.x, self.scoreBoardDestinationView.center.y);
+
+    //控制下落速度,數字越大越慢
+    snapBehaviour.damping = .8f;
+    [self.animator addBehavior:snapBehaviour];
+
+}
+
+-(void)viewDismiss {
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    UIGravityBehavior *gravityBehaviour = [[UIGravityBehavior alloc] initWithItems:@[self.scoreboard]];
+    //控制方向與速度. 0.0f -->正下方, 10.0f 速度 （數字越大越快）
+    gravityBehaviour.gravityDirection = CGVectorMake(0.0f, 10.0f);
+    [self.animator addBehavior:gravityBehaviour];
+    
+    UIDynamicItemBehavior *itemBehaviour = [[UIDynamicItemBehavior alloc] initWithItems:@[self.scoreboard]];
+    //控制轉動程度,2.0f-->數字越大轉動越大
+    [itemBehaviour addAngularVelocity:2.0f forItem:self.scoreboard];
+    [self.animator addBehavior:itemBehaviour];
+    
 }
 
 

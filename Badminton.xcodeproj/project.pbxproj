@@ -15,6 +15,8 @@
 		E83649071B8DE10D00F172A4 /* femalePlayer@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E83649061B8DE10D00F172A4 /* femalePlayer@2x.jpg */; };
 		E836490A1B8DF80200F172A4 /* AddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83649091B8DF80200F172A4 /* AddPlayerViewController.m */; };
 		E836491A1B8F696000F172A4 /* PlayerSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E83649191B8F696000F172A4 /* PlayerSwitch.m */; };
+		E836496C1B92D42600F172A4 /* ScoreBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = E836496B1B92D42600F172A4 /* ScoreBoard.xib */; };
+		E836496F1B92D48400F172A4 /* ScoreBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = E836496E1B92D48400F172A4 /* ScoreBoard.m */; };
 		E8484CC41B6BA5B100B39463 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CC31B6BA5B100B39463 /* main.m */; };
 		E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CC61B6BA5B100B39463 /* AppDelegate.m */; };
 		E8484CCA1B6BA5B100B39463 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CC91B6BA5B100B39463 /* ViewController.m */; };
@@ -33,6 +35,7 @@
 		E8C283631B88AD6B0018F3A1 /* Badminton1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E8C283621B88AD6B0018F3A1 /* Badminton1.jpg */; };
 		E8C283651B88AE7E0018F3A1 /* teams.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C283641B88AE7E0018F3A1 /* teams.png */; };
 		E8C283681B88B1640018F3A1 /* TeamPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283671B88B1640018F3A1 /* TeamPlayersTableViewController.m */; };
+		E8EDF7A41B9309EB00B56725 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +64,9 @@
 		E83649091B8DF80200F172A4 /* AddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPlayerViewController.m; sourceTree = "<group>"; };
 		E83649181B8F696000F172A4 /* PlayerSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerSwitch.h; path = Model/PlayerSwitch.h; sourceTree = "<group>"; };
 		E83649191B8F696000F172A4 /* PlayerSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerSwitch.m; path = Model/PlayerSwitch.m; sourceTree = "<group>"; };
+		E836496B1B92D42600F172A4 /* ScoreBoard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreBoard.xib; sourceTree = "<group>"; };
+		E836496D1B92D48400F172A4 /* ScoreBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreBoard.h; path = Views/ScoreBoard.h; sourceTree = "<group>"; };
+		E836496E1B92D48400F172A4 /* ScoreBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScoreBoard.m; path = Views/ScoreBoard.m; sourceTree = "<group>"; };
 		E8484CBE1B6BA5B100B39463 /* Badminton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Badminton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8484CC21B6BA5B100B39463 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8484CC31B6BA5B100B39463 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -94,6 +100,8 @@
 		E8C283641B88AE7E0018F3A1 /* teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teams.png; sourceTree = "<group>"; };
 		E8C283661B88B1640018F3A1 /* TeamPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamPlayersTableViewController.h; sourceTree = "<group>"; };
 		E8C283671B88B1640018F3A1 /* TeamPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamPlayersTableViewController.m; sourceTree = "<group>"; };
+		E8EDF7A21B9309EB00B56725 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
+		E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +217,9 @@
 				E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */,
 				E8C283591B8893990018F3A1 /* MyTeamListTableViewCell.h */,
 				E8C2835A1B8893990018F3A1 /* MyTeamListTableViewCell.m */,
+				E836496B1B92D42600F172A4 /* ScoreBoard.xib */,
+				E836496D1B92D48400F172A4 /* ScoreBoard.h */,
+				E836496E1B92D48400F172A4 /* ScoreBoard.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -228,6 +239,8 @@
 				E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */,
 				E83649081B8DF80200F172A4 /* AddPlayerViewController.h */,
 				E83649091B8DF80200F172A4 /* AddPlayerViewController.m */,
+				E8EDF7A21B9309EB00B56725 /* ProfileTableViewController.h */,
+				E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -338,6 +351,7 @@
 				E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */,
 				E83649071B8DE10D00F172A4 /* femalePlayer@2x.jpg in Resources */,
 				E8C283631B88AD6B0018F3A1 /* Badminton1.jpg in Resources */,
+				E836496C1B92D42600F172A4 /* ScoreBoard.xib in Resources */,
 				E8484CCF1B6BA5B100B39463 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,6 +406,7 @@
 				E83649031B8DD8CC00F172A4 /* Player.m in Sources */,
 				E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */,
 				E8C2835B1B8893990018F3A1 /* MyTeamListTableViewCell.m in Sources */,
+				E8EDF7A41B9309EB00B56725 /* ProfileTableViewController.m in Sources */,
 				E8C283581B8892CC0018F3A1 /* MyTeamListTableViewController.m in Sources */,
 				E8484CCA1B6BA5B100B39463 /* ViewController.m in Sources */,
 				E85EB2751B80EF480094875E /* PlayListDataSource.m in Sources */,
@@ -405,6 +420,7 @@
 				E83648CE1B8C93BF00F172A4 /* Game.m in Sources */,
 				E8C283681B88B1640018F3A1 /* TeamPlayersTableViewController.m in Sources */,
 				E877D8121B8A205C007D9E53 /* SignupTableViewController.m in Sources */,
+				E836496F1B92D48400F172A4 /* ScoreBoard.m in Sources */,
 				E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

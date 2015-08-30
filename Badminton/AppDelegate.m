@@ -56,6 +56,11 @@
     
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     
+    //customized for TabBar
+    
+    [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithRed:252.0/255.0 green:252.0/255.0 blue:252.0/255.0 alpha:1.0]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0]];
+    
     return YES;
 }
 

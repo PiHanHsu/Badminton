@@ -112,8 +112,18 @@
 
 - (void) loadingTeamDataFromParse{
     
+    PFUser * user = [PFUser currentUser];
+    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
+    [getUserId whereKey:@"user" equalTo:user.objectId];
+    NSLog(@"userId:%@", user.objectId);
+    
+    PFObject * currentPlayer = [getUserId getFirstObject];
+    
+    NSLog(@"playerId: %@", currentPlayer.objectId);
+    
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
+    [query whereKey:@"malePlayers" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:currentPlayer.objectId]];
+    
     [query findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
             [self.teamArray removeAllObjects];
             [self.teamArray addObjectsFromArray:teams];
