@@ -11,7 +11,7 @@
 #import "Team.h"
 
 @interface TeamPlayersTableViewController : UITableViewController
-@property (strong, nonatomic) NSString * teamName;
+
 @property (strong, nonatomic) Team * teamObject;
 
 @end

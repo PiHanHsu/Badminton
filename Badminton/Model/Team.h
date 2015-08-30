@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSMutableArray * femalePlayers;
 @property (strong, nonatomic) NSMutableArray * players;
 
++(Team *) createTeam;
 - (void)addPlayer: (Player *)player;
 
 @end

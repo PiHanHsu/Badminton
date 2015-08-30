@@ -61,16 +61,21 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
    if (buttonIndex ==1) {
        
-       PFObject * teamObject = [PFObject objectWithClassName:@"Team"];
+       Team * teamObject = [Team objectWithClassName:@"Team"];
        teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
        teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
        
-       [teamObject saveEventually];
-       [self updateData];
+       [teamObject saveEventually:^(BOOL succeeded, NSError * error){
+           if (!error){
+               [self updateData];
+           }
+       }];
     }
 }
 
 -(void) updateData{
+    
+    //TODO create new Team update fail, can't add player
     
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
     //[query fromLocalDatastore];
@@ -78,13 +83,11 @@
     [query findObjectsInBackgroundWithBlock:
      ^(NSArray * objects, NSError *error){
          if (!error) {
-             for (PFObject * object in objects) {
-                 [object saveEventually];
-             }
+            
              [self.teamArray removeAllObjects];
              [self.teamArray addObjectsFromArray:objects];
              [self.tableView reloadData];
-             //NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
+             NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
          }else{
              NSLog(@"error: %@" ,error);
          }

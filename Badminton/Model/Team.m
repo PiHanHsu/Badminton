@@ -32,6 +32,7 @@
 }
 
 
+
 - (void)addPlayer: (Player *)player{
     
     if ([player[@"isMale"] boolValue]) {
@@ -39,7 +40,8 @@
     }else
         [self.femalePlayers addObject:player];
     
-    NSLog(@"Team: %@", self);
+    NSLog(@"Male: %@", self.malePlayers);
+    NSLog(@"Female players: %@", self.femalePlayers);
     [self saveEventually];
 }
 @end

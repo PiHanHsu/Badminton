@@ -66,8 +66,52 @@
         for (int i = 0 ; i <8; i++) {
              self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i], nil];
         }
-       
+    }else if (malePlayerArray.count == 4 && femalePlayerArray.count ==3){
+        self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
+        self.team2Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[1], nil];
         
+        self.team1Array[1] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[2], nil];
+        self.team2Array[1] = [NSMutableArray arrayWithObjects:malePlayerArray[3],femalePlayerArray[1], nil];
+        
+        self.team1Array[2] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
+        self.team2Array[2] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[2], nil];
+        
+        self.team1Array[3] = [NSMutableArray arrayWithObjects:malePlayerArray[0],malePlayerArray[1], nil];
+        self.team2Array[3] = [NSMutableArray arrayWithObjects:malePlayerArray[2],malePlayerArray[3], nil];
+        
+        self.team1Array[4] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
+        self.team2Array[4] = [NSMutableArray arrayWithObjects:malePlayerArray[3],femalePlayerArray[1], nil];
+        
+        self.team1Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[2], nil];
+        self.team2Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[1], nil];
+        
+        self.team1Array[6] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[0], nil];
+        self.team2Array[6] = [NSMutableArray arrayWithObjects:malePlayerArray[3],femalePlayerArray[2], nil];
+        
+        self.team1Array[7] = [NSMutableArray arrayWithObjects:malePlayerArray[0],malePlayerArray[3], nil];
+        self.team2Array[7] = [NSMutableArray arrayWithObjects:malePlayerArray[2],malePlayerArray[1], nil];
+        
+        for (int i = 0 ; i <8; i++) {
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i], nil];
+        }
+    }else if (malePlayerArray.count == 5 && femalePlayerArray.count ==2){
+        self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
+        self.team2Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[1], nil];
+        
+        self.team1Array[1] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[0], nil];
+        self.team2Array[1] = [NSMutableArray arrayWithObjects:malePlayerArray[3],femalePlayerArray[1], nil];
+        
+        self.team1Array[2] = [NSMutableArray arrayWithObjects:malePlayerArray[4],femalePlayerArray[0], nil];
+        self.team2Array[2] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[1], nil];
+        
+        self.team1Array[3] = [NSMutableArray arrayWithObjects:malePlayerArray[1],malePlayerArray[2], nil];
+        self.team2Array[3] = [NSMutableArray arrayWithObjects:malePlayerArray[3],malePlayerArray[4], nil];
+        
+        for (int i = 0 ; i <4; i++) {
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i], nil];
+        }
+
+      
     }
     
     return self.gameScheduleArray;

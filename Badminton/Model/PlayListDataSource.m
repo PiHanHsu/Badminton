@@ -68,24 +68,24 @@
     return self.femaleSelectedArray;
 }
 
-- (NSMutableArray *) addToMalePlayerArray:(Player *)player{
-    [self.malePlayerArray addObject:player];
-    return self.malePlayerArray;
-}
-
-- (NSMutableArray *) addToFemalePlayerArray:(Player *)player{
-    [self.femalePlayerArray addObject:player];
-    return self.femalePlayerArray;
-}
-
-- (NSMutableArray *) removeFromMalePlayerArray:(Player *)player{
-    [self.malePlayerArray removeObject:player];
-    return self.malePlayerArray;
-}
-- (NSMutableArray *) removeFromFemalePlayerArray:(Player *)player{
-    [self.femalePlayerArray removeObject:player];
-    return self.femalePlayerArray;
-}
+//- (NSMutableArray *) addToMalePlayerArray:(Player *)player{
+//    [self.malePlayerArray addObject:player];
+//    return self.malePlayerArray;
+//}
+//
+//- (NSMutableArray *) addToFemalePlayerArray:(Player *)player{
+//    [self.femalePlayerArray addObject:player];
+//    return self.femalePlayerArray;
+//}
+//
+//- (NSMutableArray *) removeFromMalePlayerArray:(Player *)player{
+//    [self.malePlayerArray removeObject:player];
+//    return self.malePlayerArray;
+//}
+//- (NSMutableArray *) removeFromFemalePlayerArray:(Player *)player{
+//    [self.femalePlayerArray removeObject:player];
+//    return self.femalePlayerArray;
+//}
 
 - (NSMutableArray *) addToTeamArray:(NSString *)name{
     [self.teamArray addObject:name];
@@ -119,11 +119,17 @@
     
     PFObject * currentPlayer = [getUserId getFirstObject];
     
-    NSLog(@"playerId: %@", currentPlayer.objectId);
+    PFQuery * queryForCreatedBy = [PFQuery queryWithClassName:@"Team"];
+    [queryForCreatedBy whereKey:@"createBy" equalTo:user.objectId];
     
-    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    [query whereKey:@"malePlayers" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:currentPlayer.objectId]];
+    PFQuery * queryforMale = [PFQuery queryWithClassName:@"Team"];
     
+    [queryforMale whereKey:@"malePlayers" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:currentPlayer.objectId]];
+    
+    PFQuery * queryforFemale = [PFQuery queryWithClassName:@"Team"];
+    [queryforFemale whereKey:@"femalePlayers" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:currentPlayer.objectId]];
+    
+    PFQuery *query = [PFQuery orQueryWithSubqueries:@[queryForCreatedBy,queryforMale,queryforFemale]];
     [query findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
             [self.teamArray removeAllObjects];
             [self.teamArray addObjectsFromArray:teams];
@@ -131,27 +137,7 @@
             
     }];
 }
-     
 
-- (void) updateTeamPlayersToParse{
-    
-    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    NSLog(@"name: %@", self.teamName);
-    [query whereKey:@"name" equalTo:self.teamName];
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *obj, NSError *error){
-        obj[@"malePlayers"] = self.malePlayerArray;
-        obj[@"femalePlayers"] = self.femalePlayerArray;
-        
-        [obj saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error){
-            if (!error) {
-                NSLog(@"add in to list");
-            }
-        }];
-        
-    }];
-    
-    
-    
-}
+
 
 @end

@@ -14,11 +14,11 @@
 #import "PlayerSwitch.h"
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
-@property BOOL hasMalePlayer;
-@property BOOL hasFemalePlayer;
+
 @property (strong, nonatomic) NSMutableArray * malePlayerArray;
 @property (strong, nonatomic) NSMutableArray * femalePlayerArray;
 @property (strong, nonatomic) UIButton * playBallButton;
+
 @end
 
 @implementation TeamPlayersTableViewController
@@ -45,53 +45,43 @@
 
 -(void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-   NSDate * time1 = [NSDate date];
-    
-    NSArray * playerArray = self.teamObject[@"malePlayers"];
-    NSLog(@"players count: %lu", (unsigned long)playerArray.count);
     
     [self.malePlayerArray removeAllObjects];
     [self.femalePlayerArray removeAllObjects];
     
+    NSDate * time1 = [NSDate date];
+
     for (Player * player in self.teamObject[@"malePlayers"]) {
         [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
             
-                [self.malePlayerArray addObject:player];
-                [self.tableView reloadData];
+          [self.malePlayerArray addObject:player];
+          [self.tableView reloadData];
                 
-                NSDate * time2 = [NSDate date];
-                NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
-                NSLog(@"Loading male players: %f", loadingTime);
+          NSDate * time2 = [NSDate date];
+          NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
+          NSLog(@"Loading male players: %f", loadingTime);
         }];
         
-        if ((self.malePlayerArray.count + self.femalePlayerArray.count) > 2) {
-                self.tableView.tableFooterView.hidden = NO;
-        }
     }
     
     for (Player * player in self.teamObject[@"femalePlayers"]) {
         [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
             
-            [self.femalePlayerArray addObject:player];
-            [self.tableView reloadData];
+          [self.femalePlayerArray addObject:player];
+          [self.tableView reloadData];
             
-            NSDate * time3 = [NSDate date];
-            NSTimeInterval loadingTime = [time3 timeIntervalSinceDate:time1];
-            NSLog(@"Loading female players: %f", loadingTime);
+          NSDate * time3 = [NSDate date];
+          NSTimeInterval loadingTime = [time3 timeIntervalSinceDate:time1];
+          NSLog(@"Loading female players: %f", loadingTime);
         }];
     }
     
 }
 
-- (void) showFooterView{
-    if ((self.malePlayerArray.count + self.femalePlayerArray.count) > 2) {
-        self.tableView.tableFooterView.hidden = NO;
-    }
-}
-
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
 }
+
 - (IBAction)backButtonPressed:(id)sender {
      [self.navigationController popViewControllerAnimated:YES];
 }
@@ -104,6 +94,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//Lazy init for NSMutableArray
 
 - (NSMutableArray *) malePlayerArray {
     if(!_malePlayerArray)
@@ -151,11 +143,12 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
 
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 88)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     headerView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
-    tableView.sectionHeaderHeight = 44;
+    //headerView.backgroundColor = [UIColor greenColor];
+    //tableView.sectionHeaderHeight = 44;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 11, 288, 21)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 21)];
     if(section == 0)
         label.text = @"Male Player";
     else
@@ -189,40 +182,30 @@
             break;
     }
     
-    //TODO, can't switch new cell
-    //cell.switchButton.tag = indexPath.row;
-    if (indexPath.section == 0) {
-        //cell.switchButton.tag = indexPath.row;
-        [cell.playerSwitch addTarget:self action:@selector(addToMaleList:) forControlEvents:UIControlEventTouchUpInside];
-    }else if (indexPath.section == 1){
-        //cell.switchButton.tag = indexPath.row;
-        [cell.playerSwitch addTarget:self action:@selector(addToFemaleList:) forControlEvents:UIControlEventTouchUpInside];
-    }
+    //TODO can't switch new cell
+    [cell.playerSwitch addTarget:self action:@selector(selectPlayers:) forControlEvents:UIControlEventTouchUpInside];
 
     return cell;
 }
 
-- (void) addToMaleList: (UISwitch *)sender{
-    
+- (void) selectPlayers: (UISwitch *) sender{
     PlayerSwitch * playerSwitch = (PlayerSwitch *) sender;
     
-    if ([sender isOn]) {
-        [[PlayListDataSource sharedInstance]addToMalePlayerList:playerSwitch.player];
-    }else {
-        [[PlayListDataSource sharedInstance]removeFromMalePlayerList:playerSwitch.player];
+    if ([playerSwitch.player[@"isMale"] boolValue]) {
+        if ([sender isOn]) {
+            [[PlayListDataSource sharedInstance]addToMalePlayerList:playerSwitch.player];
+        }else {
+            [[PlayListDataSource sharedInstance]removeFromMalePlayerList:playerSwitch.player];
+        }
+    }else{
+        if ([sender isOn]) {
+            [[PlayListDataSource sharedInstance]addToFemalePlayerList:playerSwitch.player];
+        }else {
+            [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:playerSwitch.player];
+        }
     }
-    
-}
-
-- (void) addToFemaleList: (UISwitch *)sender{
-    
-    PlayerSwitch * playerSwitch = (PlayerSwitch *) sender;
-   
-    if ([sender isOn]) {
-        [[PlayListDataSource sharedInstance]addToFemalePlayerList:playerSwitch.player];
-    }else {
-        [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:playerSwitch.player];
-    }
+        
+        
 }
 
 
@@ -245,24 +228,21 @@
         // Delete the row from the data source
        
         if (indexPath.section == 1) {
-            //[tableView deleteRowsAtIndexPaths:self.femalePlayerArray[indexPath.row] withRowAnimation:UITableViewRowAnimationFade];
+            
             [self.femalePlayerArray removeObjectAtIndex:indexPath.row];
-            [self.teamObject[@"malePlayers"] removeObjectAtIndex:indexPath.row];
+            [self.teamObject[@"femalePlayers"] removeObjectAtIndex:indexPath.row];
+            [self.teamObject saveEventually];
             [self.tableView reloadData];
         }else if (indexPath.section == 0){
             [self.malePlayerArray removeObjectAtIndex:indexPath.row];
             [self.teamObject[@"malePlayers"] removeObjectAtIndex:indexPath.row];
+            [self.teamObject saveEventually];
             [self.tableView reloadData];
         }
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
 
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    PlayerTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
-//    cell.contentView.backgroundColor = [UIColor yellowColor];
-}
+
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {

@@ -26,13 +26,12 @@
 - (NSMutableArray *) removeFromFemalePlayerList:(Player *)player;
 - (NSMutableArray *) sheffleList:(NSMutableArray *)originalArray;
 
-- (NSMutableArray *) addToMalePlayerArray:(Player *)player;
-- (NSMutableArray *) addToFemalePlayerArray:(Player *)player;
-- (NSMutableArray *) removeFromMalePlayerArray:(Player *)player;
-- (NSMutableArray *) removeFromFemalePlayerArray:(Player *)player;
+//- (NSMutableArray *) addToMalePlayerArray:(Player *)player;
+//- (NSMutableArray *) addToFemalePlayerArray:(Player *)player;
+//- (NSMutableArray *) removeFromMalePlayerArray:(Player *)player;
+//- (NSMutableArray *) removeFromFemalePlayerArray:(Player *)player;
 - (NSMutableArray *) addToTeamArray:(NSString *)name;
 
 - (void) loadingTeamDataFromParse;
-- (void) updateTeamPlayersToParse;
 
 @end
