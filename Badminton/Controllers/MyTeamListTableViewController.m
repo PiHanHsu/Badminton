@@ -120,14 +120,11 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.teamArray.count;
-    
 }
 
 
@@ -142,7 +139,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //self.teamName = self.teamArray[indexPath.row][@"name"];
     self.teamObject = self.teamArray[indexPath.row];
     [self performSegueWithIdentifier:@"Show Team Players" sender:nil];
     
@@ -163,9 +159,6 @@
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        //[tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        
         
         //delete from Parse
         PFObject * objectToBeDelete = self.teamArray[indexPath.row];
@@ -208,7 +201,6 @@
     // Pass the selected object to the new view controller.
     if ([segue.destinationViewController isKindOfClass:[TeamPlayersTableViewController class]]) {
         TeamPlayersTableViewController * vc = segue.destinationViewController;
-        //vc.teamName = self.teamName;
         vc.teamObject = self.teamObject;
         
     }

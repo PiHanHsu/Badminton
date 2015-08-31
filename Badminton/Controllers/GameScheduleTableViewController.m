@@ -20,6 +20,8 @@
 @property(nonatomic,strong) UIDynamicAnimator *animator;
 @property(strong, nonatomic) UIView * scoreBoardDestinationView;
 @property (strong, nonatomic) Game *game;
+@property (strong, nonatomic) NSArray * tempTeam1Array;
+@property (strong, nonatomic) NSArray * tempTeam2Array;
 
 @end
 
@@ -70,8 +72,6 @@
     }
 
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -218,6 +218,8 @@
     
     cell.gameNumberLabel.text = [NSString stringWithFormat:@"Game %li",indexPath.row+1];
     
+    cell.tag = 0;
+    
     return cell;
 }
 
@@ -227,14 +229,12 @@
     self.scoreboard = [[[NSBundle mainBundle] loadNibNamed:@"ScoreBoard" owner:self options:nil] objectAtIndex:0];
     self.scoreBoardDestinationView = [[UIView alloc]init];
     
-    if (indexPath.row > 4) {
-        //self.scoreboard.frame = CGRectMake(5, 64 +62*(indexPath.row-1) - 135, 310, 130);
+    if (indexPath.row > 3) {
         self.scoreBoardDestinationView.center =CGPointMake(160, 64 +62*indexPath.row - 130 -5);
-        
-    }else
-    self.scoreBoardDestinationView.center = CGPointMake(160, 64+62*indexPath.row + 62 + 5);
-    
-    
+    }else{
+        self.scoreBoardDestinationView.center = CGPointMake(160, 64+62*indexPath.row + 62 + 5);
+    }
+
     self.scoreboard.layer.cornerRadius = 10.0;
     self.scoreboard.clipsToBounds = YES;
     self.scoreboard.cancelButton.layer.cornerRadius = 5.0;
@@ -244,25 +244,55 @@
     [self.scoreboard.cancelButton addTarget:self action:@selector(cancelScoreBoard:) forControlEvents:UIControlEventTouchUpInside];
     [self.scoreboard.saveButton addTarget:self action:@selector(saveScoreBoard:) forControlEvents:UIControlEventTouchUpInside];
     
+    self.tempTeam1Array = self.game.gameScheduleArray[indexPath.row][0];
+    self.tempTeam2Array = self.game.gameScheduleArray[indexPath.row][1];
+    
     
     [self.view addSubview:self.scoreboard];
     [self willShow];
 }
 
-- (void) saveScoreBoard: (id) sedder {
+- (void) saveScoreBoard: (id) sender {
     [self.tabBarController.tabBar setHidden:YES];
+    
     //TODO Save Game to Parse
     PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
+    if ([self.scoreboard.team1ScoreTextField.text intValue] >
+        [self.scoreboard.team2ScoreTextField.text intValue]) {
+        gameObject[@"WinTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
+        gameObject[@"LoseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
+        gameObject[@"WinTeam"] = self.tempTeam1Array;
+        gameObject[@"LoseTeam"] = self.tempTeam2Array;
+    }else{
+        gameObject[@"WinTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
+        gameObject[@"LoseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
+        gameObject[@"WinTeam"] = self.tempTeam2Array;
+        gameObject[@"LoseTeam"] = self.tempTeam1Array;
+    }
+    NSDate * date = [NSDate date];
+    gameObject[@"Date"] = date;
+    gameObject[@"Team"] = [NSString stringWithFormat:@"%@", self.teamObject.objectId];
     
-    
-    
+    [gameObject saveInBackground];
+        
     [self viewDismiss];
+    [self.scoreboard.team1ScoreTextField resignFirstResponder];
+    [self.scoreboard.team2ScoreTextField resignFirstResponder];
+
     //TODO count unfinish Games
     // if unfinish Game == 0 , show alrerview and back to Time VC
 }
 
-- (void) cancelScoreBoard: (id) sender {
+- (void) countUnfinishGames{
     
+}
+
+- (void) cancelScoreBoard: (id) sender {
+    self.tempTeam1Array = [@[] mutableCopy];
+    self.tempTeam2Array = [@[] mutableCopy];
+    [self.scoreboard.team1ScoreTextField resignFirstResponder];
+    [self.scoreboard.team2ScoreTextField resignFirstResponder];
+
     [self.scoreboard removeFromSuperview];
 }
 
@@ -272,10 +302,6 @@
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
      UISnapBehavior *snapBehaviour = [[UISnapBehavior alloc] initWithItem:self.scoreboard snapToPoint:self.scoreBoardDestinationView.center];
     
-//    UISnapBehavior *snapBehaviour = [[UISnapBehavior alloc] initWithItem:self.scoreboard snapToPoint:CGPointMake(self.scoreboard.center.x, self.scoreboard.center.y)];
-    NSLog(@"x: %f, y:%f",self.scoreboard.center.x, self.scoreboard.center.y);
-    NSLog(@"Dx: %f, Dy:%f",self.scoreBoardDestinationView.center.x, self.scoreBoardDestinationView.center.y);
-
     //控制下落速度,數字越大越慢
     snapBehaviour.damping = .8f;
     [self.animator addBehavior:snapBehaviour];

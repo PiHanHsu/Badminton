@@ -87,8 +87,9 @@
 }
 
 - (void) playBallPressed: (id)sender{
-    GameScheduleTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameScheduleVC"];
-    [self.navigationController pushViewController:vc animated:YES];
+    [self performSegueWithIdentifier:@"Show Schedule" sender:nil];
+//    GameScheduleTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameScheduleVC"];
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -266,7 +267,9 @@
     if ([segue.destinationViewController isKindOfClass:[AddPlayerViewController class]]) {
         AddPlayerViewController * vc = segue.destinationViewController;
         vc.teamObject = self.teamObject;
-        
+    }else if ([segue.destinationViewController isKindOfClass:[GameScheduleTableViewController class]]) {
+        GameScheduleTableViewController * vc = segue.destinationViewController;
+        vc.teamObject = self.teamObject;
     }
    
 }
