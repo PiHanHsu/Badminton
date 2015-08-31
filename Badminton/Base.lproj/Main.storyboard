@@ -295,10 +295,24 @@
                                             <color key="textColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EcB-A1-ga9">
-                                            <rect key="frame" x="126" y="20" width="68" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Game 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EcB-A1-ga9">
+                                            <rect key="frame" x="128" y="20" width="65" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4fA-1I-BVP">
+                                            <rect key="frame" x="87" y="14" width="40" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kmJ-nc-Acv">
+                                            <rect key="frame" x="194" y="14" width="40" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -310,6 +324,8 @@
                                     <outlet property="player2Label" destination="fq6-xO-kEV" id="eml-Ng-K2W"/>
                                     <outlet property="player3Label" destination="0VA-aR-wXc" id="ldt-tA-YYM"/>
                                     <outlet property="player4Label" destination="q15-gz-BPa" id="g4n-si-kVB"/>
+                                    <outlet property="team1ScoreLabel" destination="4fA-1I-BVP" id="kvC-ab-GEg"/>
+                                    <outlet property="team2ScoreLabel" destination="kmJ-nc-Acv" id="Bpd-b9-azg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -478,7 +494,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MyTeamListCell" rowHeight="120" id="8Xc-eB-xKb" customClass="MyTeamListTableViewCell">
-                                <rect key="frame" x="0.0" y="32" width="320" height="120"/>
+                                <rect key="frame" x="0.0" y="96" width="320" height="120"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Xc-eB-xKb" id="YqZ-yj-VZV">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="119"/>
@@ -648,11 +664,11 @@
                             <rect key="frame" x="0.0" y="64" width="320" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="t9G-Q2-EGv">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="malePlayer.jpg" id="t9G-Q2-EGv">
                                     <rect key="frame" x="85" y="8" width="150" height="150"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BTm-b8-NtM">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BTm-b8-NtM">
                                     <rect key="frame" x="60" y="166" width="200" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -778,6 +794,9 @@
                     <navigationItem key="navigationItem" title="Profile" id="RnP-gH-n63">
                         <barButtonItem key="rightBarButtonItem" title="setting" id="8xx-iy-nPI"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="userNameLabel" destination="BTm-b8-NtM" id="1gb-gb-ZOe"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9CB-cY-iwl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -830,6 +849,7 @@
         <image name="Profile_Tab_icon" width="24" height="24"/>
         <image name="Standings_tab_icon" width="24" height="18"/>
         <image name="facebookLogin" width="320" height="61"/>
+        <image name="malePlayer.jpg" width="100" height="100"/>
         <image name="teams.png" width="222" height="227"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

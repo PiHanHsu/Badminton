@@ -38,6 +38,10 @@ typedef enum {
 
 @property (strong, nonatomic) NSDate * gameDate;
 
+@property (strong, nonatomic) NSString * team1Score;
+@property (strong, nonatomic) NSString * team2Score;
+@property (strong, nonatomic) NSNumber * isFinished;
+
 
 - (NSMutableArray *) createGameScheduleWithMalePlayers:(NSMutableArray *) malePlayerArray femalePlayer:(NSMutableArray *) femalePlayerArray;
 

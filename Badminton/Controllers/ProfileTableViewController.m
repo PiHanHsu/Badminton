@@ -9,8 +9,11 @@
 #import "ProfileTableViewController.h"
 #import "LoginTableViewController.h"
 #import <Parse/Parse.h>
+#import "Player.h"
 
 @interface ProfileTableViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
+//@property (strong, nonatomic) Player * currentPlayer;
 
 @end
 
@@ -18,6 +21,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+    [query whereKey:@"user" equalTo:[PFUser currentUser].objectId];
+    
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *player, NSError * error){
+        self.userNameLabel.text = player[@"userName"];
+        
+    }];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

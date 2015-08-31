@@ -142,6 +142,7 @@
     switch (alertView.tag) {
         case 0:
             if (buttonIndex == 0) {
+                
             }
             break;
         case 1:
@@ -153,12 +154,16 @@
                 [PFUser logOut];
                 //[PFUser unpinAllObjects];
                 //[PFObject unpinAllObjects];
-                
                 [self.navigationController popToRootViewControllerAnimated:YES];
             }
             break;
         case 2:
             if (buttonIndex == 1) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            break;
+        case 3:
+            if (buttonIndex == 0) {
                 [self.navigationController popViewControllerAnimated:YES];
             }
             break;
@@ -216,7 +221,21 @@
     cell.player2Label.text = self.game.gameScheduleArray[indexPath.row][1][0][@"userName"];
     cell.player4Label.text = self.game.gameScheduleArray[indexPath.row][1][1][@"userName"];
     
+    cell.team1ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][2];
+    cell.team2ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][3];
+    
     cell.gameNumberLabel.text = [NSString stringWithFormat:@"Game %li",indexPath.row+1];
+    
+    if ([self.game.gameScheduleArray[indexPath.row][4] boolValue]) {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.player1Label.textColor = [UIColor lightGrayColor];
+        cell.player2Label.textColor = [UIColor lightGrayColor];
+        cell.player3Label.textColor = [UIColor lightGrayColor];
+        cell.player4Label.textColor = [UIColor lightGrayColor];
+        cell.gameNumberLabel.textColor = [UIColor lightGrayColor];
+    }else
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+
     
     cell.tag = 0;
     
@@ -226,6 +245,11 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [self.scoreboard removeFromSuperview];
     
+    if ([self.game.gameScheduleArray[indexPath.row][4] boolValue]) {
+        return;
+    }
+    [self.scoreboard.team1ScoreTextField becomeFirstResponder];
+
     self.scoreboard = [[[NSBundle mainBundle] loadNibNamed:@"ScoreBoard" owner:self options:nil] objectAtIndex:0];
     self.scoreBoardDestinationView = [[UIView alloc]init];
     
@@ -234,7 +258,7 @@
     }else{
         self.scoreBoardDestinationView.center = CGPointMake(160, 64+62*indexPath.row + 62 + 5);
     }
-
+    
     self.scoreboard.layer.cornerRadius = 10.0;
     self.scoreboard.clipsToBounds = YES;
     self.scoreboard.cancelButton.layer.cornerRadius = 5.0;
@@ -247,6 +271,7 @@
     self.tempTeam1Array = self.game.gameScheduleArray[indexPath.row][0];
     self.tempTeam2Array = self.game.gameScheduleArray[indexPath.row][1];
     
+    self.scoreboard.saveButton.tag = indexPath.row;
     
     [self.view addSubview:self.scoreboard];
     [self willShow];
@@ -254,6 +279,7 @@
 
 - (void) saveScoreBoard: (id) sender {
     [self.tabBarController.tabBar setHidden:YES];
+    UIButton *saveButton = (UIButton *) sender;
     
     //TODO Save Game to Parse
     PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
@@ -273,7 +299,16 @@
     gameObject[@"Date"] = date;
     gameObject[@"Team"] = [NSString stringWithFormat:@"%@", self.teamObject.objectId];
     
-    [gameObject saveInBackground];
+    [gameObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error){
+        if (!error) {
+            self.game.gameScheduleArray[saveButton.tag][2]=self.scoreboard.team1ScoreTextField.text;
+            self.game.gameScheduleArray[saveButton.tag][3]=self.scoreboard.team2ScoreTextField.text;
+            self.game.gameScheduleArray[saveButton.tag][4] = [NSNumber numberWithBool:YES];
+
+            [self.tableView reloadData];
+            [self countUnfinishGames];
+        }
+    }];
         
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];
@@ -285,6 +320,16 @@
 
 - (void) countUnfinishGames{
     
+    for (int i = 0; i < self.game.gameScheduleArray.count ; i ++) {
+        NSLog(@"finish: %d, %@", i,self.game.gameScheduleArray[i][4] );
+        if (![self.game.gameScheduleArray[i][4] boolValue]) {
+            return;
+        }
+    }
+    
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"All Finished!!" message:@"Press OK to restart a series" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    alertView.tag = 3;
+    [alertView show];
 }
 
 - (void) cancelScoreBoard: (id) sender {
