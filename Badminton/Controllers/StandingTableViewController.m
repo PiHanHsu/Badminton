@@ -19,10 +19,14 @@
 
 @property (strong, nonatomic) NSString * bestMaleTeammate;
 @property (strong, nonatomic) NSString * bestFemaleTeammate;
-@property (weak, nonatomic) IBOutlet UILabel *overallStandingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *doubleStandingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *singleStandingLabel;
-@property (weak, nonatomic) IBOutlet UILabel *mixStandingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *overAllWinLabel;
+@property (weak, nonatomic) IBOutlet UILabel *overallLoseLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mixWinLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mixLoseLabel;
+@property (weak, nonatomic) IBOutlet UILabel *doubleWinLabel;
+@property (weak, nonatomic) IBOutlet UILabel *doubleLoseLabel;
+@property (weak, nonatomic) IBOutlet UILabel *singleWinLabel;
+@property (weak, nonatomic) IBOutlet UILabel *singleLoseLabel;
 
 @end
 
@@ -58,7 +62,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 4;
+    return 9;
 }
 
 
@@ -126,10 +130,15 @@
             mixLoses ++;
     }
 
-    self.overallStandingLabel.text = [NSString stringWithFormat:@"%luW %luL",(unsigned long)self.winGames.count, (unsigned long)self.loseGames.count];
-    self.singleStandingLabel.text = [NSString stringWithFormat:@"%dW %dL",singleWins, singleLoses];
-    self.doubleStandingLabel.text = [NSString stringWithFormat:@"%dW %dL",doulbeWins, doulbeLoses];
-    self.mixStandingLabel.text = [NSString stringWithFormat:@"%dW %dL",mixWins, mixLoses];
+    self.overAllWinLabel.text = [NSString stringWithFormat:@"%lu", self.winGames.count];
+    self.overallLoseLabel.text = [NSString stringWithFormat:@"%lu", self.loseGames.count];
+    self.doubleWinLabel.text =[NSString stringWithFormat:@"%d", doulbeWins];
+    self.doubleLoseLabel.text = [NSString stringWithFormat:@"%d", doulbeLoses];
+    self.mixWinLabel.text = [NSString stringWithFormat:@"%d", mixWins];
+    self.mixLoseLabel.text= [NSString stringWithFormat:@"%d", mixLoses];
+    self.singleWinLabel.text = [NSString stringWithFormat:@"%d", singleWins];
+    self.singleLoseLabel.text = [NSString stringWithFormat:@"%d", singleLoses];
+    
     [self.tableView reloadData];
 }
 
