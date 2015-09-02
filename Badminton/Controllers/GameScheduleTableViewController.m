@@ -22,6 +22,7 @@
 @property (strong, nonatomic) Game *game;
 @property (strong, nonatomic) NSArray * tempTeam1Array;
 @property (strong, nonatomic) NSArray * tempTeam2Array;
+@property (strong, nonatomic) NSString * gameType;
 
 @end
 
@@ -281,6 +282,14 @@
     [self.tabBarController.tabBar setHidden:YES];
     UIButton *saveButton = (UIButton *) sender;
     
+    if (self.tempTeam1Array.count == 1) {
+       self.gameType = @"single";
+    }if ([self.tempTeam1Array[0][@"isMale"] boolValue] == [self.tempTeam1Array[1][@"isMale"] boolValue]) {
+        self.gameType = @"double";
+    }else{
+        self.gameType = @"mix";
+    }
+    
     //TODO Save Game to Parse
     PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
     if ([self.scoreboard.team1ScoreTextField.text intValue] >
@@ -298,6 +307,7 @@
     NSDate * date = [NSDate date];
     gameObject[@"Date"] = date;
     gameObject[@"Team"] = [NSString stringWithFormat:@"%@", self.teamObject.objectId];
+    gameObject[@"GameType"] = self.gameType;
     
     [gameObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error){
         if (!error) {

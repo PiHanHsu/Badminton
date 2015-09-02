@@ -36,6 +36,7 @@
 		E8C283651B88AE7E0018F3A1 /* teams.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C283641B88AE7E0018F3A1 /* teams.png */; };
 		E8C283681B88B1640018F3A1 /* TeamPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283671B88B1640018F3A1 /* TeamPlayersTableViewController.m */; };
 		E8EDF7A41B9309EB00B56725 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */; };
+		E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		E8C283671B88B1640018F3A1 /* TeamPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamPlayersTableViewController.m; sourceTree = "<group>"; };
 		E8EDF7A21B9309EB00B56725 /* ProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileTableViewController.h; sourceTree = "<group>"; };
 		E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
+		E8EDF7A51B95D1A900B56725 /* StandingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandingTableViewController.h; sourceTree = "<group>"; };
+		E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandingTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -241,6 +244,8 @@
 				E83649091B8DF80200F172A4 /* AddPlayerViewController.m */,
 				E8EDF7A21B9309EB00B56725 /* ProfileTableViewController.h */,
 				E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */,
+				E8EDF7A51B95D1A900B56725 /* StandingTableViewController.h */,
+				E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 				E836491A1B8F696000F172A4 /* PlayerSwitch.m in Sources */,
 				E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */,
 				E836490A1B8DF80200F172A4 /* AddPlayerViewController.m in Sources */,
+				E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
 				E83648CB1B8C93A100F172A4 /* Team.m in Sources */,
