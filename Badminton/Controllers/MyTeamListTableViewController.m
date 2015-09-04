@@ -62,10 +62,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
    if (buttonIndex ==1) {
        
-       Team * teamObject = [Team objectWithClassName:@"Team"];
+       Team * teamObject = [Team createTeam];
        teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
        teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
        teamObject[@"isDeleted"] = [NSNumber numberWithBool:NO];
+       teamObject[@"players"] = [@[] mutableCopy];
        [[DataSource sharedInstance] addTeam:teamObject];
        
        [self.tableView reloadData];

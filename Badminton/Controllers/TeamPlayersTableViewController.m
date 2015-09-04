@@ -17,6 +17,7 @@
 
 @property (strong, nonatomic) NSMutableArray * malePlayerArray;
 @property (strong, nonatomic) NSMutableArray * femalePlayerArray;
+@property (strong, nonatomic) NSMutableArray * playerArray;
 @property (strong, nonatomic) UIButton * playBallButton;
 
 @end
@@ -39,8 +40,8 @@
     
     [self.tabBarController.tabBar setHidden:YES];
     
-    [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
-    [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
+    //[[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
+    //[[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -51,30 +52,45 @@
     
     NSDate * time1 = [NSDate date];
 
-    for (Player * player in self.teamObject[@"malePlayers"]) {
+    for (Player * player in self.teamObject[@"players"]) {
         [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
-            
-          [self.malePlayerArray addObject:player];
-          [self.tableView reloadData];
-                
-          NSDate * time2 = [NSDate date];
-          NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
-          NSLog(@"Loading male players: %f", loadingTime);
+            if ([player[@"isMale"] boolValue]) {
+                [self.malePlayerArray addObject:player];
+            }else{
+                [self.femalePlayerArray addObject:player];
+            }
+            [self.tableView reloadData];
+            NSDate * time2 = [NSDate date];
+            NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
+            NSLog(@"Loading players: %f", loadingTime);
         }];
         
     }
     
-    for (Player * player in self.teamObject[@"femalePlayers"]) {
-        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
-            
-          [self.femalePlayerArray addObject:player];
-          [self.tableView reloadData];
-            
-          NSDate * time3 = [NSDate date];
-          NSTimeInterval loadingTime = [time3 timeIntervalSinceDate:time1];
-          NSLog(@"Loading female players: %f", loadingTime);
-        }];
-    }
+//    for (Player * player in self.teamObject[@"malePlayers"]) {
+//        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
+//            
+//          [self.malePlayerArray addObject:player];
+//          [self.tableView reloadData];
+//                
+//          NSDate * time2 = [NSDate date];
+//          NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
+//          NSLog(@"Loading male players: %f", loadingTime);
+//        }];
+//        
+//    }
+//    
+//    for (Player * player in self.teamObject[@"femalePlayers"]) {
+//        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
+//            
+//          [self.femalePlayerArray addObject:player];
+//          [self.tableView reloadData];
+//            
+//          NSDate * time3 = [NSDate date];
+//          NSTimeInterval loadingTime = [time3 timeIntervalSinceDate:time1];
+//          NSLog(@"Loading female players: %f", loadingTime);
+//        }];
+//    }
     
 }
 

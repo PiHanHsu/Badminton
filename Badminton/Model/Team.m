@@ -34,14 +34,17 @@
 
 
 - (void)addPlayer: (Player *)player{
+
+    [self.players addObject:player];
+    [self saveInBackground];
     
-    if ([player[@"isMale"] boolValue]) {
-        [self.malePlayers addObject:player];
-    }else
-        [self.femalePlayers addObject:player];
-    
-    NSLog(@"Male: %@", self.malePlayers);
-    NSLog(@"Female players: %@", self.femalePlayers);
-    [self saveEventually];
+//    if ([player[@"isMale"] boolValue]) {
+//        [self.malePlayers addObject:player];
+//    }else
+//        [self.femalePlayers addObject:player];
+//    
+//    NSLog(@"Male: %@", self.malePlayers);
+//    NSLog(@"Female players: %@", self.femalePlayers);
+//    [self saveEventually];
 }
 @end
