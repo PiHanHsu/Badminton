@@ -12,6 +12,7 @@
 #import <FBSDKCoreKit.h>
 #import "PlayListDataSource.h"
 #import "MyTeamListTableViewController.h"
+#import "DataSource.h"
 
 @interface LoginTableViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -46,7 +47,8 @@
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
         [self.indicator startAnimating];
-         [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+         //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+        [[DataSource sharedInstance] loadTeamsFromServer];
     }
     
     //Go to next Page after get data
@@ -106,7 +108,8 @@
                                  password:self.passwordTextField.text
                                     block:^(PFUser *user, NSError *error) {
                                         if (user) {
-                                           [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                                           //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                                            [[DataSource sharedInstance] loadTeamsFromServer];
                                         } else {
                                             UIAlertView * av = [[UIAlertView alloc]
                                                                 initWithTitle:@"Oops, Sorry!"
@@ -152,7 +155,8 @@
             } else {
                 NSLog(@"User with facebook logged in!");
                 [self.indicator stopAnimating];
-                [[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+                [[DataSource sharedInstance] loadTeamsFromServer];
             }
         }
     }];

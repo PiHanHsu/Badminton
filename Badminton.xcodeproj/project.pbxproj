@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C58066F4FBAB768813FF8B94 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A75B19B9E36D3E81268D288B /* libPods.a */; };
+		E8149C7B1B99A039002E3A62 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E8149C7A1B99A039002E3A62 /* DataSource.m */; };
 		E83648CB1B8C93A100F172A4 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648CA1B8C93A100F172A4 /* Team.m */; };
 		E83648CE1B8C93BF00F172A4 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648CD1B8C93BF00F172A4 /* Game.m */; };
 		E83649031B8DD8CC00F172A4 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = E83649021B8DD8CC00F172A4 /* Player.m */; };
@@ -53,6 +54,8 @@
 		416C2CF33F1170E2E823E9A3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A75B19B9E36D3E81268D288B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCBD8DEAD5093EF78C73240F /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E8149C791B99A039002E3A62 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSource.h; path = Model/DataSource.h; sourceTree = "<group>"; };
+		E8149C7A1B99A039002E3A62 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataSource.m; path = Model/DataSource.m; sourceTree = "<group>"; };
 		E83648C91B8C93A100F172A4 /* Team.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Team.h; path = Model/Team.h; sourceTree = "<group>"; };
 		E83648CA1B8C93A100F172A4 /* Team.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Team.m; path = Model/Team.m; sourceTree = "<group>"; };
 		E83648CC1B8C93BF00F172A4 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = Model/Game.h; sourceTree = "<group>"; };
@@ -263,6 +266,8 @@
 				E83649021B8DD8CC00F172A4 /* Player.m */,
 				E83649181B8F696000F172A4 /* PlayerSwitch.h */,
 				E83649191B8F696000F172A4 /* PlayerSwitch.m */,
+				E8149C791B99A039002E3A62 /* DataSource.h */,
+				E8149C7A1B99A039002E3A62 /* DataSource.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 				E836491A1B8F696000F172A4 /* PlayerSwitch.m in Sources */,
 				E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */,
 				E836490A1B8DF80200F172A4 /* AddPlayerViewController.m in Sources */,
+				E8149C7B1B99A039002E3A62 /* DataSource.m in Sources */,
 				E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,

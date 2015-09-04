@@ -11,6 +11,7 @@
 #import "TeamPlayersTableViewController.h"
 #import "PlayListDataSource.h"
 #import "Team.h"
+#import "DataSource.h"
 
 
 @interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
@@ -28,8 +29,8 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 120;
     
-    self.teamArray = [PlayListDataSource sharedInstance].teamArray;
-        
+    self.teamArray = [DataSource sharedInstance].teamArray;
+    
     [self.tabBarController.tabBar setHidden:NO];
 }
 
@@ -64,57 +65,12 @@
        Team * teamObject = [Team objectWithClassName:@"Team"];
        teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
        teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
+       teamObject[@"isDeleted"] = [NSNumber numberWithBool:NO];
+       [[DataSource sharedInstance] addTeam:teamObject];
        
-       [teamObject saveEventually:^(BOOL succeeded, NSError * error){
-           if (!error){
-               [self updateData];
-           }
-       }];
-    }
-}
-
--(void) updateData{
-    
-    //TODO create new Team update fail, can't add player
-    
-    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    //[query fromLocalDatastore];
-    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
-    [query findObjectsInBackgroundWithBlock:
-     ^(NSArray * objects, NSError *error){
-         if (!error) {
-            
-             [self.teamArray removeAllObjects];
-             [self.teamArray addObjectsFromArray:objects];
-             [self.tableView reloadData];
-             NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
-         }else{
-             NSLog(@"error: %@" ,error);
-         }
-         
-     }];
-}
-
--(void) deleteTeam{
-    
-    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-    //[query fromLocalDatastore];
-    [query whereKey:@"createBy" equalTo:[PFUser currentUser].objectId];
-    [query findObjectsInBackgroundWithBlock:
-     ^(NSArray * objects, NSError *error){
-         if (!error) {
-             for (PFObject * object in objects) {
-                 [object saveEventually];
-             }
-             [self.teamArray removeAllObjects];
-             [self.teamArray addObjectsFromArray:objects];
-             [self.tableView reloadData];
-             //NSLog(@"rows: %lu", (unsigned long)self.teamArray.count);
-         }else{
-             NSLog(@"error: %@" ,error);
-         }
-         
-     }];
+       [self.tableView reloadData];
+       [teamObject saveInBackground];
+        }
 }
 
 #pragma mark - Table view data source
@@ -161,16 +117,12 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         //delete from Parse
-        PFObject * objectToBeDelete = self.teamArray[indexPath.row];
-        PFQuery * query = [PFQuery queryWithClassName:@"Team"];
-        //[query fromLocalDatastore];
-        [query whereKey:@"objectId" equalTo:objectToBeDelete.objectId];
-         [query getObjectInBackgroundWithId:objectToBeDelete.objectId block:^(PFObject * toBeDeleteObj, NSError * error){
-            //[toBeDeleteObj unpin];
-            [toBeDeleteObj delete];
-             [self.teamArray removeObjectAtIndex:indexPath.row];
-             [self.tableView reloadData];
-        }];
+        Team * teamToBeDelete = self.teamArray[indexPath.row];
+        [[DataSource sharedInstance] deleteTeam:teamToBeDelete];
+        [self.tableView reloadData];
+        
+        teamToBeDelete[@"isDeleted"] = [NSNumber numberWithBool:YES];
+        [teamToBeDelete saveInBackground];
         
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
