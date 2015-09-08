@@ -211,11 +211,13 @@
     
     GameScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"playListCell" forIndexPath:indexPath];
     //not work?
-//    if (self.game.gameScheduleArray[indexPath.row][0][1][@"isMale"]) {
-//        cell.player3Label.textColor = [UIColor blueColor];
-//    }else{
-//        cell.player3Label.textColor = [UIColor orangeColor];
-//    }
+    if ([self.game.gameScheduleArray[indexPath.row][0][1][@"isMale"] boolValue]) {
+        cell.player3Label.textColor = [UIColor blueColor];
+        cell.player4Label.textColor = [UIColor blueColor];
+    }else{
+        cell.player3Label.textColor = [UIColor orangeColor];
+        cell.player4Label.textColor = [UIColor orangeColor];
+    }
     
     cell.player1Label.text = self.game.gameScheduleArray[indexPath.row][0][0][@"userName"];
     cell.player3Label.text = self.game.gameScheduleArray[indexPath.row][0][1][@"userName"];
