@@ -237,7 +237,6 @@
 			isa = PBXGroup;
 			children = (
 				E8C283531B8892AC0018F3A1 /* LoginTableViewController.h */,
-				E8C283541B8892AC0018F3A1 /* LoginTableViewController.m */,
 				E877D8101B8A205C007D9E53 /* SignupTableViewController.h */,
 				E877D8111B8A205C007D9E53 /* SignupTableViewController.m */,
 				E8C283561B8892CC0018F3A1 /* MyTeamListTableViewController.h */,
@@ -251,6 +250,7 @@
 				E8EDF7A21B9309EB00B56725 /* ProfileTableViewController.h */,
 				E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */,
 				E8EDF7A51B95D1A900B56725 /* StandingTableViewController.h */,
+				E8C283541B8892AC0018F3A1 /* LoginTableViewController.m */,
 				E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */,
 			);
 			path = Controllers;

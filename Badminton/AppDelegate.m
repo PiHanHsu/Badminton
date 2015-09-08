@@ -31,30 +31,33 @@
     [PFFacebookUtils initializeFacebook];
     
     // Register for Push Notitications
-    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-                                                    UIUserNotificationTypeBadge |
-                                                    UIUserNotificationTypeSound);
-    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-                                                                             categories:nil];
-    [application registerUserNotificationSettings:settings];
-    [application registerForRemoteNotifications];
+//    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+//                                                    UIUserNotificationTypeBadge |
+//                                                    UIUserNotificationTypeSound);
+//    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+//                                                                             categories:nil];
+//    [application registerUserNotificationSettings:settings];
+//    [application registerForRemoteNotifications];
 
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
+    
     
     //customized font for nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0]];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         [[UINavigationBar appearance] setTranslucent:NO];
+        [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
+                                          forBarPosition:UIBarPositionAny
+                                              barMetrics:UIBarMetricsDefault];
+        
+        [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     }
     
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
-                                      forBarPosition:UIBarPositionAny
-                                          barMetrics:UIBarMetricsDefault];
     
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     
     //customized for TabBar
     

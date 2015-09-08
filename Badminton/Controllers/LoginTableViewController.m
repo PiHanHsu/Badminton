@@ -27,6 +27,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0){
+        self.navigationController.navigationBarHidden = YES;
+        self.tableView.frame = CGRectMake(0, -20,  320, 480);
+    }
+    
     //set up indicator
     self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     self.indicator.center = CGPointMake(160, 190);

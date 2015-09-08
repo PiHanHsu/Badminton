@@ -14,7 +14,7 @@
 @property (nonatomic,strong) NSMutableArray *playerArray;
 @property (nonatomic,strong) NSMutableArray *gameArray;
 
-@property (strong, nonatomic) Player * currentPlayer;
+@property (strong, nonatomic) PFObject * currentPlayer;
 
 @end
 
@@ -72,22 +72,31 @@
 
 - (void) loadTeamsFromServer{
     PFUser * user = [PFUser currentUser];
-    PFQuery * getUserId = [Player query];
+    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
     [getUserId whereKey:@"user" equalTo:user.objectId];
-    [getUserId findObjectsInBackgroundWithBlock:^(NSArray * players, NSError * error){
-        self.currentPlayer = players[0];
-    }];
+    self.currentPlayer = [getUserId getFirstObject];
+    
+//    [getUserId findObjectsInBackgroundWithBlock:^(NSArray * players, NSError * error){
+//        if (!error) {
+//            self.currentPlayer = players[0];
+//            NSLog(@"currentPlayer: %@", self.currentPlayer);
+//        }else{
+//            NSLog(@"error: %@", error);
+//        }
+//       
+//    }];
     
     //this query doesn't work!!
-//    PFQuery * queryFromPlayers = [Team query];
-//    [queryFromPlayers whereKey:@"malePlayers" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:self.currentPlayer.objectId]];
-    //PFQuery *query = [PFQuery orQueryWithSubqueries:@[queryForCreatedBy,queryForNotDeleted]];
+    PFQuery * queryFromPlayers = [Team query];
+    [queryFromPlayers whereKey:@"players" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:self.currentPlayer.objectId]];
     
     PFQuery * query = [Team query];
     [query whereKey:@"createBy" equalTo:user.objectId];
     [query whereKey:@"isDeleted" equalTo:[NSNumber numberWithBool:NO]];
     
-    [query findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
+    PFQuery *queryAll = [PFQuery orQueryWithSubqueries:@[query,queryFromPlayers]];
+    
+    [queryAll findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
        
         self.teamArray = [teams mutableCopy];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
