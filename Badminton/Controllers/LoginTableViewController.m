@@ -123,6 +123,9 @@
                                                             cancelButtonTitle:@"OK"
                                                             otherButtonTitles:nil, nil];
                                             [av show];
+                                            [self.indicator stopAnimating];
+                                            self.emailTextField.text = @"";
+                                            self.passwordTextField.text = @"";
                                         }
                                     }];
 }
