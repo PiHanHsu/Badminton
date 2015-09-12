@@ -4,6 +4,11 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="scoreboard.ttf">
+            <string>ScoreBoard</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Select Players-->
         <scene sceneID="EJE-kG-7Hs">
@@ -371,10 +376,16 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginPageImage.png" id="Dpm-1X-jMv">
-                                    <rect key="frame" x="98" y="26" width="124" height="147"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Dz-ov-mYz">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <string key="text">WELCOME
+TO 
+SCOREBOARD</string>
+                                    <fontDescription key="fontDescription" name="ScoreBoard" family="Score Board" pointSize="40"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" red="0.50980392159999999" green="0.70588235290000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
@@ -634,7 +645,7 @@
                             <tableViewSection id="tru-Qy-jZo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="5IL-dN-ezw">
-                                        <rect key="frame" x="0.0" y="108" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="44" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5IL-dN-ezw" id="1u8-aW-hye">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -679,7 +690,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="vfi-Eg-BjL">
-                                        <rect key="frame" x="0.0" y="152" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="88" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vfi-Eg-BjL" id="ULb-LJ-N1r">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -724,7 +735,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="hcg-op-mb2">
-                                        <rect key="frame" x="0.0" y="196" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="132" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hcg-op-mb2" id="gY3-rG-rPg">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -769,7 +780,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" rowHeight="54" id="hex-GX-RCr">
-                                        <rect key="frame" x="0.0" y="240" width="320" height="54"/>
+                                        <rect key="frame" x="0.0" y="176" width="320" height="54"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hex-GX-RCr" id="VV3-f5-UQN">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
@@ -819,7 +830,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="eYc-Ac-5ey">
-                                        <rect key="frame" x="0.0" y="294" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="230" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eYc-Ac-5ey" id="dm4-mJ-yLH">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -843,7 +854,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="NX1-qA-TXk">
-                                        <rect key="frame" x="0.0" y="338" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="274" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="NX1-qA-TXk" id="wZ6-ET-JEk">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -867,7 +878,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="u3E-l5-UrG">
-                                        <rect key="frame" x="0.0" y="382" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="318" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="u3E-l5-UrG" id="TUm-gD-cPz">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -891,7 +902,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="5NM-Yj-3my">
-                                        <rect key="frame" x="0.0" y="426" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="362" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5NM-Yj-3my" id="pbe-MS-IaL">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -915,7 +926,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseCell" id="vgm-qF-938">
-                                        <rect key="frame" x="0.0" y="470" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="406" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vgm-qF-938" id="ilz-Uf-gom">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1150,7 +1161,6 @@
     <resources>
         <image name="Back_icon" width="22" height="22"/>
         <image name="Games_Tab_icon" width="24" height="23"/>
-        <image name="LoginPageImage.png" width="1241" height="1475"/>
         <image name="More_icon" width="22" height="22"/>
         <image name="Profile_Tab_icon" width="24" height="24"/>
         <image name="Standings_tab_icon" width="24" height="18"/>
