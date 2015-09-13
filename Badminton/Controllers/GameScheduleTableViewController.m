@@ -40,32 +40,38 @@
 
 - (void) viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==3) {
-    }else if (self.malePlaylistArrayNew.count == 4 && self.femalePlaylistArrayNew.count ==3){
-    }else if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==2){
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 0){
-        NSString * title = @"沒人是要打個鬼啊！";
-        [self alertViewWithTitle:title withMessage:nil];
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 1){
-        NSString * title = @"1個人？ 在開玩笑吧！";
-        [self alertViewWithTitle:title withMessage:nil];
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 2){
-        NSString * title = @"請不要污辱程式設計師的智商！";
-        [self alertViewWithTitle:title withMessage:nil];
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 3){
-        NSString * title = @"3個人? 有點複雜，要花點時間算一下，不如你們先開打吧！";
-        [self alertViewWithTitle:title withMessage:nil];
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) ==4 ){
-        NSString * title = @"雙打打累打單打\n單打打累打雙打";
-        NSString * message = @"請大聲唸10遍！！";
-        [self alertViewWithTitle:title withMessage:message];
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) ==5 ){
-        NSString * title = @"大哥大姐～\n 人這麼少自己輪一下好唄！";
-        [self alertViewWithTitle:title withMessage:nil];
-    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count)==6){
-        NSString * title = @"動點腦，6個人很好排，腦子久不動可是會生鏽滴～";
-        [self alertViewWithTitle:title withMessage:nil];
-    }else{
+//    if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==3) {
+//    }else if (self.malePlaylistArrayNew.count == 4 && self.femalePlaylistArrayNew.count ==3){
+//    }else if (self.malePlaylistArrayNew.count == 5 && self.femalePlaylistArrayNew.count ==2){
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 0){
+//        NSString * title = @"沒人是要打個鬼啊！";
+//        [self alertViewWithTitle:title withMessage:nil];
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 1){
+//        NSString * title = @"1個人？ 在開玩笑吧！";
+//        [self alertViewWithTitle:title withMessage:nil];
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 2){
+//        NSString * title = @"請不要污辱程式設計師的智商！";
+//        [self alertViewWithTitle:title withMessage:nil];
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) == 3){
+//        NSString * title = @"3個人? 有點複雜，要花點時間算一下，不如你們先開打吧！";
+//        [self alertViewWithTitle:title withMessage:nil];
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) ==4 ){
+//        NSString * title = @"雙打打累打單打\n單打打累打雙打";
+//        NSString * message = @"請大聲唸10遍！！";
+//        [self alertViewWithTitle:title withMessage:message];
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count) ==5 ){
+//        NSString * title = @"大哥大姐～\n 人這麼少自己輪一下好唄！";
+//        [self alertViewWithTitle:title withMessage:nil];
+//    }else if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count)==6){
+//        NSString * title = @"動點腦，6個人很好排，腦子久不動可是會生鏽滴～";
+//        [self alertViewWithTitle:title withMessage:nil];
+//    }else{
+//        NSString * title = @"Oops! Sorry!";
+//        NSString * message = @"Please reselect again!";
+//        [self alertViewWithTitle:title withMessage:message];
+//
+//    }
+    if ((self.malePlaylistArrayNew.count + self.femalePlaylistArrayNew.count)>8) {
         NSString * title = @"Oops! Sorry!";
         NSString * message = @"Please reselect again!";
         [self alertViewWithTitle:title withMessage:message];
@@ -188,7 +194,12 @@
     self.malePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.malePlaylistArray];
     self.femalePlaylistArrayNew = [[PlayListDataSource sharedInstance]sheffleList:self.femalePlaylistArray];
     self.game = [Game new];
-    self.game.gameScheduleArray = [self.game createGameScheduleWithMalePlayers:self.malePlaylistArrayNew femalePlayer:self.femalePlaylistArrayNew];
+    if ((self.malePlaylistArray.count + self.femalePlaylistArray.count) < 4) {
+        self.game.gameScheduleArray = [self.game createSinglePlayerGames:self.malePlaylistArrayNew femalePlayer:self.femalePlaylistArrayNew];
+    }else{
+         self.game.gameScheduleArray = [self.game createGameScheduleWithMalePlayers:self.malePlaylistArrayNew femalePlayer:self.femalePlaylistArrayNew];
+    }
+   
     
     [self.tableView reloadData];
  
@@ -210,19 +221,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     GameScheduleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"playListCell" forIndexPath:indexPath];
-    //not work?
-    if ([self.game.gameScheduleArray[indexPath.row][0][1][@"isMale"] boolValue]) {
-        cell.player3Label.textColor = [UIColor blueColor];
-        cell.player4Label.textColor = [UIColor blueColor];
-    }else{
-        cell.player3Label.textColor = [UIColor orangeColor];
-        cell.player4Label.textColor = [UIColor orangeColor];
-    }
     
-    cell.player1Label.text = self.game.gameScheduleArray[indexPath.row][0][0][@"userName"];
-    cell.player3Label.text = self.game.gameScheduleArray[indexPath.row][0][1][@"userName"];
-    cell.player2Label.text = self.game.gameScheduleArray[indexPath.row][1][0][@"userName"];
-    cell.player4Label.text = self.game.gameScheduleArray[indexPath.row][1][1][@"userName"];
+     if ([self.game.gameScheduleArray[indexPath.row][0] count] == 1) {
+         cell.player1Label.frame = CGRectMake(8, 20, 80, 21);
+         cell.player2Label.frame = CGRectMake(232, 20, 80, 21);
+         cell.player1Label.text = self.game.gameScheduleArray[indexPath.row][0][0][@"userName"];
+         cell.player2Label.text = self.game.gameScheduleArray[indexPath.row][1][0][@"userName"];
+         cell.player3Label.text = @"";
+         cell.player4Label.text =@"";
+     }else{
+         if ([self.game.gameScheduleArray[indexPath.row][0][1][@"isMale"] boolValue]) {
+             cell.player3Label.textColor = [UIColor blueColor];
+             cell.player4Label.textColor = [UIColor blueColor];
+         }else{
+             cell.player3Label.textColor = [UIColor orangeColor];
+             cell.player4Label.textColor = [UIColor orangeColor];
+         }
+         cell.player1Label.text = self.game.gameScheduleArray[indexPath.row][0][0][@"userName"];
+         cell.player3Label.text = self.game.gameScheduleArray[indexPath.row][0][1][@"userName"];
+         cell.player2Label.text = self.game.gameScheduleArray[indexPath.row][1][0][@"userName"];
+         cell.player4Label.text = self.game.gameScheduleArray[indexPath.row][1][1][@"userName"];
+     }
+    
+
+    
     
     cell.team1ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][2];
     cell.team2ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][3];

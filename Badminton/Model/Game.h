@@ -44,5 +44,6 @@ typedef enum {
 
 
 - (NSMutableArray *) createGameScheduleWithMalePlayers:(NSMutableArray *) malePlayerArray femalePlayer:(NSMutableArray *) femalePlayerArray;
+- (NSMutableArray *) createSinglePlayerGames: (NSMutableArray *)malePlayerArray femalePlayer:(NSMutableArray *) femalePlayerArray;
 
 @end
