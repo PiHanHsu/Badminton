@@ -42,6 +42,7 @@ typedef enum {
 @property (strong, nonatomic) NSString * team2Score;
 @property (strong, nonatomic) NSNumber * isFinished;
 
+@property (strong, nonatomic) NSMutableArray * playerArray;
 
 - (NSMutableArray *) createGameScheduleWithMalePlayers:(NSMutableArray *) malePlayerArray femalePlayer:(NSMutableArray *) femalePlayerArray;
 - (NSMutableArray *) createSinglePlayerGames: (NSMutableArray *)malePlayerArray femalePlayer:(NSMutableArray *) femalePlayerArray;

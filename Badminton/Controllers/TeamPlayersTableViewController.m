@@ -40,8 +40,6 @@
     
     [self.tabBarController.tabBar setHidden:YES];
     
-    //[[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
-    //[[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -64,33 +62,7 @@
             NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
             NSLog(@"Loading players: %f", loadingTime);
         }];
-        
     }
-    
-//    for (Player * player in self.teamObject[@"malePlayers"]) {
-//        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
-//            
-//          [self.malePlayerArray addObject:player];
-//          [self.tableView reloadData];
-//                
-//          NSDate * time2 = [NSDate date];
-//          NSTimeInterval loadingTime = [time2 timeIntervalSinceDate:time1];
-//          NSLog(@"Loading male players: %f", loadingTime);
-//        }];
-//        
-//    }
-//    
-//    for (Player * player in self.teamObject[@"femalePlayers"]) {
-//        [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
-//            
-//          [self.femalePlayerArray addObject:player];
-//          [self.tableView reloadData];
-//            
-//          NSDate * time3 = [NSDate date];
-//          NSTimeInterval loadingTime = [time3 timeIntervalSinceDate:time1];
-//          NSLog(@"Loading female players: %f", loadingTime);
-//        }];
-//    }
     
 }
 
@@ -200,6 +172,7 @@
     }
     
     //TODO can't switch new cell
+    cell.playerSwitch.on = NO;
     [cell.playerSwitch addTarget:self action:@selector(selectPlayers:) forControlEvents:UIControlEventTouchUpInside];
 
     return cell;
@@ -245,15 +218,18 @@
         // Delete the row from the data source
        
         if (indexPath.section == 1) {
-            
-            [self.femalePlayerArray removeObjectAtIndex:indexPath.row];
-            [self.teamObject[@"femalePlayers"] removeObjectAtIndex:indexPath.row];
+            Player * playerToBeDeleted = self.malePlayerArray[indexPath.row];
+            [self.teamObject[@"players"] removeObject: playerToBeDeleted];
             [self.teamObject saveEventually];
+
+            [self.femalePlayerArray removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
         }else if (indexPath.section == 0){
-            [self.malePlayerArray removeObjectAtIndex:indexPath.row];
-            [self.teamObject[@"malePlayers"] removeObjectAtIndex:indexPath.row];
+            Player * playerToBeDeleted = self.malePlayerArray[indexPath.row];
+            [self.teamObject[@"players"] removeObject: playerToBeDeleted];
             [self.teamObject saveEventually];
+            
+            [self.malePlayerArray removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
         }
     }

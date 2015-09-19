@@ -113,16 +113,7 @@
     return _femalePlaylistArrayNew;
 }
 
-- (IBAction)backButtonPressed:(id)sender {
-    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Notice!"
-                                                        message:@"This schedule won't be saved if you exit now."
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"OK",
-                               nil];
-    alertView.tag =2;
-    [alertView show];
-}
+
 #pragma mark AlertView Delegate
 
 - (void)alertViewWithTitle:(NSString *)title withMessage:(NSString *)mesg {
@@ -139,10 +130,34 @@
 
 
 - (IBAction)refreshButtonPressed:(id)sender {
-    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save Games", @"Refresh Game", @"Logout", nil];
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save Games", @"Refresh Game", nil];
     alertView.tag = 1;
     [alertView show];
     
+}
+- (IBAction)backButtonPressed:(id)sender {
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"Notice!"
+                                                        message:@"This schedule won't be saved if you exit now."
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"OK",
+                               nil];
+    alertView.tag =2;
+    [alertView show];
+}
+
+- (void) countUnfinishGames{
+    
+    for (int i = 0; i < self.game.gameScheduleArray.count ; i ++) {
+        NSLog(@"finish: %d, %@", i,self.game.gameScheduleArray[i][4] );
+        if (![self.game.gameScheduleArray[i][4] boolValue]) {
+            return;
+        }
+    }
+    
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"All Finished!!" message:@"Press OK to restart a series" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    alertView.tag = 3;
+    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -157,21 +172,20 @@
                 
             }else if (buttonIndex ==2){
                 [self refreshGames];
-            }else if (buttonIndex ==3){
-                [PFUser logOut];
-                //[PFUser unpinAllObjects];
-                //[PFObject unpinAllObjects];
-                [self.navigationController popToRootViewControllerAnimated:YES];
             }
             break;
         case 2:
             if (buttonIndex == 1) {
                 [self.navigationController popViewControllerAnimated:YES];
+                [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
+                [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
             }
             break;
         case 3:
             if (buttonIndex == 0) {
                 [self.navigationController popViewControllerAnimated:YES];
+                [[PlayListDataSource sharedInstance].maleSelectedArray removeAllObjects];
+                [[PlayListDataSource sharedInstance].femaleSelectedArray removeAllObjects];
             }
             break;
 
@@ -352,19 +366,7 @@
     // if unfinish Game == 0 , show alrerview and back to Time VC
 }
 
-- (void) countUnfinishGames{
-    
-    for (int i = 0; i < self.game.gameScheduleArray.count ; i ++) {
-        NSLog(@"finish: %d, %@", i,self.game.gameScheduleArray[i][4] );
-        if (![self.game.gameScheduleArray[i][4] boolValue]) {
-            return;
-        }
-    }
-    
-    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"All Finished!!" message:@"Press OK to restart a series" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-    alertView.tag = 3;
-    [alertView show];
-}
+
 
 - (void) cancelScoreBoard: (id) sender {
     self.tempTeam1Array = [@[] mutableCopy];

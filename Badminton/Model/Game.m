@@ -9,7 +9,7 @@
 #import "Game.h"
 #import "Player.h"
 @interface Game()
-@property (strong, nonatomic) NSMutableArray * playerArray;
+
 
 @end
 
@@ -33,6 +33,7 @@
 @dynamic team2Score;
 @dynamic isFinished;
 
+@dynamic playerArray;
 
 +(void)load {
     [self registerSubclass];
@@ -187,24 +188,33 @@
     while (remaining > 0) {
         
         int n = (int)self.playerArray.count;
+        NSMutableArray * team = [@[] mutableCopy];
+       
+        Player * player1 = self.playerArray[arc4random_uniform(n)];
+        Player * player2 = self.playerArray[arc4random_uniform(n)];
         
-        Player * player = self.playerArray[arc4random_uniform(n)];
+        int loop = 0;
+        loop ++;
         
-            if (![oneMatch containsObject:player]) {
-                [oneMatch addObject:player];
-                
-                [self.playerArray removeObject:player];
-                
-                if (self.playerArray.count == 0) {
+        if (player1 != player2) {
+            team = [NSMutableArray arrayWithObjects:player1,player2, nil];
+           
+            if (![self.gameScheduleArray containsObject:team]) {
+                [oneMatch addObject:team];
+                [self.playerArray removeObject:player1];
+                [self.playerArray removeObject:player2];
+                if (self.playerArray.count <=1) {
                     [self.playerArray addObjectsFromArray:malePlayerArray];
                     [self.playerArray addObjectsFromArray:femalePlayerArray];
                 }
-                if (oneMatch.count ==4) {
-                    self.team1Array[i] = [NSMutableArray arrayWithObjects:oneMatch[0],oneMatch[1], nil];
-                    self.team2Array[i] = [NSMutableArray arrayWithObjects:oneMatch[2],oneMatch[3], nil];
-                    remaining = 0;
-                }
             }
+            if (oneMatch.count ==2) {
+                self.team1Array[i] = oneMatch[0];
+                self.team2Array[i] = oneMatch[1];
+                remaining = 0;
+                NSLog(@"loop: %d", loop);
+            }
+        }
     }
    
     //NSMutableArray * randomArray = [@[] mutableCopy];
