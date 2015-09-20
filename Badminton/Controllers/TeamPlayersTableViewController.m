@@ -40,6 +40,7 @@
     
     [self.tabBarController.tabBar setHidden:YES];
     
+
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -218,7 +219,7 @@
         // Delete the row from the data source
        
         if (indexPath.section == 1) {
-            Player * playerToBeDeleted = self.malePlayerArray[indexPath.row];
+            Player * playerToBeDeleted = self.femalePlayerArray[indexPath.row];
             [self.teamObject[@"players"] removeObject: playerToBeDeleted];
             [self.teamObject saveEventually];
 

@@ -262,6 +262,15 @@
     
     cell.team1ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][2];
     cell.team2ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][3];
+    if ([self.game.gameScheduleArray[indexPath.row][2] intValue] > 0){
+        if ([cell.team1ScoreLabel.text intValue] > [cell.team2ScoreLabel.text intValue]) {
+            cell.team1ScoreLabel.textColor = [UIColor redColor];
+        }else{
+            cell.team2ScoreLabel.textColor = [UIColor redColor];
+        }
+    }
+   
+    
     
     cell.gameNumberLabel.text = [NSString stringWithFormat:@"Game %li",indexPath.row+1];
     
@@ -352,18 +361,91 @@
             self.game.gameScheduleArray[saveButton.tag][2]=self.scoreboard.team1ScoreTextField.text;
             self.game.gameScheduleArray[saveButton.tag][3]=self.scoreboard.team2ScoreTextField.text;
             self.game.gameScheduleArray[saveButton.tag][4] = [NSNumber numberWithBool:YES];
-
+            
             [self.tableView reloadData];
             [self countUnfinishGames];
+            
         }
     }];
-        
+    
+    [self updateStandingWithWinner1:gameObject[@"WinTeam"][0] winner2:gameObject[@"WinTeam"][1] loser1:gameObject[@"LoseTeam"][0] loser2:gameObject[@"LoseTeam"][1] gameType:gameObject[@"GameType"]];
+    
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];
     [self.scoreboard.team2ScoreTextField resignFirstResponder];
 
     //TODO count unfinish Games
-    // if unfinish Game == 0 , show alrerview and back to Time VC
+    // if unfinish Game == 0 , show alrerview and back to Team VC
+}
+
+- (void)updateStandingWithWinner1: (Player *) winner1 winner2: (Player *) winner2 loser1: (Player *) loser1 loser2: (Player *) loser2 gameType:(NSString *)gameType{
+   
+    for (int i = 0 ; i < self.teamObject.teamPlayerStandingArray.count ; i ++) {
+        if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:winner1.objectId]) {
+            int wins = [self.teamObject.teamPlayerStandingArray[i][@"wins"] intValue];
+            wins ++;
+            self.teamObject.teamPlayerStandingArray[i][@"wins"] = [NSNumber numberWithInt:wins];
+            if ([gameType isEqualToString:@"double"]) {
+                int doubleWins = [self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] intValue];
+                doubleWins ++;
+                self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] = [NSNumber numberWithInt:doubleWins];
+            }else if ([gameType isEqualToString:@"mix"]){
+                int mixWins = [self.teamObject.teamPlayerStandingArray[i][@"mixWins"] intValue];
+                mixWins ++;
+                self.teamObject.teamPlayerStandingArray[i][@"mixWins"] = [NSNumber numberWithInt:mixWins];
+            }
+            
+            [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
+        }else if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:winner2.objectId]) {
+            int wins = [self.teamObject.teamPlayerStandingArray[i][@"wins"] intValue];
+            wins ++;
+            self.teamObject.teamPlayerStandingArray[i][@"wins"] = [NSNumber numberWithInt:wins];
+            if ([gameType isEqualToString:@"double"]) {
+                int doubleWins = [self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] intValue];
+                doubleWins ++;
+                self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] = [NSNumber numberWithInt:doubleWins];
+            }else if ([gameType isEqualToString:@"mix"]){
+                int mixWins = [self.teamObject.teamPlayerStandingArray[i][@"mixWins"] intValue];
+                mixWins ++;
+                self.teamObject.teamPlayerStandingArray[i][@"mixWins"] = [NSNumber numberWithInt:mixWins];
+            }
+            
+             [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
+            
+        }else if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:loser1.objectId]) {
+            int loses = [self.teamObject.teamPlayerStandingArray[i][@"loses"] intValue];
+            loses ++;
+            self.teamObject.teamPlayerStandingArray[i][@"loses"] = [NSNumber numberWithInt:loses];
+            if ([gameType isEqualToString:@"double"]) {
+                int doubleLoses = [self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] intValue];
+                doubleLoses ++;
+                self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] = [NSNumber numberWithInt:doubleLoses];
+            }else if ([gameType isEqualToString:@"mix"]){
+                int mixLoses = [self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] intValue];
+                mixLoses ++;
+                self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] = [NSNumber numberWithInt:mixLoses];
+            }
+            
+             [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
+            
+        }else if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:loser2.objectId]) {
+            int loses = [self.teamObject.teamPlayerStandingArray[i][@"loses"] intValue];
+            loses ++;
+            self.teamObject.teamPlayerStandingArray[i][@"loses"] = [NSNumber numberWithInt:loses];
+            if ([gameType isEqualToString:@"double"]) {
+                int doubleLoses = [self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] intValue];
+                doubleLoses ++;
+                self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] = [NSNumber numberWithInt:doubleLoses];
+            }else if ([gameType isEqualToString:@"mix"]){
+                int mixLoses = [self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] intValue];
+                mixLoses ++;
+                self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] = [NSNumber numberWithInt:mixLoses];
+            }
+            
+             [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
+        }
+    }
+    
 }
 
 

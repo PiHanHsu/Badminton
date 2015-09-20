@@ -7,6 +7,7 @@
 //
 
 #import "Team.h"
+#import "Standing.h"
 
 @implementation Team
 
@@ -16,6 +17,7 @@
 @dynamic malePlayers;
 @dynamic femalePlayers;
 @dynamic players;
+@dynamic teamPlayerStandingArray;
 
 +(void)load {
     [self registerSubclass];
@@ -37,14 +39,43 @@
 
     [self.players addObject:player];
     [self saveInBackground];
+    [self createPlayerStanding:player];
     
-//    if ([player[@"isMale"] boolValue]) {
-//        [self.malePlayers addObject:player];
-//    }else
-//        [self.femalePlayers addObject:player];
-//    
-//    NSLog(@"Male: %@", self.malePlayers);
-//    NSLog(@"Female players: %@", self.femalePlayers);
-//    [self saveEventually];
+}
+
+- (void) createPlayerStanding: (Player *) player{
+    
+    NSString * playerId = player.objectId;
+    if (![self.teamPlayerStandingArray containsObject:playerId]) {
+        Standing * standingObject = [Standing createPlayerStanding];
+        standingObject[@"player"] = player;
+        standingObject[@"playerId"] = player.objectId;
+        standingObject[@"team"] = self;
+        standingObject[@"wins"] = [NSNumber numberWithInt:0];
+        standingObject[@"singleWins"] = [NSNumber numberWithInt:0];
+        standingObject[@"doubleWins"] = [NSNumber numberWithInt:0];
+        standingObject[@"mixWins"] = [NSNumber numberWithInt:0];
+        standingObject[@"loses"] = [NSNumber numberWithInt:0];
+        standingObject[@"singleLoses"] = [NSNumber numberWithInt:0];
+        standingObject[@"doubleLoses"] = [NSNumber numberWithInt:0];
+        standingObject[@"mixLoses"] = [NSNumber numberWithInt:0];
+        
+        [standingObject saveInBackground];
+    }
+}
+
+-(NSMutableArray *) loadTeamPlayerStandingArray{
+    self.teamPlayerStandingArray = [@[] mutableCopy];
+    
+    PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
+    [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:self.objectId]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
+        if (!error){
+            self.teamPlayerStandingArray = [[NSMutableArray alloc]
+                                            initWithArray:array];
+        }
+    }];
+    
+    return self.teamPlayerStandingArray;
 }
 @end

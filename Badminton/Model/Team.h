@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "Player.h"
 
+
 @interface Team : PFObject<PFSubclassing>
 @property (strong, nonatomic) NSString * objectId;
 @property (strong, nonatomic) NSString * teamName;
@@ -17,8 +18,10 @@
 @property (strong, nonatomic) NSMutableArray * malePlayers;
 @property (strong, nonatomic) NSMutableArray * femalePlayers;
 @property (strong, nonatomic) NSMutableArray * players;
+@property (strong, nonatomic) NSMutableArray * teamPlayerStandingArray; // of each player standing
 
 +(Team *) createTeam;
 - (void)addPlayer: (Player *)player;
+- (NSMutableArray *) loadTeamPlayerStandingArray;
 
 @end

@@ -14,6 +14,5 @@
 @property (strong, nonatomic) NSString * userName;
 @property (strong, nonatomic) NSString * name;
 
-
 +(Player *) createPlayer;
 @end

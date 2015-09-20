@@ -25,6 +25,7 @@
 		E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8484CCB1B6BA5B100B39463 /* Main.storyboard */; };
 		E8484CCF1B6BA5B100B39463 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E8484CCE1B6BA5B100B39463 /* Images.xcassets */; };
 		E8484CDE1B6BA5B100B39463 /* BadmintonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E8484CDD1B6BA5B100B39463 /* BadmintonTests.m */; };
+		E85B3C871BAD5CDB007D85BB /* Standing.m in Sources */ = {isa = PBXBuildFile; fileRef = E85B3C861BAD5CDB007D85BB /* Standing.m */; };
 		E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */; };
 		E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2331B7FA4DE0094875E /* GameScheduleTableViewCell.m */; };
 		E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */; };
@@ -87,6 +88,8 @@
 		E8484CD71B6BA5B100B39463 /* BadmintonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BadmintonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8484CDC1B6BA5B100B39463 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8484CDD1B6BA5B100B39463 /* BadmintonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BadmintonTests.m; sourceTree = "<group>"; };
+		E85B3C851BAD5CDB007D85BB /* Standing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Standing.h; path = Model/Standing.h; sourceTree = "<group>"; };
+		E85B3C861BAD5CDB007D85BB /* Standing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Standing.m; path = Model/Standing.m; sourceTree = "<group>"; };
 		E85EB22F1B7F9CA90094875E /* GameScheduleTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScheduleTableViewController.h; sourceTree = "<group>"; };
 		E85EB2301B7F9CA90094875E /* GameScheduleTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScheduleTableViewController.m; sourceTree = "<group>"; };
 		E85EB2321B7FA4DE0094875E /* GameScheduleTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScheduleTableViewCell.h; path = Views/GameScheduleTableViewCell.h; sourceTree = "<group>"; };
@@ -276,6 +279,8 @@
 				E8149C7A1B99A039002E3A62 /* DataSource.m */,
 				E8149C7C1B9ACDC0002E3A62 /* GameMatches.h */,
 				E8149C7D1B9ACDC0002E3A62 /* GameMatches.m */,
+				E85B3C851BAD5CDB007D85BB /* Standing.h */,
+				E85B3C861BAD5CDB007D85BB /* Standing.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -438,6 +443,7 @@
 				E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
+				E85B3C871BAD5CDB007D85BB /* Standing.m in Sources */,
 				E83648CB1B8C93A100F172A4 /* Team.m in Sources */,
 				E83648CE1B8C93BF00F172A4 /* Game.m in Sources */,
 				E8C283681B88B1640018F3A1 /* TeamPlayersTableViewController.m in Sources */,

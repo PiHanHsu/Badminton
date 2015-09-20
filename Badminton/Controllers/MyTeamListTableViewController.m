@@ -97,6 +97,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     self.teamObject = self.teamArray[indexPath.row];
+    [self.teamObject loadTeamPlayerStandingArray];
+    
     [self performSegueWithIdentifier:@"Show Team Players" sender:nil];
     
 //    TeamPlayersTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"TeamPlayersTableViewController"];
