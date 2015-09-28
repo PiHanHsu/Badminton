@@ -115,6 +115,93 @@
 
 
 - (void) loadGamesFromServer{
+    PFUser * user = [PFUser currentUser];
+    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
+    [getUserId whereKey:@"user" equalTo:user.objectId];
+    PFObject * currentPlayer = [getUserId getFirstObject];
+    PFQuery * queryWinGames = [PFQuery queryWithClassName:@"Game"];
+    [queryWinGames whereKey:@"winTeam" equalTo:currentPlayer.objectId];
+    PFQuery * queryLoseGames = [PFQuery queryWithClassName:@"Game"];
+    [queryLoseGames whereKey:@"loseTeam" equalTo:currentPlayer.objectId];
+
+    PFQuery *queryBoth = [PFQuery orQueryWithSubqueries:@[queryWinGames , queryLoseGames]];
+    
+    [queryBoth findObjectsInBackgroundWithBlock:^(NSArray *gamesArray, NSError * error){
+        NSSortDescriptor *descriptor=[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+        
+        self.currentPlayerGamesArray = [gamesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject: descriptor]];
+        [self createStatsArray:self.currentPlayerGamesArray];
+
+    }];
+    
+}
+
+- (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray{
+    self.currentPlayerStatsArray = [@[] mutableCopy];
+    
+    // taking too long to calculate, need a better algorithm
+    
+    for (int i = 0 ; i < playerGameArray.count; i++) {
+        NSDictionary * statsDict = [[NSDictionary alloc] init];
+        NSMutableArray * winTeam = playerGameArray[i][@"winTeam"];
+        NSMutableArray * loseTeam = playerGameArray[i][@"loseTeam"];
+
+        if ([winTeam containsObject:self.currentPlayer.objectId]) {
+            [winTeam removeObject:self.currentPlayer];
+            Player * teamMate = winTeam[0];
+            
+            statsDict = @{@"winOrLose" : @"Win",
+                          @"teammate" : teamMate,
+                          @"opponent" : loseTeam,
+                          @"gameType" : playerGameArray[i][@"gameType"],
+                          @"date" : playerGameArray[i][@"date"]};
+            
+        }else if ([loseTeam containsObject:self.currentPlayer.objectId]){
+            [loseTeam removeObject:self.currentPlayer];
+            Player * teamMate = loseTeam[0];
+            statsDict = @{@"winOrLose" : @"Lose",
+                          @"teammate" : teamMate,
+                          @"opponent" : winTeam,
+                          @"gameType" : playerGameArray[i][@"gameType"],
+                          @"date" : playerGameArray[i][@"date"]};
+        }
+        [self.currentPlayerStatsArray addObject:statsDict];
+    }
+    
+    [self getSteakWins:self.currentPlayerStatsArray];
+    return self.currentPlayerStatsArray;
+}
+
+-(void) getSteakWins:(NSMutableArray *) playerStatsArray{
+    // Calculate StrakWins
+    int streakWins = 0;
+    int maxStreakWins = 0;
+    int streakLoses = 0;
+    int maxStreakLoses = 0;
+    
+    for (int i = 0 ; i < playerStatsArray.count; i++) {
+        
+        if ([playerStatsArray[i][@"winOrLose"] isEqualToString:@"Win"]) {
+            streakWins ++;
+            if (streakLoses > maxStreakLoses) {
+                maxStreakLoses = streakLoses;
+                streakLoses = 0;
+            }
+            streakLoses = 0;
+        }else if ([playerStatsArray[i][@"winOrLose"] isEqualToString:@"Lose"]){
+            streakLoses ++;
+            if (streakWins > maxStreakWins) {
+                maxStreakWins = streakWins;
+                streakWins = 0;
+            }
+            streakWins = 0;
+        }
+    }
+    
+    NSLog(@"Max streakWins: %d", maxStreakWins);
+    NSLog(@"current Streak wins: %d", streakWins);
+    NSLog(@"Max streakLoses: %d", maxStreakLoses);
+    NSLog(@"current Streak Loses: %d", streakLoses);
     
 }
 

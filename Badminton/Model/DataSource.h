@@ -18,6 +18,8 @@
 @property (nonatomic,strong) NSMutableArray *teamArray;
 @property (nonatomic,strong, readonly) NSMutableArray *playerArray;
 @property (nonatomic,strong, readonly) NSMutableArray *gameArray;
+@property (nonatomic, strong) NSArray * currentPlayerGamesArray;
+@property (nonatomic, strong) NSMutableArray * currentPlayerStatsArray;
 
 
 + (DataSource *)sharedInstance ;
@@ -31,6 +33,8 @@
 
 -(void) addPlayer:(Player *) playerObject toTeam: (Team *) teamObject;
 -(void) deletePlayer:(Player *) playerObject fromTeam:(Team *)teamObject;
+
+- (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray;
 
 -(void) saveGame:(Game *) gameObject;
 

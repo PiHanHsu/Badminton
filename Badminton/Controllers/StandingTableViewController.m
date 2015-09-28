@@ -28,6 +28,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *singleWinLabel;
 @property (weak, nonatomic) IBOutlet UILabel *singleLoseLabel;
 
+@property (strong, nonatomic) NSArray * currentPlayerGamesArray;
+
 @end
 
 @implementation StandingTableViewController
@@ -47,6 +49,7 @@
     [super viewWillAppear:animated];
     
     [self getStandings];
+    [self getStats];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -66,6 +69,7 @@
 }
 
 
+
 - (void) getStandings{
     
     PFUser * user = [PFUser currentUser];
@@ -75,14 +79,14 @@
     
     
     PFQuery * query = [PFQuery queryWithClassName:@"Game"];
-    [query whereKey:@"WinTeam" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:currentPlayer.objectId]];
+    [query whereKey:@"winTeam" equalTo:currentPlayer.objectId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * winGames, NSError * error){
         self.winGames = winGames;
         [self createStrings];
     }];
     
     PFQuery * queryLoseGames = [PFQuery queryWithClassName:@"Game"];
-    [queryLoseGames whereKey:@"LoseTeam" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:currentPlayer.objectId]];
+    [queryLoseGames whereKey:@"loseTeam" equalTo:currentPlayer.objectId];
     [queryLoseGames findObjectsInBackgroundWithBlock:^(NSArray * loseGames, NSError * error){
         self.loseGames = loseGames;
         [self createStrings];
@@ -98,35 +102,35 @@
     
     int singleWins = 0;
     for (int i = 0; i < self.winGames.count ; i ++) {
-        if ([self.winGames[i][@"GameType"] isEqualToString:@"single"])
+        if ([self.winGames[i][@"gameType"] isEqualToString:@"single"])
             singleWins ++;
     }
     
     int doulbeWins = 0;
     for (int i = 0; i < self.winGames.count ; i ++) {
-        if ([self.winGames[i][@"GameType"] isEqualToString:@"double"])
+        if ([self.winGames[i][@"gameType"] isEqualToString:@"double"])
             doulbeWins ++;
     }
     int mixWins = 0;
     for (int i = 0; i < self.winGames.count ; i ++) {
-        if ([self.winGames[i][@"GameType"] isEqualToString:@"mix"])
+        if ([self.winGames[i][@"gameType"] isEqualToString:@"mix"])
             mixWins ++;
     }
     
     int singleLoses = 0;
     for (int i = 0; i < self.loseGames.count ; i ++) {
-        if ([self.loseGames[i][@"GameType"] isEqualToString:@"single"])
+        if ([self.loseGames[i][@"gameType"] isEqualToString:@"single"])
         singleLoses ++;
     }
     int doulbeLoses = 0;
     for (int i = 0; i < self.loseGames.count ; i ++) {
-        if ([self.loseGames[i][@"GameType"] isEqualToString:@"double"])
+        if ([self.loseGames[i][@"gameType"] isEqualToString:@"double"])
             doulbeLoses ++;
     }
    
     int mixLoses = 0;
     for (int i = 0; i < self.loseGames.count ; i ++) {
-        if ([self.loseGames[i][@"GameType"] isEqualToString:@"mix"])
+        if ([self.loseGames[i][@"gameType"] isEqualToString:@"mix"])
             mixLoses ++;
     }
 

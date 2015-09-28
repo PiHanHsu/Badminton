@@ -331,7 +331,7 @@
     
     if (self.tempTeam1Array.count == 1) {
        self.gameType = @"single";
-    }if ([self.tempTeam1Array[0][@"isMale"] boolValue] == [self.tempTeam1Array[1][@"isMale"] boolValue]) {
+    }else if ([self.tempTeam1Array[0][@"isMale"] boolValue] == [self.tempTeam1Array[1][@"isMale"] boolValue]) {
         self.gameType = @"double";
     }else{
         self.gameType = @"mix";
@@ -341,20 +341,39 @@
     PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
     if ([self.scoreboard.team1ScoreTextField.text intValue] >
         [self.scoreboard.team2ScoreTextField.text intValue]) {
-        gameObject[@"WinTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
-        gameObject[@"LoseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
-        gameObject[@"WinTeam"] = self.tempTeam1Array;
-        gameObject[@"LoseTeam"] = self.tempTeam2Array;
+        gameObject[@"winTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
+        gameObject[@"loseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
+        NSMutableArray * winTeam = [@[] mutableCopy];
+        NSMutableArray * loseTeam = [@[] mutableCopy];
+        for (int i = 0 ; i < self.tempTeam1Array.count ; i++) {
+            Player * winner = self.tempTeam1Array[i];
+            Player * loser = self.tempTeam2Array[i];
+            [winTeam addObject:winner.objectId];
+            [loseTeam addObject:loser.objectId];
+        }
+        gameObject[@"winTeam"] = winTeam;
+        gameObject[@"loseTeam"] = loseTeam;
+
+       
     }else{
-        gameObject[@"WinTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
-        gameObject[@"LoseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
-        gameObject[@"WinTeam"] = self.tempTeam2Array;
-        gameObject[@"LoseTeam"] = self.tempTeam1Array;
+        gameObject[@"winTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
+        gameObject[@"loseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
+        
+        NSMutableArray * winTeam = [@[] mutableCopy];
+        NSMutableArray * loseTeam = [@[] mutableCopy];
+        for (int i = 0 ; i < self.tempTeam1Array.count ; i++) {
+            Player * winner = self.tempTeam2Array[i];
+            Player * loser = self.tempTeam1Array[i];
+            [winTeam addObject:winner.objectId];
+            [loseTeam addObject:loser.objectId];
+        }
+        gameObject[@"winTeam"] = winTeam;
+        gameObject[@"loseTeam"] = loseTeam;
     }
     NSDate * date = [NSDate date];
-    gameObject[@"Date"] = date;
-    gameObject[@"Team"] = [NSString stringWithFormat:@"%@", self.teamObject.objectId];
-    gameObject[@"GameType"] = self.gameType;
+    gameObject[@"date"] = date;
+    gameObject[@"team"] = [NSString stringWithFormat:@"%@", self.teamObject.objectId];
+    gameObject[@"gameType"] = self.gameType;
     
     [gameObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error){
         if (!error) {
@@ -368,7 +387,7 @@
         }
     }];
     
-    [self updateStandingWithWinner1:gameObject[@"WinTeam"][0] winner2:gameObject[@"WinTeam"][1] loser1:gameObject[@"LoseTeam"][0] loser2:gameObject[@"LoseTeam"][1] gameType:gameObject[@"GameType"]];
+    //[self updateStandingWithWinner1:gameObject[@"WinTeam"][0] winner2:gameObject[@"WinTeam"][1] loser1:gameObject[@"LoseTeam"][0] loser2:gameObject[@"LoseTeam"][1] gameType:gameObject[@"GameType"]];
     
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];
