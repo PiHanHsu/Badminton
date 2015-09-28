@@ -49,7 +49,6 @@
     [super viewWillAppear:animated];
     
     [self getStandings];
-    [self getStats];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
