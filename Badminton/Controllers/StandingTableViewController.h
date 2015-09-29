@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface StandingTableViewController : UITableViewController
+@property (strong, nonatomic) NSString * playerId;
 
 @end

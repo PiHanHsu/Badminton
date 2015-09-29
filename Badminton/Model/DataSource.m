@@ -114,15 +114,15 @@
 }
 
 
-- (void) loadGamesFromServer{
-    PFUser * user = [PFUser currentUser];
-    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
-    [getUserId whereKey:@"user" equalTo:user.objectId];
-    PFObject * currentPlayer = [getUserId getFirstObject];
+- (void) loadGamesFromServer: (NSString *) playerId{
+//    PFUser * user = [PFUser currentUser];
+//    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
+//    [getUserId whereKey:@"user" equalTo:user.objectId];
+//    PFObject * currentPlayer = [getUserId getFirstObject];
     PFQuery * queryWinGames = [PFQuery queryWithClassName:@"Game"];
-    [queryWinGames whereKey:@"winTeam" equalTo:currentPlayer.objectId];
+    [queryWinGames whereKey:@"winTeam" equalTo:playerId];
     PFQuery * queryLoseGames = [PFQuery queryWithClassName:@"Game"];
-    [queryLoseGames whereKey:@"loseTeam" equalTo:currentPlayer.objectId];
+    [queryLoseGames whereKey:@"loseTeam" equalTo:playerId];
 
     PFQuery *queryBoth = [PFQuery orQueryWithSubqueries:@[queryWinGames , queryLoseGames]];
     
@@ -130,13 +130,13 @@
         NSSortDescriptor *descriptor=[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
         
         self.currentPlayerGamesArray = [gamesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject: descriptor]];
-        [self createStatsArray:self.currentPlayerGamesArray];
+        [self createStatsArray:self.currentPlayerGamesArray player:playerId];
 
     }];
     
 }
 
-- (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray{
+- (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray player: (NSString *) playerId{
     self.currentPlayerStatsArray = [@[] mutableCopy];
     
     for (int i = 0 ; i < playerGameArray.count; i++) {
@@ -144,8 +144,8 @@
         NSMutableArray * winTeam = playerGameArray[i][@"winTeam"];
         NSMutableArray * loseTeam = playerGameArray[i][@"loseTeam"];
 
-        if ([winTeam containsObject:self.currentPlayer.objectId]) {
-            [winTeam removeObject:self.currentPlayer];
+        if ([winTeam containsObject:playerId]) {
+            [winTeam removeObject:playerId];
             NSString * teamMate = winTeam[0];
             
             statsDict = @{@"winOrLose" : @"Win",
@@ -154,8 +154,8 @@
                           @"gameType" : playerGameArray[i][@"gameType"],
                           @"date" : playerGameArray[i][@"date"]};
             
-        }else if ([loseTeam containsObject:self.currentPlayer.objectId]){
-            [loseTeam removeObject:self.currentPlayer];
+        }else if ([loseTeam containsObject:playerId]){
+            [loseTeam removeObject:playerId];
             NSString * teamMate = loseTeam[0];
             statsDict = @{@"winOrLose" : @"Lose",
                           @"teammate" : teamMate,
@@ -196,10 +196,15 @@
         }
     }
     
+    //TODO: sometimes, the number is wrong
+    self.currentStreakWins = [NSNumber numberWithInt:streakWins];
+    self.maxStreakWins = [NSNumber numberWithInt:maxStreakWins];
     NSLog(@"Max streakWins: %d", maxStreakWins);
     NSLog(@"current Streak wins: %d", streakWins);
     NSLog(@"Max streakLoses: %d", maxStreakLoses);
     NSLog(@"current Streak Loses: %d", streakLoses);
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"calculateStreakWinsFinished" object:self];
     
 }
 

@@ -8,6 +8,7 @@
 
 #import "StandingTableViewController.h"
 #import <Parse/Parse.h>
+#import "DataSource.h"
 
 @interface StandingTableViewController ()
 @property (strong, nonatomic) NSArray * winGames;
@@ -27,8 +28,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *doubleLoseLabel;
 @property (weak, nonatomic) IBOutlet UILabel *singleWinLabel;
 @property (weak, nonatomic) IBOutlet UILabel *singleLoseLabel;
+@property (weak, nonatomic) IBOutlet UILabel *maxStreakWinsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentStreakWinsLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 
 @property (strong, nonatomic) NSArray * currentPlayerGamesArray;
+@property (strong, nonatomic) UIActivityIndicatorView * indicator;
 
 @end
 
@@ -38,17 +43,33 @@
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     [self getStandings];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [[DataSource sharedInstance] loadGamesFromServer:self.playerId];
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:@"calculateStreakWinsFinished"
+     object:nil
+     queue:[NSOperationQueue mainQueue]
+     usingBlock:^(NSNotification *notification) {
+         if ([notification.name isEqualToString:@"calculateStreakWinsFinished"]) {
+             int maxStreakWins = [[DataSource sharedInstance].maxStreakWins intValue];
+             int currentStreakWins = [[DataSource sharedInstance].currentStreakWins intValue];
+             self.maxStreakWinsLabel.text = [NSString stringWithFormat:@"%d連勝", maxStreakWins];
+             self.currentStreakWinsLabel.text = [NSString stringWithFormat:@"%d連勝", currentStreakWins];
+             [self.tableView reloadData];
+             [self.activityIndicatorView stopAnimating];
+            
+         }
+     }];
+//    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    self.indicator.center = self.view.center;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.activityIndicatorView startAnimating];
+   // [self.view addSubview:self.indicator];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    [self getStandings];
+    //[self getStandings];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -71,21 +92,21 @@
 
 - (void) getStandings{
     
-    PFUser * user = [PFUser currentUser];
-    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
-    [getUserId whereKey:@"user" equalTo:user.objectId];
-    PFObject * currentPlayer = [getUserId getFirstObject];
+//    PFUser * user = [PFUser currentUser];
+//    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
+//    [getUserId whereKey:@"user" equalTo:user.objectId];
+//    PFObject * currentPlayer = [getUserId getFirstObject];
     
     
     PFQuery * query = [PFQuery queryWithClassName:@"Game"];
-    [query whereKey:@"winTeam" equalTo:currentPlayer.objectId];
+    [query whereKey:@"winTeam" equalTo:self.playerId];
     [query findObjectsInBackgroundWithBlock:^(NSArray * winGames, NSError * error){
         self.winGames = winGames;
         [self createStrings];
     }];
     
     PFQuery * queryLoseGames = [PFQuery queryWithClassName:@"Game"];
-    [queryLoseGames whereKey:@"loseTeam" equalTo:currentPlayer.objectId];
+    [queryLoseGames whereKey:@"loseTeam" equalTo:self.playerId];
     [queryLoseGames findObjectsInBackgroundWithBlock:^(NSArray * loseGames, NSError * error){
         self.loseGames = loseGames;
         [self createStrings];
@@ -148,23 +169,6 @@
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseCell" forIndexPath:indexPath];
 //    
-////    switch (indexPath.row) {
-////        case 0:
-////            cell.textLabel.text = self.totalStandingStr;
-////            break;
-////        case 1:
-////            cell.textLabel.text = self.mixStandingStr;
-////            break;
-////        case 2:
-////            cell.textLabel.text = self.doubleStandingStr;
-////            break;
-////        case 3:
-////            cell.textLabel.text = self.singleStandingStr;
-////            break;
-////            
-////        default:
-////            break;
-////    }
 //    // Configure the cell...
 //    
 //    return cell;

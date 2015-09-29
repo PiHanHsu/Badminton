@@ -20,13 +20,16 @@
 @property (nonatomic,strong, readonly) NSMutableArray *gameArray;
 @property (nonatomic, strong) NSArray * currentPlayerGamesArray;
 @property (nonatomic, strong) NSMutableArray * currentPlayerStatsArray;
+@property (nonatomic, strong) NSNumber * currentStreakWins;
+@property (nonatomic, strong) NSNumber * maxStreakWins;
+
 
 
 + (DataSource *)sharedInstance ;
 
 - (void) loadTeamsFromServer;
 - (void) loadPlayersFromServer;
-- (void) loadGamesFromServer;
+- (void) loadGamesFromServer: (NSString *) playerId;
 
 -(void) addTeam:(Team *) teamObject;
 -(void) deleteTeam:(Team *) teamObject;

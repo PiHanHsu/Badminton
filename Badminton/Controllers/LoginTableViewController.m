@@ -64,7 +64,6 @@
      usingBlock:^(NSNotification *notification) {
          if ([notification.name isEqualToString:@"loadingDataFinished"]) {
              NSLog(@"Loading Data Finished!");
-             [[DataSource sharedInstance] loadGamesFromServer];
              [self _ViewControllerAnimated:YES];
          }
      }];

@@ -9,11 +9,14 @@
 #import "V2StandingTableViewController.h"
 #import "StandingTableViewCell.h"
 #import "Standing.h"
+#import "StandingTableViewController.h"
 
 @interface V2StandingTableViewController ()
 @property (strong, nonatomic) NSArray * playerArray;
 @property (strong, nonatomic) NSArray * teamPlayersStandingArray;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
+
+@property (strong, nonatomic) NSString * selectedPlayerId;
 
 @end
 
@@ -97,24 +100,24 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
     headerView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
     //headerView.backgroundColor = [UIColor greenColor];
-    tableView.sectionHeaderHeight = 44;
+    //tableView.sectionHeaderHeight = 44;
     
-    UILabel *winslabel = [[UILabel alloc] initWithFrame:CGRectMake(195, 5, 30, 30)];
+    UILabel *winslabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 125, 0, 30, 30)];
     winslabel.text = @"勝";
     winslabel.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     winslabel.backgroundColor = [UIColor clearColor];
     winslabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
     
-    UILabel *loseslabel = [[UILabel alloc] initWithFrame:CGRectMake(240, 5, 30, 30)];
+    UILabel *loseslabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 90, 0, 30, 30)];
     loseslabel.text = @"敗";
     loseslabel.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     loseslabel.backgroundColor = [UIColor clearColor];
     loseslabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
     
-    UILabel *winsRatelabel = [[UILabel alloc] initWithFrame:CGRectMake(280, 5, 45, 30)];
+    UILabel *winsRatelabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 55, 0, 45, 30)];
     winsRatelabel.text = @"勝率";
     winsRatelabel.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     winsRatelabel.backgroundColor = [UIColor clearColor];
@@ -163,11 +166,21 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    self.teamObject = self.teamArray[indexPath.row];
-    //[self.teamObject loadTeamPlayerStandingArray];
-    
+    self.selectedPlayerId = self.teamPlayersStandingArray[indexPath.row][@"playerId"];
+    NSLog(@"id: %@", self.selectedPlayerId);
     [self performSegueWithIdentifier:@"Go To Stats" sender:nil];
+    
+}
+
+//[self.teamObject loadTeamPlayerStandingArray];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if ([segue.destinationViewController isKindOfClass:[StandingTableViewController class]]) {
+        StandingTableViewController * vc = segue.destinationViewController;
+        vc.playerId = self.selectedPlayerId;
+    }
+    
     
 }
 
