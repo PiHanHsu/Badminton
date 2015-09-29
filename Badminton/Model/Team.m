@@ -69,13 +69,17 @@
     
     PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
     [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:self.objectId]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
-        if (!error){
-            self.teamPlayerStandingArray = [[NSMutableArray alloc]
-                                            initWithArray:array];
-        }
-    }];
-    
+    self.teamPlayerStandingArray = [[NSMutableArray alloc]initWithArray:[query findObjects]];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
+//        if (!error){
+//            self.teamPlayerStandingArray = [[NSMutableArray alloc]
+//                                            initWithArray:array];
+//        
+//        }else{
+//            NSLog(@"error:%@ ", error);
+//        }
+//    }];
     return self.teamPlayerStandingArray;
+    
 }
 @end

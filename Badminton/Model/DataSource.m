@@ -139,8 +139,6 @@
 - (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray{
     self.currentPlayerStatsArray = [@[] mutableCopy];
     
-    // taking too long to calculate, need a better algorithm
-    
     for (int i = 0 ; i < playerGameArray.count; i++) {
         NSDictionary * statsDict = [[NSDictionary alloc] init];
         NSMutableArray * winTeam = playerGameArray[i][@"winTeam"];
@@ -148,7 +146,7 @@
 
         if ([winTeam containsObject:self.currentPlayer.objectId]) {
             [winTeam removeObject:self.currentPlayer];
-            Player * teamMate = winTeam[0];
+            NSString * teamMate = winTeam[0];
             
             statsDict = @{@"winOrLose" : @"Win",
                           @"teammate" : teamMate,
@@ -158,7 +156,7 @@
             
         }else if ([loseTeam containsObject:self.currentPlayer.objectId]){
             [loseTeam removeObject:self.currentPlayer];
-            Player * teamMate = loseTeam[0];
+            NSString * teamMate = loseTeam[0];
             statsDict = @{@"winOrLose" : @"Lose",
                           @"teammate" : teamMate,
                           @"opponent" : winTeam,
@@ -204,6 +202,38 @@
     NSLog(@"current Streak Loses: %d", streakLoses);
     
 }
+
+-(NSMutableArray *) calculateBestTeamMate:(NSMutableArray *) playerStatsArray teamMatesArray:(NSMutableArray *) teamMates{
+    NSMutableArray * teamMatesStats = [@[] mutableCopy];
+    
+    for (int i = 0 ; i < teamMates.count ; i++) {
+        int wins = 0;
+        int loses = 0;
+        for (int j = 0 ; j < playerStatsArray.count; j++) {
+            
+            if ([playerStatsArray[j][@"teamMate"] isEqualToString:teamMates[i]]) {
+                if ([playerStatsArray[j][@"winOrLose"] isEqualToString:@"Win"]) {
+                    wins++;
+                }else if ([playerStatsArray[j][@"winOrLose"] isEqualToString:@"Lose"]){
+                    loses++;
+                }
+            }
+        }
+        NSDictionary * teamMatesStanding = [[NSDictionary alloc]init];
+        float winRate = wins / loses ;
+        
+        teamMatesStanding = @{@"teamMate" : @"teamMate",
+                              @"wins" : [NSNumber numberWithInt:wins],
+                              @"loses" : [NSNumber numberWithInt:wins],
+                              @"winRate" : [NSNumber numberWithFloat:winRate]};
+        
+        [teamMatesStats addObject:teamMatesStanding];
+    }
+    
+    return teamMatesStats;
+    
+}
+
 
 -(void) saveGame:(Game *) gameObject{
     

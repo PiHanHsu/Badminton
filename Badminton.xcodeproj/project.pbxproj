@@ -41,6 +41,8 @@
 		E8D324771BA3FE3A009210DC /* scoreboard.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8D324761BA3FCD8009210DC /* scoreboard.ttf */; };
 		E8EDF7A41B9309EB00B56725 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */; };
 		E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */; };
+		E8FA57731BBA8F8D0031C3B8 /* StandingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FA57721BBA8F8D0031C3B8 /* StandingTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
+		E8FA57791BBA90E70031C3B8 /* V2StandingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FA57781BBA90E70031C3B8 /* V2StandingTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +118,10 @@
 		E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileTableViewController.m; sourceTree = "<group>"; };
 		E8EDF7A51B95D1A900B56725 /* StandingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandingTableViewController.h; sourceTree = "<group>"; };
 		E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandingTableViewController.m; sourceTree = "<group>"; };
+		E8FA57711BBA8F8D0031C3B8 /* StandingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StandingTableViewCell.h; path = Views/StandingTableViewCell.h; sourceTree = "<group>"; };
+		E8FA57721BBA8F8D0031C3B8 /* StandingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StandingTableViewCell.m; path = Views/StandingTableViewCell.m; sourceTree = "<group>"; };
+		E8FA57771BBA90E70031C3B8 /* V2StandingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = V2StandingTableViewController.h; sourceTree = "<group>"; };
+		E8FA57781BBA90E70031C3B8 /* V2StandingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = V2StandingTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +241,8 @@
 				E836496B1B92D42600F172A4 /* ScoreBoard.xib */,
 				E836496D1B92D48400F172A4 /* ScoreBoard.h */,
 				E836496E1B92D48400F172A4 /* ScoreBoard.m */,
+				E8FA57711BBA8F8D0031C3B8 /* StandingTableViewCell.h */,
+				E8FA57721BBA8F8D0031C3B8 /* StandingTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -258,6 +266,8 @@
 				E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */,
 				E8EDF7A51B95D1A900B56725 /* StandingTableViewController.h */,
 				E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */,
+				E8FA57771BBA90E70031C3B8 /* V2StandingTableViewController.h */,
+				E8FA57781BBA90E70031C3B8 /* V2StandingTableViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -427,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8FA57791BBA90E70031C3B8 /* V2StandingTableViewController.m in Sources */,
 				E83649031B8DD8CC00F172A4 /* Player.m in Sources */,
 				E85EB2341B7FA4DE0094875E /* GameScheduleTableViewCell.m in Sources */,
 				E8C2835B1B8893990018F3A1 /* MyTeamListTableViewCell.m in Sources */,
@@ -440,6 +451,7 @@
 				E85EB2311B7F9CA90094875E /* GameScheduleTableViewController.m in Sources */,
 				E836490A1B8DF80200F172A4 /* AddPlayerViewController.m in Sources */,
 				E8149C7B1B99A039002E3A62 /* DataSource.m in Sources */,
+				E8FA57731BBA8F8D0031C3B8 /* StandingTableViewCell.m in Sources */,
 				E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */,
 				E8484CC71B6BA5B100B39463 /* AppDelegate.m in Sources */,
 				E8484CC41B6BA5B100B39463 /* main.m in Sources */,
@@ -520,7 +532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -558,7 +570,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -574,7 +586,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Badminton/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pihanhsu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -589,7 +601,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Badminton/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pihanhsu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
