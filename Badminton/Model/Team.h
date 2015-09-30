@@ -18,10 +18,12 @@
 @property (strong, nonatomic) NSMutableArray * malePlayers;
 @property (strong, nonatomic) NSMutableArray * femalePlayers;
 @property (strong, nonatomic) NSMutableArray * players;
-@property (strong, nonatomic) NSMutableArray * teamPlayerStandingArray; // of each player standing
+@property (strong, nonatomic) NSArray * teamPlayerStandingArray; // of each player standing
 
 +(Team *) createTeam;
 - (void)addPlayer: (Player *)player;
 - (NSMutableArray *) loadTeamPlayerStandingArray;
+
+-(void) loadTeamPlayerStandingArrayWithDone:(void (^)(NSArray * teamPlayerStandingArray))doneHandle;
 
 @end

@@ -64,22 +64,24 @@
     }
 }
 
--(NSMutableArray *) loadTeamPlayerStandingArray{
+-(void) loadTeamPlayerStandingArrayWithDone:(void (^)(NSArray * teamPlayerStandingArray))doneHandle{
     self.teamPlayerStandingArray = [@[] mutableCopy];
     
     PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
     [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:self.objectId]];
-    self.teamPlayerStandingArray = [[NSMutableArray alloc]initWithArray:[query findObjects]];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
-//        if (!error){
-//            self.teamPlayerStandingArray = [[NSMutableArray alloc]
-//                                            initWithArray:array];
-//        
-//        }else{
-//            NSLog(@"error:%@ ", error);
-//        }
-//    }];
-    return self.teamPlayerStandingArray;
+    //self.teamPlayerStandingArray = [[NSMutableArray alloc]initWithArray:[query findObjects]];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
+        if (!error){
+            self.teamPlayerStandingArray = array;
+        
+            if (doneHandle) {
+                doneHandle (self.teamPlayerStandingArray);
+            }
+        }else{
+            NSLog(@"error:%@ ", error);
+        }
+    }];
+    //return self.teamPlayerStandingArray;
     
 }
 @end

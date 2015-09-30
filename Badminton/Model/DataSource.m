@@ -12,7 +12,7 @@
 
 //@property (nonatomic,strong) NSMutableArray *teamArray;
 @property (nonatomic,strong) NSMutableArray *playerArray;
-@property (nonatomic,strong) NSMutableArray *gameArray;
+@property (nonatomic,strong) NSArray *teamGamesArray;
 
 @property (strong, nonatomic) PFObject * currentPlayer;
 
@@ -205,6 +205,21 @@
     NSLog(@"current Streak Loses: %d", streakLoses);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"calculateStreakWinsFinished" object:self];
+    
+}
+
+- (void) loadingTeamGames:(NSString *) teamId {
+    PFQuery * query = [PFQuery queryWithClassName:@"Game"];
+    [query whereKey:@"team" equalTo:teamId];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * gamesArray, NSError * error){
+        if (!error) {
+            self.teamGamesArray = gamesArray;
+        
+        }else{
+            NSLog(@"loading games error: %@", error);
+        }
+    }];
+    
     
 }
 

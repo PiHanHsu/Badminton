@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSArray * teamPlayersStandingArray;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
 
+@property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 @property (strong, nonatomic) NSString * selectedPlayerId;
 
 @end
@@ -25,12 +26,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    //self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+    
+    self.activityIndicatorView = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.activityIndicatorView.center = self.view.center;
+    [self.activityIndicatorView startAnimating];
+    [self.view addSubview:self.activityIndicatorView];
+    
     self.teamArray = [DataSource sharedInstance].teamArray;
     self.teamObject = self.teamArray[0];
-    self.teamPlayersStandingArray = [[self.teamObject loadTeamPlayerStandingArray] mutableCopy];
+    [self.teamObject loadTeamPlayerStandingArrayWithDone:^(NSArray * array){
+        self.teamPlayersStandingArray = [self createWinRateWithPlayerStatsArray:array];
+        [self.activityIndicatorView stopAnimating];
+        [self.tableView reloadData];
+    }];
+    //self.teamPlayersStandingArray = [[self.teamObject loadTeamPlayerStandingArray] mutableCopy];
     
-    self.teamPlayersStandingArray = [self createWinRateWithPlayerStatsArray:self.teamPlayersStandingArray];
+    
     
     //self.playerArray = self.teamObject[@"player"];
     
