@@ -82,6 +82,16 @@
         }
     }];
     //return self.teamPlayerStandingArray;
+}
+
+- (NSArray *) malePlayersArray: (NSArray *) playerArray{
+    NSMutableArray * malePlayersArray = [@[] mutableCopy];
+    for (Player * player in playerArray) {
+        if ([player[@"isMale"] boolValue]){
+            [malePlayersArray addObject:player];
+        }
+    }
     
+    return malePlayersArray;
 }
 @end

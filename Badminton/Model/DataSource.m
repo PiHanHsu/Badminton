@@ -99,6 +99,10 @@
     [queryAll findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
        
         self.teamArray = [teams mutableCopy];
+        for (Team * teamObject in self.teamArray) {
+            [teamObject pinInBackground];
+        }
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
     }];
     
@@ -214,14 +218,37 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray * gamesArray, NSError * error){
         if (!error) {
             self.teamGamesArray = gamesArray;
-        
+            for (Game * oneGame in self.teamGamesArray) {
+                [oneGame pinInBackground];
+            }
         }else{
             NSLog(@"loading games error: %@", error);
         }
     }];
+}
+
+- (void) createMixStandingWithmalePlayersArray: (NSMutableArray *)maleplayersArray femalePlayersArray: (NSMutableArray *)femaleplayersArray gameArray: (NSArray *) gameArray{
+
+    //TODO: TBD...
     
+    NSMutableArray * mixGameStandingArray = [@[] mutableCopy];
+    
+    for (Player * malePlayer in maleplayersArray) {
+        for (Player * femalePlayer in femaleplayersArray) {
+            NSArray * teamMatch = @[malePlayer, femalePlayer];
+            NSDictionary * teamMatchListScore = [[NSDictionary alloc]init];
+            teamMatchListScore = @{@"team" : teamMatch,
+                                   @"wins" : [NSNumber numberWithFloat:0],
+                                   @"loses" : [NSNumber numberWithFloat:0],
+                                   @"winRate" : [NSNumber numberWithFloat:0]};
+            [mixGameStandingArray addObject:teamMatchListScore];
+        }
+    }
+
+
     
 }
+
 
 -(NSMutableArray *) calculateBestTeamMate:(NSMutableArray *) playerStatsArray teamMatesArray:(NSMutableArray *) teamMates{
     NSMutableArray * teamMatesStats = [@[] mutableCopy];
