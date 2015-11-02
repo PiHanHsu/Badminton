@@ -11,6 +11,8 @@
 #import "PlayListDataSource.h"
 #import "Game.h"
 #import "ScoreBoard.h"
+#import "DataSource.h"
+#import "GameMatches.h"
 
 
 
@@ -23,6 +25,7 @@
 @property (strong, nonatomic) NSArray * tempTeam1Array;
 @property (strong, nonatomic) NSArray * tempTeam2Array;
 @property (strong, nonatomic) NSString * gameType;
+@property (strong, nonatomic) NSMutableArray * playersArray;
 
 @end
 
@@ -35,6 +38,12 @@
     self.tableView.rowHeight = 62;
     
     [self.tabBarController.tabBar setHidden:YES];
+    self.playersArray = [DataSource sharedInstance].selectedPlayersArray;
+    self.playersArray = [[DataSource sharedInstance]sheffleList:self.playersArray];
+    
+    //self.game.gameScheduleArray = [[GameMatches new] createMatches:self.playersArray];
+    
+    
     [self shuffleList];
 }
 
@@ -88,6 +97,12 @@
 #pragma mark init MutableArray
 
 //lazy init array
+
+- (NSMutableArray *) playersArray {
+    if(!_playersArray)
+        _playersArray = [@[] mutableCopy];
+    return _playersArray;
+}
 
 - (NSMutableArray *) malePlaylistArray {
     if(!_malePlaylistArray)
@@ -199,6 +214,16 @@
     [self.malePlaylistArrayNew removeAllObjects];
     [self.femalePlaylistArrayNew removeAllObjects];
     [self shuffleList];
+}
+
+- (void) createGameSchedule{
+//    if ((self.malePlaylistArray.count + self.femalePlaylistArray.count) < 4) {
+//        self.game.gameScheduleArray = [self.game createSinglePlayerGames:self.malePlaylistArrayNew femalePlayer:self.femalePlaylistArrayNew];
+//    }else{
+//        self.game.gameScheduleArray = [self.game createGameScheduleWithMalePlayers:self.malePlaylistArrayNew femalePlayer:self.femalePlaylistArrayNew];
+//    }
+    
+    [self.tableView reloadData];
 }
 
 - (void) shuffleList{

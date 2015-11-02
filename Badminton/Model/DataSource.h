@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSMutableArray * currentPlayerStatsArray;
 @property (nonatomic, strong) NSNumber * currentStreakWins;
 @property (nonatomic, strong) NSNumber * maxStreakWins;
+@property (nonatomic, strong) NSMutableArray *selectedPlayersArray;
 
 
 
@@ -36,8 +37,10 @@
 
 -(void) addPlayer:(Player *) playerObject toTeam: (Team *) teamObject;
 -(void) deletePlayer:(Player *) playerObject fromTeam:(Team *)teamObject;
+- (NSMutableArray *) addPlayerToPlayList:(Player *)player;
 
 - (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray;
+- (NSMutableArray *) sheffleList:(NSMutableArray *)originalArray;
 
 -(void) saveGame:(Game *) gameObject;
 

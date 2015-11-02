@@ -12,6 +12,7 @@
 #import "Player.h"
 #import "AddPlayerViewController.h"
 #import "PlayerSwitch.h"
+#import "DataSource.h"
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -183,6 +184,9 @@
 - (void) selectPlayers: (UISwitch *) sender{
     PlayerSwitch * playerSwitch = (PlayerSwitch *) sender;
     
+    //[[DataSource sharedInstance]addPlayerToPlayList:playerSwitch.player];
+    
+    
     if ([playerSwitch.player[@"isMale"] boolValue]) {
         if ([sender isOn]) {
             [[PlayListDataSource sharedInstance]addToMalePlayerList:playerSwitch.player];
@@ -196,7 +200,7 @@
             [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:playerSwitch.player];
         }
     }
-        
+    
         
 }
 

@@ -49,9 +49,39 @@
         _playerArray = [@[] mutableCopy];
     return _playerArray;
 }
+
+-(NSMutableArray *) selectedPlayersArray{
+    if(!_selectedPlayersArray)
+        _selectedPlayersArray = [@[] mutableCopy];
+    return _selectedPlayersArray;
+}
+
 - (void) loadPlayersFromServer{
     
 }
+
+- (NSMutableArray *) addPlayerToPlayList:(Player *)player{
+    [self.selectedPlayersArray addObject:player];
+    return self.selectedPlayersArray;
+}
+
+- (NSMutableArray *) sheffleList:(NSMutableArray *)originalArray{
+    NSMutableArray * newArray = [[NSMutableArray alloc]initWithCapacity:0];
+    
+    int n = (int)originalArray.count;
+    for (int i = 0;  i < n ; i++) {
+        int m = (int)originalArray.count;
+        int r = arc4random_uniform(m);
+        [newArray addObject:originalArray[r]];
+        [originalArray removeObject:originalArray[r]];
+        if (i == n-1) {
+            [originalArray addObjectsFromArray:newArray];
+        }
+    }
+    
+    return newArray;
+}
+
 
 -(void) addPlayer:(Player *) playerObject toTeam:(Team *)teamObject{
     [teamObject[@"players"] addObject:playerObject];
