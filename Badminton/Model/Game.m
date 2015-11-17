@@ -312,6 +312,100 @@
     
 }
 
+- (NSMutableArray *) randomCreateByPlayers: (NSMutableArray *) playersArray{
+    
+    switch (playersArray.count) {
+        case 4:{
+            self.team1Array[0] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[1], nil];
+            self.team2Array[0] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[3], nil];
+            self.team1Array[1] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[2], nil];
+            self.team2Array[1] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[3], nil];
+            self.team1Array[2] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[3], nil];
+            self.team2Array[2] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[2], nil];
+        break;
+        }
+        case 5:{
+            self.team1Array[0] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[1], nil];
+            self.team2Array[0] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[3], nil];
+            self.team1Array[1] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[2], nil];
+            self.team2Array[1] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[4], nil];
+            self.team1Array[2] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[3], nil];
+            self.team2Array[2] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[4], nil];
+            self.team1Array[3] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[4], nil];
+            self.team2Array[3] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[3], nil];
+            self.team1Array[4] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[2], nil];
+            self.team2Array[4] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[4], nil];
+        break;
+        }
+        case 6:{
+            self.team1Array[0] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[1], nil];
+            self.team2Array[0] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[3], nil];
+            self.team1Array[1] = [NSMutableArray arrayWithObjects:playersArray[4],playersArray[0], nil];
+            self.team2Array[1] = [NSMutableArray arrayWithObjects:playersArray[5],playersArray[1], nil];
+            self.team1Array[2] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[4], nil];
+            self.team2Array[2] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[5], nil];
+            self.team1Array[3] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[2], nil];
+            self.team2Array[3] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[3], nil];
+            self.team1Array[4] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[5], nil];
+            self.team2Array[4] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[4], nil];
+            self.team1Array[5] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[5], nil];
+            self.team2Array[5] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[4], nil];
+            break;
+        }
+        case 7:{
+            self.team1Array[0] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[1], nil];
+            self.team2Array[0] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[3], nil];
+            self.team1Array[1] = [NSMutableArray arrayWithObjects:playersArray[4],playersArray[5], nil];
+            self.team2Array[1] = [NSMutableArray arrayWithObjects:playersArray[6],playersArray[0], nil];
+            self.team1Array[2] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[2], nil];
+            self.team2Array[2] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[4], nil];
+            self.team1Array[3] = [NSMutableArray arrayWithObjects:playersArray[5],playersArray[0], nil];
+            self.team2Array[3] = [NSMutableArray arrayWithObjects:playersArray[6],playersArray[1], nil];
+            self.team1Array[4] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[4], nil];
+            self.team2Array[4] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[5], nil];
+            self.team1Array[5] = [NSMutableArray arrayWithObjects:playersArray[6],playersArray[2], nil];
+            self.team2Array[5] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[0], nil];
+            self.team1Array[6] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[4], nil];
+            self.team2Array[6] = [NSMutableArray arrayWithObjects:playersArray[5],playersArray[6], nil];
+            break;
+        }
+        case 8:{
+            self.team1Array[0] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[1], nil];
+            self.team2Array[0] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[3], nil];
+            self.team1Array[1] = [NSMutableArray arrayWithObjects:playersArray[4],playersArray[5], nil];
+            self.team2Array[1] = [NSMutableArray arrayWithObjects:playersArray[6],playersArray[7], nil];
+            self.team1Array[2] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[6], nil];
+            self.team2Array[2] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[7], nil];
+            self.team1Array[3] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[4], nil];
+            self.team2Array[3] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[5], nil];
+            self.team1Array[4] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[4], nil];
+            self.team2Array[4] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[5], nil];
+            self.team1Array[5] = [NSMutableArray arrayWithObjects:playersArray[2],playersArray[6], nil];
+            self.team2Array[5] = [NSMutableArray arrayWithObjects:playersArray[3],playersArray[7], nil];
+            self.team1Array[6] = [NSMutableArray arrayWithObjects:playersArray[0],playersArray[2], nil];
+            self.team2Array[6] = [NSMutableArray arrayWithObjects:playersArray[4],playersArray[6], nil];
+            self.team1Array[7] = [NSMutableArray arrayWithObjects:playersArray[1],playersArray[3], nil];
+            self.team2Array[7] = [NSMutableArray arrayWithObjects:playersArray[5],playersArray[7], nil];
+
+            break;
+        }
+        default:
+            break;
+    }
+    
+    if (playersArray.count == 4) {
+        for (int i = 0 ; i < 3 ; i++) {
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+        }
+    }else{
+        for (int i = 0 ; i < playersArray.count ; i++) {
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+        }
+    }
+    
+    return self.gameScheduleArray;
+}
+
 - (NSMutableArray *) randomCreateBymalePlayers:(NSMutableArray *) malePlayerArray  femaleplayers:(NSMutableArray *) femalePlayerArray gameIndex: (int)i {
     
     int remaining = 4;
