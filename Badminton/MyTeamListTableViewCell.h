@@ -11,5 +11,6 @@
 @interface MyTeamListTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *teamName;
 @property (weak, nonatomic) IBOutlet UIImageView *teamImage;
+@property (weak, nonatomic) IBOutlet UIButton *photoButton;
 
 @end

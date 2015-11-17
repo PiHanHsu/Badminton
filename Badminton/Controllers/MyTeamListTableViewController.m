@@ -14,10 +14,13 @@
 #import "DataSource.h"
 
 
-@interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
+@interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (strong, nonatomic) NSString * teamName;
 @property (strong, nonatomic) NSMutableArray * teamArray;
 @property (strong, nonatomic) Team * teamObject;
+@property (strong, nonatomic) UIImagePickerController *photoPicker;
+@property (strong, nonatomic) UIImage * teamImage;
+@property (assign, nonatomic) NSInteger tempIndex;
 
 @end
 
@@ -30,7 +33,6 @@
     self.tableView.rowHeight = 120;
     
     self.teamArray = [DataSource sharedInstance].teamArray;
-    
     [self.tabBarController.tabBar setHidden:NO];
 }
 
@@ -49,6 +51,42 @@
     return _teamArray;
 }
 
+- (IBAction)photoButtonPressed:(id)sender {
+    
+    UIButton *button = (UIButton *)sender;
+    self.tempIndex = button.tag;
+    
+    UIAlertController * view = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+                                           
+    UIAlertAction* fromCamera = [UIAlertAction
+                         actionWithTitle:@"Change Photo from Camera"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                                 [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                             }
+                             
+                             [view dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    UIAlertAction* fromAlbum = [UIAlertAction
+                             actionWithTitle:@"Change Photo from Album"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                                     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                                 }
+                                 [view dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    
+    [view addAction:fromCamera];
+    [view addAction:fromAlbum];
+    [self presentViewController:view animated:YES completion:nil];
+}
 
 - (IBAction)AddTeam:(id)sender {
     
@@ -90,6 +128,17 @@
     
     // Configure the cell...
     cell.teamName.text = self.teamArray[indexPath.row][@"name"];
+    [cell.photoButton addTarget:self action:@selector(photoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    cell.photoButton.tag = indexPath.row;
+    if (self.teamArray[indexPath.row][@"photo"]) {
+        PFFile * photo = self.teamArray[indexPath.row][@"photo"];
+        if (photo) {
+            [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
+                cell.teamImage.image = [UIImage imageWithData:imageData];
+            }];
+        }
+
+    }
     
     return cell;
 }
@@ -149,6 +198,60 @@
 }
 */
 
+#pragma mark image picker delegate
+
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType{
+    UIImagePickerController *photoPicker = [[UIImagePickerController alloc] init];
+    photoPicker.sourceType = sourceType;
+    photoPicker.delegate = self;
+    
+    self.photoPicker = photoPicker;
+    [self presentViewController:self.photoPicker animated:YES completion:nil];
+}
+
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    
+    UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
+    self.teamImage = photoImage;
+    
+    [self updateTeamPhoto];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    self.photoPicker = nil;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.photoPicker = nil;
+}
+
+- (void)updateTeamPhoto{
+    NSData *imageData = UIImageJPEGRepresentation(self.teamImage, 1.0);
+    PFFile *photoFile = [PFFile fileWithData:imageData];
+    Team * team = self.teamArray[self.tempIndex];
+    
+    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query whereKey:@"objectId" equalTo:team.objectId];
+    
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *team, NSError * error){
+        if (error) {
+            NSLog(@"error: %@", error);
+        }else{
+            team[@"photo"] = photoFile;
+            [team saveInBackgroundWithBlock:^(BOOL succeed, NSError * error){
+                if (!error) {
+                    [self.tableView reloadData];
+                }else {
+                    NSLog(@"error: %@", error);
+                }
+                
+            }];
+
+        }
+    }];
+    
+}
 
 #pragma mark - Navigation
 
