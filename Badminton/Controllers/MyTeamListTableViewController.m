@@ -63,9 +63,12 @@
                          style:UIAlertActionStyleDefault
                          handler:^(UIAlertAction * action)
                          {
-                             if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                             if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)]) {
+                                 
                                  [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                 
                              }
+
                              
                              [view dismissViewControllerAnimated:YES completion:nil];
                              
@@ -200,7 +203,6 @@
 
 #pragma mark image picker delegate
 
-
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType{
     UIImagePickerController *photoPicker = [[UIImagePickerController alloc] init];
     photoPicker.sourceType = sourceType;
@@ -211,7 +213,6 @@
 }
 
 -(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
     
     UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
     self.teamImage = photoImage;
@@ -227,11 +228,14 @@
 }
 
 - (void)updateTeamPhoto{
+    
     NSData *imageData = UIImageJPEGRepresentation(self.teamImage, 1.0);
     PFFile *photoFile = [PFFile fileWithData:imageData];
     Team * team = self.teamArray[self.tempIndex];
     
+    
     PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query fromLocalDatastore];
     [query whereKey:@"objectId" equalTo:team.objectId];
     
     [query getFirstObjectInBackgroundWithBlock:^(PFObject *team, NSError * error){
@@ -239,15 +243,14 @@
             NSLog(@"error: %@", error);
         }else{
             team[@"photo"] = photoFile;
-            [team saveInBackgroundWithBlock:^(BOOL succeed, NSError * error){
+            [team pinInBackgroundWithBlock:^(BOOL succeed, NSError * error){
                 if (!error) {
                     [self.tableView reloadData];
                 }else {
                     NSLog(@"error: %@", error);
                 }
-                
             }];
-
+            //[team saveInBackground];
         }
     }];
     

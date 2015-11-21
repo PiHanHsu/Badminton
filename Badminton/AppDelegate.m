@@ -45,6 +45,8 @@
     
     
     
+    
+    
     //customized font for nav bar
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0]];
     
