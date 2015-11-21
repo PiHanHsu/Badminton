@@ -41,8 +41,8 @@
 		E8D324771BA3FE3A009210DC /* scoreboard.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8D324761BA3FCD8009210DC /* scoreboard.ttf */; };
 		E8EDF7A41B9309EB00B56725 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */; };
 		E8EDF7A71B95D1A900B56725 /* StandingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A61B95D1A900B56725 /* StandingTableViewController.m */; };
-		E8FA57731BBA8F8D0031C3B8 /* StandingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FA57721BBA8F8D0031C3B8 /* StandingTableViewCell.m */; settings = {ASSET_TAGS = (); }; };
-		E8FA57791BBA90E70031C3B8 /* V2StandingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FA57781BBA90E70031C3B8 /* V2StandingTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		E8FA57731BBA8F8D0031C3B8 /* StandingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FA57721BBA8F8D0031C3B8 /* StandingTableViewCell.m */; };
+		E8FA57791BBA90E70031C3B8 /* V2StandingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8FA57781BBA90E70031C3B8 /* V2StandingTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -307,6 +307,7 @@
 				E8484CBB1B6BA5B100B39463 /* Frameworks */,
 				E8484CBC1B6BA5B100B39463 /* Resources */,
 				20CDCD0283C53F636766830F /* Copy Pods Resources */,
+				3C634227132B2D6DD4E58487 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -413,6 +414,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3C634227132B2D6DD4E58487 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		591A4DDFCDB5A0A260FFFB74 /* Check Pods Manifest.lock */ = {

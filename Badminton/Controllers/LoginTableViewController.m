@@ -9,7 +9,7 @@
 #import "LoginTableViewController.h"
 #import <Parse.h>
 #import <ParseFacebookUtils/PFFacebookUtils.h>
-#import <FBSDKCoreKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "PlayListDataSource.h"
 #import "MyTeamListTableViewController.h"
 #import "DataSource.h"
