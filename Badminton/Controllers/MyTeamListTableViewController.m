@@ -136,11 +136,16 @@
     if (self.teamArray[indexPath.row][@"photo"]) {
         PFFile * photo = self.teamArray[indexPath.row][@"photo"];
         if (photo) {
+            
             [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
-                cell.teamImage.image = [UIImage imageWithData:imageData];
+                if (error) {
+                    NSLog(@"load photo error: %@", error);
+                }else{
+                    cell.teamImage.image = [UIImage imageWithData:imageData];
+                }
             }];
         }
-
+        
     }
     
     return cell;
