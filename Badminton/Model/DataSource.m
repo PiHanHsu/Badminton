@@ -173,15 +173,22 @@
 - (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray player: (NSString *) playerId{
     self.currentPlayerStatsArray = [@[] mutableCopy];
     
+    NSLog(@"n = %lu", (unsigned long)playerGameArray.count);
+    
     for (int i = 0 ; i < playerGameArray.count; i++) {
         NSDictionary * statsDict = [[NSDictionary alloc] init];
         NSMutableArray * winTeam = playerGameArray[i][@"winTeam"];
         NSMutableArray * loseTeam = playerGameArray[i][@"loseTeam"];
 
+        NSString * teamMate = [[NSString alloc]init];
         if ([winTeam containsObject:playerId]) {
-            [winTeam removeObject:playerId];
-            NSString * teamMate = winTeam[0];
             
+            if (winTeam.count > 1) {
+                [winTeam removeObject:playerId];
+                teamMate = winTeam[0];
+            }else{
+                teamMate = @"";
+            }
             statsDict = @{@"winOrLose" : @"Win",
                           @"teammate" : teamMate,
                           @"opponent" : loseTeam,
@@ -189,7 +196,13 @@
                           @"date" : playerGameArray[i][@"date"]};
             
         }else if ([loseTeam containsObject:playerId]){
-            [loseTeam removeObject:playerId];
+            
+            if (loseTeam.count > 1) {
+                [loseTeam removeObject:playerId];
+                teamMate = loseTeam[0];
+            }else{
+                teamMate = @"";
+            }
             NSString * teamMate = loseTeam[0];
             statsDict = @{@"winOrLose" : @"Lose",
                           @"teammate" : teamMate,
@@ -197,9 +210,11 @@
                           @"gameType" : playerGameArray[i][@"gameType"],
                           @"date" : playerGameArray[i][@"date"]};
         }
+        
         [self.currentPlayerStatsArray addObject:statsDict];
     }
     
+    NSLog(@"playerStatsArray: %@", self.currentPlayerStatsArray);
     [self getSteakWins:self.currentPlayerStatsArray];
     return self.currentPlayerStatsArray;
 }
