@@ -412,87 +412,66 @@
         }
     }];
     
-    //[self updateStandingWithWinner1:gameObject[@"WinTeam"][0] winner2:gameObject[@"WinTeam"][1] loser1:gameObject[@"LoseTeam"][0] loser2:gameObject[@"LoseTeam"][1] gameType:gameObject[@"GameType"]];
+    [self updateStangingWithWinTeam:gameObject[@"winTeam"] loseTeam:gameObject[@"loseTeam"] gameType:gameObject[@"gameType"] team:self.teamObject.objectId];
     
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];
     [self.scoreboard.team2ScoreTextField resignFirstResponder];
 
-    //TODO count unfinish Games
-    // if unfinish Game == 0 , show alrerview and back to Team VC
 }
 
-- (void)updateStandingWithWinner1: (Player *) winner1 winner2: (Player *) winner2 loser1: (Player *) loser1 loser2: (Player *) loser2 gameType:(NSString *)gameType{
-   
-    for (int i = 0 ; i < self.teamObject.teamPlayerStandingArray.count ; i ++) {
-        if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:winner1.objectId]) {
-            int wins = [self.teamObject.teamPlayerStandingArray[i][@"wins"] intValue];
+- (void)updateStangingWithWinTeam: (NSMutableArray *) winTeam loseTeam:(NSMutableArray *)loseTeam gameType:(NSString *)gameType team:(NSString *) team{
+    for (NSString * winner in winTeam) {
+        PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
+        [query whereKey:@"playerId" equalTo:winner];
+        [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:team]];
+        [query getFirstObjectInBackgroundWithBlock:^(PFObject * object, NSError * error) {
+            int wins = [object[@"wins"] intValue];
             wins ++;
-            self.teamObject.teamPlayerStandingArray[i][@"wins"] = [NSNumber numberWithInt:wins];
+            object[@"wins"] = [NSNumber numberWithInt:wins];
             if ([gameType isEqualToString:@"double"]) {
-                int doubleWins = [self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] intValue];
+                int doubleWins = [object[@"doubleWins"] intValue];
                 doubleWins ++;
-                self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] = [NSNumber numberWithInt:doubleWins];
+                object[@"doubleWins"] = [NSNumber numberWithInt:doubleWins];
             }else if ([gameType isEqualToString:@"mix"]){
-                int mixWins = [self.teamObject.teamPlayerStandingArray[i][@"mixWins"] intValue];
+                int mixWins = [object[@"mixWins"] intValue];
                 mixWins ++;
-                self.teamObject.teamPlayerStandingArray[i][@"mixWins"] = [NSNumber numberWithInt:mixWins];
+                object[@"mixWins"] = [NSNumber numberWithInt:mixWins];
+            }else if ([gameType isEqualToString:@"single"]){
+                int singleWins = [object[@"singleWins"] intValue];
+                singleWins ++;
+                object[@"singleWins"] = [NSNumber numberWithInt:singleWins];
             }
-            
-            [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
-        }else if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:winner2.objectId]) {
-            int wins = [self.teamObject.teamPlayerStandingArray[i][@"wins"] intValue];
-            wins ++;
-            self.teamObject.teamPlayerStandingArray[i][@"wins"] = [NSNumber numberWithInt:wins];
-            if ([gameType isEqualToString:@"double"]) {
-                int doubleWins = [self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] intValue];
-                doubleWins ++;
-                self.teamObject.teamPlayerStandingArray[i][@"doubleWins"] = [NSNumber numberWithInt:doubleWins];
-            }else if ([gameType isEqualToString:@"mix"]){
-                int mixWins = [self.teamObject.teamPlayerStandingArray[i][@"mixWins"] intValue];
-                mixWins ++;
-                self.teamObject.teamPlayerStandingArray[i][@"mixWins"] = [NSNumber numberWithInt:mixWins];
-            }
-            
-             [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
-            
-        }else if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:loser1.objectId]) {
-            int loses = [self.teamObject.teamPlayerStandingArray[i][@"loses"] intValue];
-            loses ++;
-            self.teamObject.teamPlayerStandingArray[i][@"loses"] = [NSNumber numberWithInt:loses];
-            if ([gameType isEqualToString:@"double"]) {
-                int doubleLoses = [self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] intValue];
-                doubleLoses ++;
-                self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] = [NSNumber numberWithInt:doubleLoses];
-            }else if ([gameType isEqualToString:@"mix"]){
-                int mixLoses = [self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] intValue];
-                mixLoses ++;
-                self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] = [NSNumber numberWithInt:mixLoses];
-            }
-            
-             [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
-            
-        }else if ([self.teamObject.teamPlayerStandingArray[i][@"playerId"] isEqualToString:loser2.objectId]) {
-            int loses = [self.teamObject.teamPlayerStandingArray[i][@"loses"] intValue];
-            loses ++;
-            self.teamObject.teamPlayerStandingArray[i][@"loses"] = [NSNumber numberWithInt:loses];
-            if ([gameType isEqualToString:@"double"]) {
-                int doubleLoses = [self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] intValue];
-                doubleLoses ++;
-                self.teamObject.teamPlayerStandingArray[i][@"doubleLoses"] = [NSNumber numberWithInt:doubleLoses];
-            }else if ([gameType isEqualToString:@"mix"]){
-                int mixLoses = [self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] intValue];
-                mixLoses ++;
-                self.teamObject.teamPlayerStandingArray[i][@"mixLoses"] = [NSNumber numberWithInt:mixLoses];
-            }
-            
-             [self.teamObject.teamPlayerStandingArray[i] saveInBackground];
-        }
+
+            [object saveInBackground];
+        }];
     }
     
+    for (NSString * loser in loseTeam) {
+        PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
+        [query whereKey:@"playerId" equalTo:loser];
+        [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:team]];
+        [query getFirstObjectInBackgroundWithBlock:^(PFObject * object, NSError * error) {
+            int loses = [object[@"loses"] intValue];
+            loses ++;
+            object[@"loses"] = [NSNumber numberWithInt:loses];
+            if ([gameType isEqualToString:@"double"]) {
+                int doubleLoses = [object[@"doubleLoses"] intValue];
+                doubleLoses ++;
+                object[@"doubleLoses"] = [NSNumber numberWithInt:doubleLoses];
+            }else if ([gameType isEqualToString:@"mix"]){
+                int mixLoses = [object[@"mixLoses"] intValue];
+                mixLoses ++;
+                object[@"mixLoses"] = [NSNumber numberWithInt:mixLoses];
+            }else if ([gameType isEqualToString:@"single"]){
+                int singleLoses = [object[@"singleLoses"] intValue];
+                singleLoses ++;
+                object[@"singleLoses"] = [NSNumber numberWithInt:singleLoses];
+            }
+            [object saveInBackground];
+         }];
+    }    
 }
-
-
 
 - (void) cancelScoreBoard: (id) sender {
     self.tempTeam1Array = [@[] mutableCopy];

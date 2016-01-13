@@ -73,7 +73,9 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
         if (!error){
             self.teamPlayerStandingArray = array;
-        
+//            for (PFObject * standing in array) {
+//                [standing pinInBackground];
+//            }
             if (doneHandle) {
                 doneHandle (self.teamPlayerStandingArray);
             }
