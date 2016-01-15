@@ -7,6 +7,7 @@
 //
 
 #import "StandingTableViewController.h"
+#import "StandingWithTeammateTableViewController.h"
 #import <Parse/Parse.h>
 #import "DataSource.h"
 
@@ -32,10 +33,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentStreakWinsLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
 @property (strong, nonatomic) NSMutableArray * playerStatsWithTeammateArray;
+@property (strong, nonatomic) NSArray * playerStatsWithDoubleGameArray;
+@property (strong, nonatomic) NSArray * playerStatsWithMixGameArray;
+@property (strong, nonatomic) NSString * gameType;
 
 @property (strong, nonatomic) NSArray * currentPlayerGamesArray;
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
-@property (strong, nonatomic) Player * currentPlayer;
 @property (weak, nonatomic) IBOutlet UILabel *bestTeammateForDoubleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bestTeammateForMixLabel;
 
@@ -50,8 +53,9 @@
     [[DataSource sharedInstance] loadGamesFromServer:self.playerId];
     PFQuery * query = [PFQuery queryWithClassName:@"Player"];
     [query whereKey:@"objectId" equalTo:self.playerId];
-    self.currentPlayer = [query getFirstObject];
-    self.title = self.currentPlayer[@"userName"];
+    self.currentPlayerForStats = [query getFirstObject];
+    self.title = self.currentPlayerForStats[@"userName"];
+    
 //    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
 //    self.indicator.center = self.view.center;
     
@@ -83,52 +87,19 @@
      queue:[NSOperationQueue mainQueue]
      usingBlock:^(NSNotification *notification) {
          if ([notification.name isEqualToString:@"getBestTeammateFinished"]) {
-             self.playerStatsWithTeammateArray = [DataSource sharedInstance].statsWithTeammatesArray;
-              NSString * bestDoubleTeammate = @"";
-              NSString * bestMixTeammate = @"";
-              float BestWinRate1 = 0;
-              float BestWinRate2 = 0;
-             for (NSDictionary * dict in self.playerStatsWithTeammateArray) {
-                 Player * player = dict[@"player"];
-                
-                 if ([self.currentPlayer[@"isMale"]boolValue] && [player[@"isMale"] boolValue]) {
-                    
-                     float doubleWinRate = [dict[@"winRate"] floatValue];
-                     NSLog(@"winRate: %f", doubleWinRate);
-                     if (doubleWinRate > BestWinRate1) {
-                         BestWinRate1 = doubleWinRate;
-                         
-                         bestDoubleTeammate = player[@"userName"];
-                         NSLog(@"best doubel player: %@", bestDoubleTeammate);
-                     }
-                   
-                 }else if (![self.currentPlayer[@"isMale"]boolValue] && ![player[@"isMale"] boolValue] ){
-                     float doubleWinRate = [dict[@"winRate"] floatValue];
-                     NSLog(@"winRate: %f", doubleWinRate);
-                     if (doubleWinRate > BestWinRate1) {
-                         BestWinRate1 = doubleWinRate;
-                         
-                         bestDoubleTeammate = player[@"userName"];
-                         NSLog(@"best doubel player: %@", bestDoubleTeammate);
-                     }
-                 }else{
-                     float mixWinRate = [dict[@"winRate"] floatValue];
-                     NSLog(@"winRate: %f", mixWinRate);
-                     if (mixWinRate > BestWinRate2) {
-                         BestWinRate2 = mixWinRate;
-                         
-                         bestMixTeammate = player[@"userName"];
-                         NSLog(@"best doubel player: %@", bestDoubleTeammate);
-                     }
-                 }
-             }
-             NSLog(@"final best doubel player: %@", bestDoubleTeammate);
-             NSLog(@"final best mix player: %@", bestMixTeammate);
-             self.bestTeammateForDoubleLabel.text = bestDoubleTeammate;
-             self.bestTeammateForMixLabel.text = bestMixTeammate;
+             self.playerStatsWithDoubleGameArray = [DataSource sharedInstance].statsWithTeammatesByDoubleGameArray;
+             self.playerStatsWithMixGameArray = [DataSource sharedInstance].statsWithTeammatesByMixGameArray;
+             
+             NSString * bestTeammateForDouble = @"";
+             NSString * bestTeammateForMix = @"";
+             bestTeammateForDouble = self.playerStatsWithDoubleGameArray[0][@"player"][@"userName"];
+             bestTeammateForMix = self.playerStatsWithMixGameArray[0][@"player"][@"userName"];
+             self.bestTeammateForDoubleLabel.text = bestTeammateForDouble;
+             self.bestTeammateForMixLabel.text = bestTeammateForMix;
              
          }
      }];
+
     //[self getStandings];
 }
 
@@ -231,6 +202,19 @@
     [self.tableView reloadData];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    self.selectedPlayerId = self.teamPlayersStandingArray[indexPath.row][@"playerId"];
+//    NSLog(@"id: %@", self.selectedPlayerId);
+    if (indexPath.row == 6){
+        self.gameType = @"Double";
+        [self performSegueWithIdentifier:@"Show Stats with Teammates" sender:nil];
+
+    }else if (indexPath.row == 7) {
+        self.gameType = @"Mix";
+        [self performSegueWithIdentifier:@"Show Stats with Teammates" sender:nil];
+    }
+    
+}
 //- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseCell" forIndexPath:indexPath];
 //    
@@ -274,14 +258,22 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
+    if ([segue.destinationViewController isKindOfClass:[StandingWithTeammateTableViewController class]]) {
+        StandingWithTeammateTableViewController * vc = segue.destinationViewController;
+        vc.currentPlayerForStats = self.currentPlayerForStats;
+        vc.playerStatsWithDoubleGameArray = self.playerStatsWithDoubleGameArray;
+        vc.playerStatsWithMixGameArray = self.playerStatsWithMixGameArray;
+        vc.gameType = self.gameType;
+    }
+
 }
-*/
+
+
 
 @end

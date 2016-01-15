@@ -1016,29 +1016,24 @@ SCOREBOARD</string>
                         <outlet property="overallLoseLabel" destination="tZA-V8-FZq" id="QYL-Hr-qF0"/>
                         <outlet property="singleLoseLabel" destination="Qfm-Wn-q2O" id="V0X-b1-KiC"/>
                         <outlet property="singleWinLabel" destination="jwT-BY-dYe" id="Rcm-zc-RY2"/>
-                        <segue destination="dez-FM-5Ma" kind="push" id="Tax-O3-w52"/>
+                        <segue destination="dez-FM-5Ma" kind="push" identifier="Show Stats with Teammates" id="Tax-O3-w52"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMC-ny-ild" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2925" y="1181"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Standing With Teammate Table View Controller-->
         <scene sceneID="HhV-v1-aWc">
             <objects>
-                <tableViewController id="dez-FM-5Ma" sceneMemberID="viewController">
+                <tableViewController id="dez-FM-5Ma" customClass="StandingWithTeammateTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="SeS-EO-1b0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="gc4-3p-qOV">
-                            <rect key="frame" x="0.0" y="64" width="320" height="43"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="iPB-cO-36P">
-                                <rect key="frame" x="0.0" y="135" width="320" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StandingWithTeammateTableViewCell" id="iPB-cO-36P" customClass="StandingWithTeammateTableViewCell">
+                                <rect key="frame" x="0.0" y="92" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iPB-cO-36P" id="Z74-dW-joI">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1051,7 +1046,7 @@ SCOREBOARD</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="勝" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuk-d6-QCE">
-                                            <rect key="frame" x="199" y="8" width="20" height="25"/>
+                                            <rect key="frame" x="210" y="9" width="20" height="25"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1063,19 +1058,24 @@ SCOREBOARD</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exu-5m-ZWo">
-                                            <rect key="frame" x="219" y="9" width="30" height="25"/>
+                                            <rect key="frame" x="240" y="9" width="30" height="25"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="敗" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lCT-xT-7q9">
-                                            <rect key="frame" x="266" y="9" width="20" height="25"/>
+                                            <rect key="frame" x="275" y="9" width="20" height="25"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="losesLabel" destination="Exu-5m-ZWo" id="WoA-fx-L7V"/>
+                                    <outlet property="teammateNameLabel" destination="AMF-GJ-Ky1" id="f18-cf-eXr"/>
+                                    <outlet property="winsLabel" destination="6Ra-V5-4ZR" id="W90-ag-9n6"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

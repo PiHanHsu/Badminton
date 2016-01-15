@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSNumber * maxStreakWins;
 @property (nonatomic, strong) NSMutableArray *selectedPlayersArray;
 @property (nonatomic, strong) NSMutableArray *statsWithTeammatesArray;
+@property (nonatomic, strong) NSArray *statsWithTeammatesByDoubleGameArray;
+@property (nonatomic, strong) NSArray *statsWithTeammatesByMixGameArray;
 
 
 + (DataSource *)sharedInstance ;

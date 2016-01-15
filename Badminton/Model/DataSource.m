@@ -216,14 +216,21 @@
     
     NSLog(@"playerStatsArray: %@", self.currentPlayerStatsArray);
     [self getSteakWins:self.currentPlayerStatsArray];
-    [self getBestTeammate:self.currentPlayerStatsArray];
+    [self getBestTeammate:self.currentPlayerStatsArray player:playerId];
     return self.currentPlayerStatsArray;
 }
 
--(void) getBestTeammate:(NSMutableArray *) playerStatsArray{
+-(void) getBestTeammate:(NSMutableArray *) playerStatsArray player:(NSString *) playerId{
     NSMutableArray * winTeammates = [@[] mutableCopy];
     NSMutableArray * loseTeammates = [@[] mutableCopy];
+    NSMutableArray * statsWithDoubleGame = [@[] mutableCopy];
+    NSMutableArray * statsWithMixGame = [@[] mutableCopy];
+
     self.statsWithTeammatesArray = [@[] mutableCopy];
+    
+    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+    [query whereKey:@"objectId" equalTo:playerId];
+    Player * playerForStats = [query getFirstObject];
     
     for (NSDictionary * stats in playerStatsArray) {
         
@@ -239,7 +246,7 @@
     NSCountedSet * loseSet =[[NSCountedSet alloc] initWithArray:loseTeammates];
     
     
-    
+    //TODO, if player has 0 win, s/he will not show in winSet
     for (id item in winSet)
     {
         PFQuery * query = [PFQuery queryWithClassName:@"Player"];
@@ -256,11 +263,27 @@
                                      @"loses" : loses,
                                      @"winRate" : winRate};
         
-        [self.statsWithTeammatesArray addObject:statsDict];
+        if ([playerForStats[@"isMale"]boolValue] && [player[@"isMale"] boolValue]){
+            [statsWithDoubleGame addObject:statsDict];
+        }else if (![playerForStats[@"isMale"]boolValue] && ![player[@"isMale"] boolValue] ){
+            [statsWithDoubleGame addObject:statsDict];
+        }else{
+            [statsWithMixGame addObject:statsDict];
+        }
+        
+        
+        
+        //[self.statsWithTeammatesArray addObject:statsDict];
             //   NSLog(@"Name=%@, Wins=%lu", item, (unsigned long)[winSet countForObject:item]);
             //   NSLog(@"Name=%@, Loses=%lu", item, (unsigned long)[loseSet countForObject:item]);
     }
-
+    
+    self.statsWithTeammatesByDoubleGameArray = [[NSArray alloc]initWithArray:statsWithDoubleGame];
+    self.statsWithTeammatesByMixGameArray = [[NSArray alloc]initWithArray:statsWithMixGame];
+    
+    NSSortDescriptor *descriptor=[[NSSortDescriptor alloc] initWithKey:@"winRate" ascending:NO];
+    self.statsWithTeammatesByDoubleGameArray = [self.statsWithTeammatesByDoubleGameArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
+    self.statsWithTeammatesByMixGameArray = [self.statsWithTeammatesByMixGameArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"getBestTeammateFinished" object:self];
 
     

@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Player.h"
 
 @interface StandingTableViewController : UITableViewController
 @property (strong, nonatomic) NSString * playerId;
+@property (strong, nonatomic) Player * currentPlayerForStats;
 
 @end
