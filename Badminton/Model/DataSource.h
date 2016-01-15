@@ -23,7 +23,7 @@
 @property (nonatomic, strong) NSNumber * currentStreakWins;
 @property (nonatomic, strong) NSNumber * maxStreakWins;
 @property (nonatomic, strong) NSMutableArray *selectedPlayersArray;
-
+@property (nonatomic, strong) NSMutableArray *statsWithTeammatesArray;
 
 
 + (DataSource *)sharedInstance ;

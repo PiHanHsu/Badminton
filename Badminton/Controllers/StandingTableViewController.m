@@ -31,9 +31,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *maxStreakWinsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *currentStreakWinsLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
+@property (strong, nonatomic) NSMutableArray * playerStatsWithTeammateArray;
 
 @property (strong, nonatomic) NSArray * currentPlayerGamesArray;
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
+@property (strong, nonatomic) Player * currentPlayer;
+@property (weak, nonatomic) IBOutlet UILabel *bestTeammateForDoubleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bestTeammateForMixLabel;
 
 @end
 
@@ -44,6 +48,19 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     [self getStandings];
     [[DataSource sharedInstance] loadGamesFromServer:self.playerId];
+    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+    [query whereKey:@"objectId" equalTo:self.playerId];
+    self.currentPlayer = [query getFirstObject];
+    self.title = self.currentPlayer[@"userName"];
+//    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    self.indicator.center = self.view.center;
+    
+    [self.activityIndicatorView startAnimating];
+   // [self.view addSubview:self.indicator];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter]
      addObserverForName:@"calculateStreakWinsFinished"
      object:nil
@@ -56,20 +73,68 @@
              self.currentStreakWinsLabel.text = [NSString stringWithFormat:@"%d連勝", currentStreakWins];
              [self.tableView reloadData];
              [self.activityIndicatorView stopAnimating];
-            
+             
          }
      }];
-//    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    self.indicator.center = self.view.center;
     
-    [self.activityIndicatorView startAnimating];
-   // [self.view addSubview:self.indicator];
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:@"getBestTeammateFinished"
+     object:nil
+     queue:[NSOperationQueue mainQueue]
+     usingBlock:^(NSNotification *notification) {
+         if ([notification.name isEqualToString:@"getBestTeammateFinished"]) {
+             self.playerStatsWithTeammateArray = [DataSource sharedInstance].statsWithTeammatesArray;
+              NSString * bestDoubleTeammate = @"";
+              NSString * bestMixTeammate = @"";
+              float BestWinRate1 = 0;
+              float BestWinRate2 = 0;
+             for (NSDictionary * dict in self.playerStatsWithTeammateArray) {
+                 Player * player = dict[@"player"];
+                
+                 if ([self.currentPlayer[@"isMale"]boolValue] && [player[@"isMale"] boolValue]) {
+                    
+                     float doubleWinRate = [dict[@"winRate"] floatValue];
+                     NSLog(@"winRate: %f", doubleWinRate);
+                     if (doubleWinRate > BestWinRate1) {
+                         BestWinRate1 = doubleWinRate;
+                         
+                         bestDoubleTeammate = player[@"userName"];
+                         NSLog(@"best doubel player: %@", bestDoubleTeammate);
+                     }
+                   
+                 }else if (![self.currentPlayer[@"isMale"]boolValue] && ![player[@"isMale"] boolValue] ){
+                     float doubleWinRate = [dict[@"winRate"] floatValue];
+                     NSLog(@"winRate: %f", doubleWinRate);
+                     if (doubleWinRate > BestWinRate1) {
+                         BestWinRate1 = doubleWinRate;
+                         
+                         bestDoubleTeammate = player[@"userName"];
+                         NSLog(@"best doubel player: %@", bestDoubleTeammate);
+                     }
+                 }else{
+                     float mixWinRate = [dict[@"winRate"] floatValue];
+                     NSLog(@"winRate: %f", mixWinRate);
+                     if (mixWinRate > BestWinRate2) {
+                         BestWinRate2 = mixWinRate;
+                         
+                         bestMixTeammate = player[@"userName"];
+                         NSLog(@"best doubel player: %@", bestDoubleTeammate);
+                     }
+                 }
+             }
+             NSLog(@"final best doubel player: %@", bestDoubleTeammate);
+             NSLog(@"final best mix player: %@", bestMixTeammate);
+             self.bestTeammateForDoubleLabel.text = bestDoubleTeammate;
+             self.bestTeammateForMixLabel.text = bestMixTeammate;
+             
+         }
+     }];
+    //[self getStandings];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    //[self getStandings];
+- (void) viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

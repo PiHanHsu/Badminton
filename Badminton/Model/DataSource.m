@@ -216,7 +216,54 @@
     
     NSLog(@"playerStatsArray: %@", self.currentPlayerStatsArray);
     [self getSteakWins:self.currentPlayerStatsArray];
+    [self getBestTeammate:self.currentPlayerStatsArray];
     return self.currentPlayerStatsArray;
+}
+
+-(void) getBestTeammate:(NSMutableArray *) playerStatsArray{
+    NSMutableArray * winTeammates = [@[] mutableCopy];
+    NSMutableArray * loseTeammates = [@[] mutableCopy];
+    self.statsWithTeammatesArray = [@[] mutableCopy];
+    
+    for (NSDictionary * stats in playerStatsArray) {
+        
+        if ([stats[@"winOrLose"] isEqualToString:@"Win"]){
+            [winTeammates addObject: stats[@"teammate"]];
+        }else{
+            [loseTeammates addObject: stats[@"teammate"]];
+        }
+    }
+    
+    [winTeammates removeObject:@""];
+    NSCountedSet * winSet =[[NSCountedSet alloc] initWithArray:winTeammates];
+    NSCountedSet * loseSet =[[NSCountedSet alloc] initWithArray:loseTeammates];
+    
+    
+    
+    for (id item in winSet)
+    {
+        PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+        [query whereKey:@"objectId" equalTo:item];
+        Player * player = [query getFirstObject];
+        
+        NSNumber * wins = [NSNumber numberWithUnsignedLong:[winSet countForObject:item]];
+        NSNumber * loses = [NSNumber numberWithUnsignedLong:[loseSet countForObject:item]];
+        float rate = wins.floatValue / (wins.floatValue + loses.floatValue) * 100;
+        NSNumber * winRate = [NSNumber numberWithFloat:rate];
+                
+        NSDictionary * statsDict = @{@"player" : player,
+                                     @"wins" : wins,
+                                     @"loses" : loses,
+                                     @"winRate" : winRate};
+        
+        [self.statsWithTeammatesArray addObject:statsDict];
+            //   NSLog(@"Name=%@, Wins=%lu", item, (unsigned long)[winSet countForObject:item]);
+            //   NSLog(@"Name=%@, Loses=%lu", item, (unsigned long)[loseSet countForObject:item]);
+    }
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getBestTeammateFinished" object:self];
+
+    
 }
 
 -(void) getSteakWins:(NSMutableArray *) playerStatsArray{
@@ -254,8 +301,10 @@
     NSLog(@"current Streak Loses: %d", streakLoses);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"calculateStreakWinsFinished" object:self];
-    
 }
+
+
+
 
 - (void) loadingTeamGames:(NSString *) teamId {
     PFQuery * query = [PFQuery queryWithClassName:@"Game"];
