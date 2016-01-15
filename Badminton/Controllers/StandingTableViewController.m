@@ -19,8 +19,6 @@
 @property (strong, nonatomic) NSString * singleStandingStr;
 @property (strong, nonatomic) NSString * mixStandingStr;
 
-@property (strong, nonatomic) NSString * bestMaleTeammate;
-@property (strong, nonatomic) NSString * bestFemaleTeammate;
 @property (weak, nonatomic) IBOutlet UILabel *overAllWinLabel;
 @property (weak, nonatomic) IBOutlet UILabel *overallLoseLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mixWinLabel;
@@ -90,9 +88,12 @@
              self.playerStatsWithDoubleGameArray = [DataSource sharedInstance].statsWithTeammatesByDoubleGameArray;
              self.playerStatsWithMixGameArray = [DataSource sharedInstance].statsWithTeammatesByMixGameArray;
              
-             NSString * bestTeammateForDouble = @"";
+             NSString * bestTeammateForDouble = @"--";
              NSString * bestTeammateForMix = @"";
-             bestTeammateForDouble = self.playerStatsWithDoubleGameArray[0][@"player"][@"userName"];
+             if (self.playerStatsWithDoubleGameArray.count > 0) {
+                 bestTeammateForDouble = self.playerStatsWithDoubleGameArray[0][@"player"][@"userName"];
+             }
+             
              bestTeammateForMix = self.playerStatsWithMixGameArray[0][@"player"][@"userName"];
              self.bestTeammateForDoubleLabel.text = bestTeammateForDouble;
              self.bestTeammateForMixLabel.text = bestTeammateForMix;
@@ -207,8 +208,9 @@
 //    NSLog(@"id: %@", self.selectedPlayerId);
     if (indexPath.row == 6){
         self.gameType = @"Double";
-        [self performSegueWithIdentifier:@"Show Stats with Teammates" sender:nil];
-
+        if (![self.bestTeammateForDoubleLabel.text isEqualToString:@"--"]) {
+            [self performSegueWithIdentifier:@"Show Stats with Teammates" sender:nil];
+        }
     }else if (indexPath.row == 7) {
         self.gameType = @"Mix";
         [self performSegueWithIdentifier:@"Show Stats with Teammates" sender:nil];
