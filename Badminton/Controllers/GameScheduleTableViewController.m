@@ -426,24 +426,26 @@
         [query whereKey:@"playerId" equalTo:winner];
         [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:team]];
         [query getFirstObjectInBackgroundWithBlock:^(PFObject * object, NSError * error) {
-            int wins = [object[@"wins"] intValue];
-            wins ++;
-            object[@"wins"] = [NSNumber numberWithInt:wins];
+            [object incrementKey:@"wins"];
+            
             if ([gameType isEqualToString:@"double"]) {
-                int doubleWins = [object[@"doubleWins"] intValue];
-                doubleWins ++;
-                object[@"doubleWins"] = [NSNumber numberWithInt:doubleWins];
+                [object incrementKey:@"doublewins"];
             }else if ([gameType isEqualToString:@"mix"]){
-                int mixWins = [object[@"mixWins"] intValue];
-                mixWins ++;
-                object[@"mixWins"] = [NSNumber numberWithInt:mixWins];
+                [object incrementKey:@"mixWins"];
+
             }else if ([gameType isEqualToString:@"single"]){
-                int singleWins = [object[@"singleWins"] intValue];
-                singleWins ++;
-                object[@"singleWins"] = [NSNumber numberWithInt:singleWins];
+                [object incrementKey:@"singleWins"];
             }
 
-            [object saveInBackground];
+            NSLog(@"newObject: %@", object);
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
+                
+                if (error) {
+                    NSLog(@"error: %@", error);
+                }else{
+                    NSLog(@"Winner Standing updated to Parse");
+                }
+            }];
         }];
     }
     
@@ -452,21 +454,17 @@
         [query whereKey:@"playerId" equalTo:loser];
         [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:team]];
         [query getFirstObjectInBackgroundWithBlock:^(PFObject * object, NSError * error) {
-            int loses = [object[@"loses"] intValue];
-            loses ++;
-            object[@"loses"] = [NSNumber numberWithInt:loses];
+            [object incrementKey:@"loses"];
+
             if ([gameType isEqualToString:@"double"]) {
-                int doubleLoses = [object[@"doubleLoses"] intValue];
-                doubleLoses ++;
-                object[@"doubleLoses"] = [NSNumber numberWithInt:doubleLoses];
+                [object incrementKey:@"doubleLoses"];
+                
             }else if ([gameType isEqualToString:@"mix"]){
-                int mixLoses = [object[@"mixLoses"] intValue];
-                mixLoses ++;
-                object[@"mixLoses"] = [NSNumber numberWithInt:mixLoses];
+                [object incrementKey:@"mixLoses"];
+
             }else if ([gameType isEqualToString:@"single"]){
-                int singleLoses = [object[@"singleLoses"] intValue];
-                singleLoses ++;
-                object[@"singleLoses"] = [NSNumber numberWithInt:singleLoses];
+                [object incrementKey:@"singleLoses"];
+
             }
             [object saveInBackground];
          }];
