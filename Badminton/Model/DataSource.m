@@ -14,7 +14,7 @@
 @property (nonatomic,strong) NSMutableArray *playerArray;
 @property (nonatomic,strong) NSArray *teamGamesArray;
 
-@property (strong, nonatomic) PFObject * currentPlayer;
+
 
 @end
 
@@ -105,7 +105,12 @@
     PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
     [getUserId whereKey:@"user" equalTo:user.objectId];
     self.currentPlayer = [getUserId getFirstObject];
-    
+    PFFile * photo = self.currentPlayer[@"photo"];
+    if (photo) {
+        [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
+            self.currentPlayerImage = [UIImage imageWithData:imageData];
+        }];
+    }
 //    [getUserId findObjectsInBackgroundWithBlock:^(NSArray * players, NSError * error){
 //        if (!error) {
 //            self.currentPlayer = players[0];

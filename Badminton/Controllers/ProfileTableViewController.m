@@ -10,6 +10,7 @@
 #import "LoginTableViewController.h"
 #import <Parse/Parse.h>
 #import "Player.h"
+#import "DataSource.h"
 
 @interface ProfileTableViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -33,23 +34,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].objectId];
+    PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
+    self.userNameLabel.text = currentPlayer[@"userName"];
+    self.userNameTextField.text = currentPlayer[@"userName"];
+    self.realNameTextField.text = currentPlayer[@"name"];
+    self.emailTextField.text = currentPlayer[@"email"];
     
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *player, NSError * error){
-        self.userNameLabel.text = player[@"userName"];
-        self.userNameTextField.text = player[@"userName"];
-        self.realNameTextField.text = player[@"name"];
-        self.emailTextField.text = player[@"email"];
-        PFFile * photo = player[@"photo"];
-        if (photo) {
-            [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
-                [self.photoButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
-            }];
-        }
-        
-    }];
-    
+    PFFile * photo = currentPlayer[@"photo"];
+    if (photo) {
+        [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
+           [self.photoButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+        }];
+    }
     self.userNameTextField.enabled = NO;
     self.realNameTextField.enabled = NO;
     self.emailTextField.enabled = NO;

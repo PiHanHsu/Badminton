@@ -255,7 +255,7 @@
                     NSLog(@"error: %@", error);
                 }
             }];
-            //[team saveInBackground];
+            [team saveInBackground];
         }
     }];
     

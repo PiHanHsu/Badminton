@@ -26,6 +26,9 @@
 @property (nonatomic, strong) NSMutableArray *statsWithTeammatesArray;
 @property (nonatomic, strong) NSArray *statsWithTeammatesByDoubleGameArray;
 @property (nonatomic, strong) NSArray *statsWithTeammatesByMixGameArray;
+@property (strong, nonatomic) PFObject * currentPlayer;
+@property (strong, nonatomic) UIImage * currentPlayerImage;
+
 
 
 + (DataSource *)sharedInstance ;
