@@ -134,9 +134,9 @@
     [queryAll findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
        
         self.teamArray = [teams mutableCopy];
-        for (Team * teamObject in self.teamArray) {
-            [teamObject pinInBackground];
-        }
+//        for (Team * teamObject in self.teamArray) {
+//            [teamObject pinInBackground];
+//        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
     }];

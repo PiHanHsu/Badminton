@@ -8,8 +8,11 @@
 
 #import "LoginTableViewController.h"
 #import <Parse.h>
-#import <ParseFacebookUtils/PFFacebookUtils.h>
-#import <FacebookSDK/FacebookSDK.h>
+//#import <ParseFacebookUtils/PFFacebookUtils.h>
+#import <ParseFacebookUtilsV4/ParseFacebookUtilsV4.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+//#import <FacebookSDK/FacebookSDK.h>
 #import "PlayListDataSource.h"
 #import "MyTeamListTableViewController.h"
 #import "DataSource.h"
@@ -137,8 +140,8 @@
     NSArray *permissionsArray = @[@"email"];
     [self.indicator startAnimating];
     // Login PFUser using Facebook
-    [PFFacebookUtils logInWithPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
-        
+    
+    [PFFacebookUtils logInInBackgroundWithPublishPermissions:permissionsArray block:^(PFUser * _Nullable user, NSError * _Nullable error) {
         if (!user) {
             NSString *errorMessage = nil;
             if (!error) {
@@ -159,7 +162,7 @@
                 NSLog(@"User with facebook signed up and logged in!");
                 //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
                 
-                [self saveUserDataToParse];
+                //[self saveUserDataToParse];
             } else {
                 NSLog(@"User with facebook logged in!");
                 [self.indicator stopAnimating];
@@ -167,48 +170,50 @@
                 [[DataSource sharedInstance] loadTeamsFromServer];
             }
         }
+
     }];
+   
     
 }
 
 
--(void) saveUserDataToParse
-{
-    FBRequest *request = [FBRequest requestForMe];
-    
-    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-        // handle response
-        if (!error) {
-            // Parse the data received
-            NSDictionary *userData = (NSDictionary *)result;
-            
-            NSString *facebookID = userData[@"id"];
-            NSString *name = userData[@"name"];
-            NSString *email =userData[@"email"];
-            NSString *pictureURL =[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID];
-            NSString *gender =userData[@"gender"];
-            
-            [[PFUser currentUser] setObject:name forKey:@"name"];
-            //[[PFUser currentUser] setObject:facebookID forKey:@"facebookID"];
-            [[PFUser currentUser] setObject:email forKey:@"email"];
-            [[PFUser currentUser] setObject:pictureURL forKey:@"pictureURL"];
-            [[PFUser currentUser] setObject:gender forKey:@"gender"];
-            
-            [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeed, NSError* error){
-                if (!error){
-                   [self performSegueWithIdentifier:@"Go to Sign up Page" sender:nil];
-                }
-            }];
-            
-        } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
-                    isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
-            NSLog(@"The facebook session was invalidated");
-            
-        } else {
-            NSLog(@"Some other error: %@", error);
-        }
-    }];
-}
+//-(void) saveUserDataToParse
+//{
+//    FBRequest *request = [FBRequest requestForMe];
+//    
+//    [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+//        // handle response
+//        if (!error) {
+//            // Parse the data received
+//            NSDictionary *userData = (NSDictionary *)result;
+//            
+//            NSString *facebookID = userData[@"id"];
+//            NSString *name = userData[@"name"];
+//            NSString *email =userData[@"email"];
+//            NSString *pictureURL =[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID];
+//            NSString *gender =userData[@"gender"];
+//            
+//            [[PFUser currentUser] setObject:name forKey:@"name"];
+//            //[[PFUser currentUser] setObject:facebookID forKey:@"facebookID"];
+//            [[PFUser currentUser] setObject:email forKey:@"email"];
+//            [[PFUser currentUser] setObject:pictureURL forKey:@"pictureURL"];
+//            [[PFUser currentUser] setObject:gender forKey:@"gender"];
+//            
+//            [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeed, NSError* error){
+//                if (!error){
+//                   [self performSegueWithIdentifier:@"Go to Sign up Page" sender:nil];
+//                }
+//            }];
+//            
+//        } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
+//                    isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+//            NSLog(@"The facebook session was invalidated");
+//            
+//        } else {
+//            NSLog(@"Some other error: %@", error);
+//        }
+//    }];
+//}
 
 
 @end

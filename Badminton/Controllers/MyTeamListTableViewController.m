@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UIImagePickerController *photoPicker;
 @property (strong, nonatomic) UIImage * teamImage;
 @property (assign, nonatomic) NSInteger tempIndex;
+@property (strong, nonatomic) Player * currentPlayer;
 
 @end
 
@@ -29,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.currentPlayer = [DataSource sharedInstance].currentPlayer;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 120;
     
@@ -107,7 +109,7 @@
        teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
        teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
        teamObject[@"isDeleted"] = [NSNumber numberWithBool:NO];
-       teamObject[@"players"] = [@[] mutableCopy];
+       teamObject[@"players"] = [@[self.currentPlayer] mutableCopy];
        [[DataSource sharedInstance] addTeam:teamObject];
        
        [self.tableView reloadData];

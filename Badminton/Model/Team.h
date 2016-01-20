@@ -13,16 +13,18 @@
 
 @interface Team : PFObject<PFSubclassing>
 @property (strong, nonatomic) NSString * objectId;
-@property (strong, nonatomic) NSString * teamName;
-@property (strong, nonatomic) NSString * createdBy;
+@property (strong, nonatomic) NSString * name;
+@property (strong, nonatomic) NSString * createBy;
 @property (strong, nonatomic) NSMutableArray * malePlayers;
 @property (strong, nonatomic) NSMutableArray * femalePlayers;
 @property (strong, nonatomic) NSMutableArray * players;
 @property (strong, nonatomic) NSArray * teamPlayerStandingArray; // of each player standing
+@property (assign, nonatomic) BOOL isDeleted;
+@property (strong, nonatomic) PFFile * photo;
 
 +(Team *) createTeam;
 - (void)addPlayer: (Player *)player;
-- (NSMutableArray *) loadTeamPlayerStandingArray;
+//- (NSMutableArray *) loadTeamPlayerStandingArray;
 
 -(void) loadTeamPlayerStandingArrayWithDone:(void (^)(NSArray * teamPlayerStandingArray))doneHandle;
 

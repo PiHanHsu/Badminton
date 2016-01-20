@@ -7,9 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import <ParseFacebookUtils/PFFacebookUtils.h>
+//#import <ParseFacebookUtilsV4/PFFacebookUtilsV4.h>
+#import <ParseFacebookUtilsV4/ParseFacebookUtilsV4.h>
 #import <Parse/Parse.h>
-#import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKLoginKit.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FacebookSDK/FacebookSDK.h>
 
 @interface AppDelegate ()
 
@@ -28,7 +31,7 @@
     [PFUser enableRevocableSessionInBackground];
     
     //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    [PFFacebookUtils initializeFacebook];
+    //[PFFacebookUtils initializeFacebook];
     
     // Register for Push Notitications
 //    UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
@@ -74,11 +77,11 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [FBAppCall handleOpenURL:url
-                  sourceApplication:sourceApplication
-                        withSession:[PFFacebookUtils session]];
-}
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+////    return [FBAppCall handleOpenURL:url
+////                  sourceApplication:sourceApplication
+////                        withSession:[PFFacebookUtils session]];
+//}
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     // Store the deviceToken in the current installation and save it to Parse.
@@ -106,7 +109,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [[PFFacebookUtils session] close];
+    //[[PFFacebookUtils session] close];
 }
 
 @end

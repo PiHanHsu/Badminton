@@ -12,12 +12,15 @@
 @implementation Team
 
 @dynamic objectId;
-@dynamic teamName;
-@dynamic createdBy;
+@dynamic name;
+@dynamic createBy;
 @dynamic malePlayers;
 @dynamic femalePlayers;
 @dynamic players;
 @dynamic teamPlayerStandingArray;
+@dynamic isDeleted;
+@dynamic photo;
+
 
 +(void)load {
     [self registerSubclass];
@@ -30,14 +33,15 @@
 
 +(Team *) createTeam {
     Team *teamObject = [Team object];
+    teamObject.players = [@[] mutableCopy];
     return teamObject;
 }
 
-
-
 - (void)addPlayer: (Player *)player{
-
+    
     [self.players addObject:player];
+    self.players = [self.players mutableCopy];
+    
     [self saveInBackground];
     [self createPlayerStanding:player];
     

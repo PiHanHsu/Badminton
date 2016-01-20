@@ -70,6 +70,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     self.player = self.searchResults[indexPath.row];
     [self.teamObject addPlayer:self.player];
+//    PFObject * teamObj = [PFObject objectWithClassName:@"Team"];
+//    teamObj[@"players"] = @[self.player, self.player];
+//    [teamObj saveInBackground];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
