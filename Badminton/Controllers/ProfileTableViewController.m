@@ -199,9 +199,9 @@
     //[PFUser unpinAllObjects];
     //[PFObject unpinAllObjects];
     
-    
-    LoginTableViewController * rootVC =[self.storyboard instantiateViewControllerWithIdentifier:@"LoginTableViewController"];
+    UINavigationController * rootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RootNavigatoinController"];
     [self presentViewController:rootVC animated:YES completion:nil];
+    
     //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 

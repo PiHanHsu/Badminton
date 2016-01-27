@@ -112,20 +112,21 @@
             //TODO player photo
             
             [player saveInBackground];
-            
-            MyTeamListTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"MyTeamTableViewController"];
-            [self.navigationController pushViewController:vc animated:YES];
-
+            [self signUpSuccess];
+    
         } else {
             NSString *errorString = [error userInfo][@"error"];
             NSLog(@"sign up error: %@", errorString);
             // Show the errorString somewhere and let the user try again.
         }
     }];
+}
+
+-(void) signUpSuccess{
+    UITabBarController * tabbarVC =[self.storyboard instantiateViewControllerWithIdentifier:@"TabbarViewController"];
     
-    
-    
-    
+    [tabbarVC setSelectedIndex:0];
+    [self presentViewController:tabbarVC animated:YES completion:nil];
 }
 
 #pragma mark textField delegate
