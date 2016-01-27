@@ -111,15 +111,6 @@
             self.currentPlayerImage = [UIImage imageWithData:imageData];
         }];
     }
-//    [getUserId findObjectsInBackgroundWithBlock:^(NSArray * players, NSError * error){
-//        if (!error) {
-//            self.currentPlayer = players[0];
-//            NSLog(@"currentPlayer: %@", self.currentPlayer);
-//        }else{
-//            NSLog(@"error: %@", error);
-//        }
-//       
-//    }];
     
     //this query doesn't work!!
     PFQuery * queryFromPlayers = [Team query];
