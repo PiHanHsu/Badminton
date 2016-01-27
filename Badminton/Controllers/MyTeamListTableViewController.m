@@ -35,6 +35,21 @@
     self.tableView.rowHeight = 120;
     
     self.teamArray = [DataSource sharedInstance].teamArray;
+    if (self.teamArray.count == 0 ) {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"請新增一個球隊，或請隊友將您加入現有球隊" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 //Do some thing here
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+    }
     [self.tabBarController.tabBar setHidden:NO];
 }
 
@@ -59,37 +74,45 @@
     self.tempIndex = button.tag;
     
     UIAlertController * view = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-                                           
+    
     UIAlertAction* fromCamera = [UIAlertAction
-                         actionWithTitle:@"Change Photo from Camera"
-                         style:UIAlertActionStyleDefault
-                         handler:^(UIAlertAction * action)
-                         {
-                             if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)]) {
-                                 
-                                 [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
-                                 
-                             }
-
-                             
-                             [view dismissViewControllerAnimated:YES completion:nil];
-                             
-                         }];
+                                 actionWithTitle:@"開啟相機"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)]) {
+                                         
+                                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                         
+                                     }
+                                     
+                                     
+                                     [view dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                 }];
     UIAlertAction* fromAlbum = [UIAlertAction
-                             actionWithTitle:@"Change Photo from Album"
+                                actionWithTitle:@"從相機膠卷選取"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                                    }
+                                    [view dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"取消"
                              style:UIAlertActionStyleDefault
                              handler:^(UIAlertAction * action)
                              {
-                                 if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-                                     [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-                                 }
                                  [view dismissViewControllerAnimated:YES completion:nil];
                                  
                              }];
     
-    
     [view addAction:fromCamera];
     [view addAction:fromAlbum];
+    [view addAction:cancel];
     [self presentViewController:view animated:YES completion:nil];
 }
 

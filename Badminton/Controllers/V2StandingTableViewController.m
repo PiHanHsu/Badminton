@@ -33,18 +33,26 @@
     [self.view addSubview:self.activityIndicatorView];
     
     self.teamArray = [DataSource sharedInstance].teamArray;
-    self.teamObject = self.teamArray[0];
-    [self.teamObject loadTeamPlayerStandingArrayWithDone:^(NSArray * array){
-        self.teamPlayersStandingArray = [self createWinRateWithPlayerStatsArray:array];
-        [self.activityIndicatorView stopAnimating];
-        [self.tableView reloadData];
-    }];
-    //self.teamPlayersStandingArray = [[self.teamObject loadTeamPlayerStandingArray] mutableCopy];
-    
-    
-    
-    //self.playerArray = self.teamObject[@"player"];
-    
+    if (self.teamArray.count == 0) {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"目前尚未有排名資訊" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* ok = [UIAlertAction
+                             actionWithTitle:@"OK"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [alert dismissViewControllerAnimated:YES completion:nil];
+                                 [self.activityIndicatorView stopAnimating];
+                             }];
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+    }else{
+        self.teamObject = self.teamArray[0];
+        [self.teamObject loadTeamPlayerStandingArrayWithDone:^(NSArray * array){
+            self.teamPlayersStandingArray = [self createWinRateWithPlayerStatsArray:array];
+            [self.activityIndicatorView stopAnimating];
+            [self.tableView reloadData];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

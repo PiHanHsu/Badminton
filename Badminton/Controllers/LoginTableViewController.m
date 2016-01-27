@@ -53,11 +53,11 @@
     
     //if currentUser, byPass Login
     PFUser *currentUser = [PFUser currentUser];
-//    if (currentUser) {
-//        [self.indicator startAnimating];
-//         //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
-//        [[DataSource sharedInstance] loadTeamsFromServer];
-//    }
+    if (currentUser) {
+        [self.indicator startAnimating];
+         //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
+        [[DataSource sharedInstance] loadTeamsFromServer];
+    }
     
     //Go to next Page after get data
     [[NSNotificationCenter defaultCenter]

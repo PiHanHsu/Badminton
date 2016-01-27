@@ -1098,31 +1098,37 @@ SCOREBOARD</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="ukx-1c-UQE">
-                            <rect key="frame" x="0.0" y="64" width="320" height="200"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="120"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTm-b8-NtM">
-                                    <rect key="frame" x="60" y="174" width="200" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icA-Tb-ZKM">
-                                    <rect key="frame" x="85" y="20" width="150" height="150"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGd-8M-UwN" userLabel="BackgroundView">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+                                    <color key="backgroundColor" red="0.52227174789999997" green="0.70964062630000002" blue="0.99813589140000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="81" id="ffp-6I-Q5V"/>
+                                    </constraints>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icA-Tb-ZKM">
+                                    <rect key="frame" x="155" y="0.0" width="150" height="150"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="150" id="Dv6-YK-ffc"/>
+                                        <constraint firstAttribute="width" constant="150" id="x5x-fv-qFU"/>
+                                    </constraints>
                                     <state key="normal" title="photo">
                                         <color key="titleColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Hw-hg-sD2" userLabel="LineView">
-                                    <rect key="frame" x="0.0" y="199" width="320" height="1"/>
-                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                </view>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="EGd-8M-UwN" secondAttribute="trailing" id="51b-Vg-DvR"/>
+                                <constraint firstItem="EGd-8M-UwN" firstAttribute="top" secondItem="ukx-1c-UQE" secondAttribute="top" id="CXf-PG-gnA"/>
+                                <constraint firstItem="EGd-8M-UwN" firstAttribute="leading" secondItem="ukx-1c-UQE" secondAttribute="leading" id="hcp-cl-RIO"/>
+                            </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="zku-Qp-bpA">
-                            <rect key="frame" x="0.0" y="440" width="320" height="79"/>
+                            <rect key="frame" x="0.0" y="360" width="320" height="79"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVO-kk-4Yn">
@@ -1145,7 +1151,7 @@ SCOREBOARD</string>
                             <tableViewSection id="c0D-aA-hf6">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="HBG-AT-bf1">
-                                        <rect key="frame" x="0.0" y="264" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="184" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HBG-AT-bf1" id="pnX-Zb-gDr">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1160,7 +1166,7 @@ SCOREBOARD</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="kSu-WH-hZ3">
-                                        <rect key="frame" x="0.0" y="308" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="228" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kSu-WH-hZ3" id="hqz-r9-VJE">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1175,7 +1181,7 @@ SCOREBOARD</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Wd5-oV-4Mp">
-                                        <rect key="frame" x="0.0" y="352" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="272" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wd5-oV-4Mp" id="h0w-U9-mcJ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1190,7 +1196,7 @@ SCOREBOARD</string>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" id="imC-zv-QKc">
-                                        <rect key="frame" x="0.0" y="396" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="316" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="imC-zv-QKc" id="U9h-3B-1fT">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
@@ -1218,7 +1224,6 @@ SCOREBOARD</string>
                         <outlet property="emailTextField" destination="Gwe-T3-Mh8" id="ZbH-S7-8Gt"/>
                         <outlet property="photoButton" destination="icA-Tb-ZKM" id="27r-Ux-yTF"/>
                         <outlet property="realNameTextField" destination="YYi-4o-yUE" id="Xwe-2F-tzn"/>
-                        <outlet property="userNameLabel" destination="BTm-b8-NtM" id="1gb-gb-ZOe"/>
                         <outlet property="userNameTextField" destination="yNh-hg-Rft" id="TOh-Sc-Iew"/>
                     </connections>
                 </tableViewController>

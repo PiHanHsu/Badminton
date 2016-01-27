@@ -15,7 +15,7 @@
 @interface ProfileTableViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-//@property (strong, nonatomic) Player * currentPlayer;
+@property (strong, nonatomic) Player * currentPlayer;
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *realNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
@@ -54,7 +54,7 @@
     
     //set up Photo Button
     self.photoButton.layer.borderWidth = 5.0f;
-    self.photoButton.layer.borderColor = [UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
+    self.photoButton.layer.borderColor = [UIColor whiteColor].CGColor;
     self.photoButton.layer.cornerRadius = 75.0;
     self.photoButton.clipsToBounds = YES;
     
@@ -62,10 +62,10 @@
     
     //set barButton
     
-    self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editBtnPressed:)];
+    self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editBtnPressed:)];
     self.navigationItem.rightBarButtonItem = self.editBarButton;
     
-    self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelBtnPressed:)];
+    self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelBtnPressed:)];
     self.navigationItem.leftBarButtonItem = nil;
     
 }
@@ -108,20 +108,30 @@
 }
 
 - (void)updateProfile{
-    NSData *imageData = UIImageJPEGRepresentation(self.photoButton.imageView.image, 1.0);
-    PFFile *photoFile = [PFFile fileWithData:imageData];
-    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
-    [query whereKey:@"user" equalTo:[PFUser currentUser].objectId];
     
-    [query getFirstObjectInBackgroundWithBlock:^(PFObject *player, NSError * error){
+    if (self.photoButton.imageView.image) {
+        NSData *imageData = UIImageJPEGRepresentation(self.photoButton.imageView.image, 1.0);
+        PFFile *photoFile = [PFFile fileWithData:imageData];
+        PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+        [query whereKey:@"user" equalTo:[PFUser currentUser].objectId];
         
-        player[@"userName"] = self.userNameTextField.text;
-        player[@"name"] = self.realNameTextField.text;
-        player[@"email"] = self.emailTextField.text;
-        player [@"photo"] = photoFile;
+        [query getFirstObjectInBackgroundWithBlock:^(PFObject *player, NSError * error){
+            
+            player[@"userName"] = self.userNameTextField.text;
+            player[@"name"] = self.realNameTextField.text;
+            player[@"email"] = self.emailTextField.text;
+            player [@"photo"] = photoFile;
+            
+            [player saveInBackground];
+        }];
+    }else{
+        PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
+        currentPlayer[@"userName"] = self.userNameTextField.text;
+        currentPlayer[@"name"] = self.realNameTextField.text;
+        currentPlayer[@"email"] = self.emailTextField.text;
         
-        [player saveInBackground];
-    }];
+        [currentPlayer saveInBackground];
+    }
 }
 
 #pragma mark - Handle BarButtonItem states
@@ -162,9 +172,49 @@
 #pragma mark image picker delegate
 
 - (IBAction)addPhtotButtonPressed:(id)sender {
-    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    }
+    UIAlertController * view = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* fromCamera = [UIAlertAction
+                                 actionWithTitle:@"開啟相機"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)]) {
+                                         
+                                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                         
+                                     }
+                                     
+                                     
+                                     [view dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                 }];
+    UIAlertAction* fromAlbum = [UIAlertAction
+                                actionWithTitle:@"從相機膠卷選取"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                                    }
+                                    [view dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                }];
+    UIAlertAction* cancel = [UIAlertAction
+                                actionWithTitle:@"取消"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    [view dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                }];
+    
+    [view addAction:fromCamera];
+    [view addAction:fromAlbum];
+    [view addAction:cancel];
+    [self presentViewController:view animated:YES completion:nil];
+    
+ 
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType{
