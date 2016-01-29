@@ -31,6 +31,10 @@
 		E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */; };
 		E85EB2751B80EF480094875E /* PlayListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2741B80EF480094875E /* PlayListDataSource.m */; };
 		E870EE451C5BB5D100A85174 /* TeamListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E870EE441C5BB5D100A85174 /* TeamListTableViewCell.m */; };
+		E870EE4A1C5BCC1900A85174 /* user_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE481C5BCC1900A85174 /* user_placeholder@2x.png */; };
+		E870EE4D1C5BCCA300A85174 /* user_placeholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE4C1C5BCCA300A85174 /* user_placeholder@3x.png */; };
+		E870EE521C5BD50600A85174 /* camera-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE501C5BD50600A85174 /* camera-icon@3x.png */; };
+		E870EE531C5BD50600A85174 /* camera-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE511C5BD50600A85174 /* camera-icon@2x.png */; };
 		E877D8121B8A205C007D9E53 /* SignupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E877D8111B8A205C007D9E53 /* SignupTableViewController.m */; };
 		E879D8491C48CA06004297F9 /* StandingWithTeammateTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E879D8481C48CA06004297F9 /* StandingWithTeammateTableViewController.m */; };
 		E879D84C1C48CAC5004297F9 /* StandingWithTeammateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E879D84B1C48CAC5004297F9 /* StandingWithTeammateTableViewCell.m */; };
@@ -105,6 +109,10 @@
 		E85EB2741B80EF480094875E /* PlayListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayListDataSource.m; path = Model/PlayListDataSource.m; sourceTree = "<group>"; };
 		E870EE431C5BB5D100A85174 /* TeamListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamListTableViewCell.h; sourceTree = "<group>"; };
 		E870EE441C5BB5D100A85174 /* TeamListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamListTableViewCell.m; sourceTree = "<group>"; };
+		E870EE481C5BCC1900A85174 /* user_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_placeholder@2x.png"; sourceTree = "<group>"; };
+		E870EE4C1C5BCCA300A85174 /* user_placeholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_placeholder@3x.png"; sourceTree = "<group>"; };
+		E870EE501C5BD50600A85174 /* camera-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon@3x.png"; sourceTree = "<group>"; };
+		E870EE511C5BD50600A85174 /* camera-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon@2x.png"; sourceTree = "<group>"; };
 		E877D8101B8A205C007D9E53 /* SignupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupTableViewController.h; sourceTree = "<group>"; };
 		E877D8111B8A205C007D9E53 /* SignupTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupTableViewController.m; sourceTree = "<group>"; };
 		E879D8471C48CA06004297F9 /* StandingWithTeammateTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandingWithTeammateTableViewController.h; sourceTree = "<group>"; };
@@ -208,6 +216,10 @@
 				E8D324761BA3FCD8009210DC /* scoreboard.ttf */,
 				E83649061B8DE10D00F172A4 /* femalePlayer@2x.jpg */,
 				E83649041B8DE10900F172A4 /* malePlayer@2x.jpg */,
+				E870EE481C5BCC1900A85174 /* user_placeholder@2x.png */,
+				E870EE4C1C5BCCA300A85174 /* user_placeholder@3x.png */,
+				E870EE501C5BD50600A85174 /* camera-icon@3x.png */,
+				E870EE511C5BD50600A85174 /* camera-icon@2x.png */,
 				E8484CC51B6BA5B100B39463 /* AppDelegate.h */,
 				E8484CC61B6BA5B100B39463 /* AppDelegate.m */,
 				E8484CC81B6BA5B100B39463 /* ViewController.h */,
@@ -394,12 +406,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E870EE4D1C5BCCA300A85174 /* user_placeholder@3x.png in Resources */,
 				E8D324771BA3FE3A009210DC /* scoreboard.ttf in Resources */,
+				E870EE531C5BD50600A85174 /* camera-icon@2x.png in Resources */,
 				E83649051B8DE10900F172A4 /* malePlayer@2x.jpg in Resources */,
+				E870EE4A1C5BCC1900A85174 /* user_placeholder@2x.png in Resources */,
 				E8C283611B88A0C90018F3A1 /* LoginPageImage.png in Resources */,
 				E8C283651B88AE7E0018F3A1 /* teams.png in Resources */,
 				E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */,
 				E83649071B8DE10D00F172A4 /* femalePlayer@2x.jpg in Resources */,
+				E870EE521C5BD50600A85174 /* camera-icon@3x.png in Resources */,
 				E8C283631B88AD6B0018F3A1 /* Badminton1.jpg in Resources */,
 				E836496C1B92D42600F172A4 /* ScoreBoard.xib in Resources */,
 				E8484CCF1B6BA5B100B39463 /* Images.xcassets in Resources */,

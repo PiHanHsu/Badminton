@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
 @property (strong, nonatomic) UIImage * photoImage;
 @property (strong, nonatomic) UIImagePickerController *photoPicker;
+@property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
 
 @property (assign) BOOL isEditState;
 
@@ -50,7 +51,7 @@
     self.realNameTextField.enabled = NO;
     self.emailTextField.enabled = NO;
     [self.photoButton setUserInteractionEnabled:NO];
-
+    self.cameraImage.hidden = YES;
     
     //set up Photo Button
     self.photoButton.layer.borderWidth = 5.0f;
@@ -151,6 +152,7 @@
     if(isEditState) {
         
         self.cancelBarButton.enabled = YES;
+        self.cameraImage.hidden = NO;
         self.navigationItem.leftBarButtonItem = self.cancelBarButton;
         
         self.editBarButton.title = @"Done";
@@ -161,6 +163,7 @@
             [self.userNameTextField becomeFirstResponder];
     } else {
         self.cancelBarButton.enabled = NO;
+        self.cameraImage.hidden = YES;
         self.navigationItem.leftBarButtonItem = nil;
         
         self.editBarButton.title = @"Edit";

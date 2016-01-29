@@ -99,8 +99,11 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mqk-K5-TBU">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user_placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Mqk-K5-TBU">
                                     <rect key="frame" x="207" y="20" width="100" height="100"/>
+                                </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="camera-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="g3l-td-yFL">
+                                    <rect key="frame" x="287" y="100" width="20" height="20"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1101,29 +1104,38 @@ SCOREBOARD</string>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGd-8M-UwN" userLabel="BackgroundView">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                                     <color key="backgroundColor" red="0.52227174789999997" green="0.70964062630000002" blue="0.99813589140000003" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="81" id="ffp-6I-Q5V"/>
-                                    </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icA-Tb-ZKM">
-                                    <rect key="frame" x="155" y="0.0" width="150" height="150"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icA-Tb-ZKM">
+                                    <rect key="frame" x="162" y="8" width="150" height="150"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="150" id="Dv6-YK-ffc"/>
-                                        <constraint firstAttribute="width" constant="150" id="x5x-fv-qFU"/>
+                                        <constraint firstAttribute="width" constant="150" id="YJU-Q5-ayk"/>
+                                        <constraint firstAttribute="height" constant="150" id="uzh-Jy-I3C"/>
                                     </constraints>
-                                    <state key="normal" title="photo">
+                                    <state key="normal" title="photo" image="user_placeholder.png">
                                         <color key="titleColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="tVU-df-epj">
+                                    <rect key="frame" x="217" y="63" width="40" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="EgS-01-NcL"/>
+                                        <constraint firstAttribute="height" constant="40" id="hu3-xO-SvN"/>
+                                    </constraints>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="EGd-8M-UwN" secondAttribute="trailing" id="51b-Vg-DvR"/>
-                                <constraint firstItem="EGd-8M-UwN" firstAttribute="top" secondItem="ukx-1c-UQE" secondAttribute="top" id="CXf-PG-gnA"/>
-                                <constraint firstItem="EGd-8M-UwN" firstAttribute="leading" secondItem="ukx-1c-UQE" secondAttribute="leading" id="hcp-cl-RIO"/>
+                                <constraint firstAttribute="bottom" secondItem="EGd-8M-UwN" secondAttribute="bottom" constant="20" symbolic="YES" id="1UV-9u-Nfc"/>
+                                <constraint firstItem="icA-Tb-ZKM" firstAttribute="centerX" secondItem="tVU-df-epj" secondAttribute="centerX" id="Jdh-aF-bFt"/>
+                                <constraint firstItem="icA-Tb-ZKM" firstAttribute="centerY" secondItem="tVU-df-epj" secondAttribute="centerY" id="TcN-Wx-SRu"/>
+                                <constraint firstItem="icA-Tb-ZKM" firstAttribute="top" secondItem="ukx-1c-UQE" secondAttribute="topMargin" id="bEc-Na-O1o"/>
+                                <constraint firstAttribute="trailing" secondItem="EGd-8M-UwN" secondAttribute="trailing" id="jVJ-UB-3gJ"/>
+                                <constraint firstItem="icA-Tb-ZKM" firstAttribute="trailing" secondItem="ukx-1c-UQE" secondAttribute="trailingMargin" id="kaG-SE-QuT"/>
+                                <constraint firstItem="EGd-8M-UwN" firstAttribute="top" secondItem="ukx-1c-UQE" secondAttribute="top" id="kdy-ot-Oo3"/>
+                                <constraint firstItem="EGd-8M-UwN" firstAttribute="leading" secondItem="ukx-1c-UQE" secondAttribute="leading" id="qt0-yp-8fX"/>
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="zku-Qp-bpA">
@@ -1220,6 +1232,7 @@ SCOREBOARD</string>
                     </tableView>
                     <navigationItem key="navigationItem" title="Profile" id="RnP-gH-n63"/>
                     <connections>
+                        <outlet property="cameraImage" destination="tVU-df-epj" id="hng-RF-mWe"/>
                         <outlet property="emailTextField" destination="Gwe-T3-Mh8" id="ZbH-S7-8Gt"/>
                         <outlet property="photoButton" destination="icA-Tb-ZKM" id="27r-Ux-yTF"/>
                         <outlet property="realNameTextField" destination="YYi-4o-yUE" id="Xwe-2F-tzn"/>
@@ -1398,7 +1411,9 @@ SCOREBOARD</string>
         <image name="More_icon" width="22" height="22"/>
         <image name="Profile_Tab_icon" width="24" height="24"/>
         <image name="Standings_tab_icon" width="24" height="18"/>
+        <image name="camera-icon.png" width="40" height="40"/>
         <image name="facebookLogin" width="320" height="61"/>
         <image name="teams.png" width="222" height="227"/>
+        <image name="user_placeholder.png" width="150" height="150"/>
     </resources>
 </document>
