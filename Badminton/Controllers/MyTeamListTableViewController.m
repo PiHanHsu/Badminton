@@ -12,9 +12,10 @@
 #import "PlayListDataSource.h"
 #import "Team.h"
 #import "DataSource.h"
+#import "TeamListTableViewCell.h"
 
 
-@interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) NSString * teamName;
 @property (strong, nonatomic) NSMutableArray * teamArray;
 @property (strong, nonatomic) Team * teamObject;
@@ -68,10 +69,10 @@
     return _teamArray;
 }
 
-- (IBAction)photoButtonPressed:(id)sender {
+- (IBAction)photoButtonPressed:(MGSwipeButton *)sender {
     
-    UIButton *button = (UIButton *)sender;
-    self.tempIndex = button.tag;
+    //UIButton *button = (MGSwipeButton *)sender;
+    self.tempIndex = sender.tag;
     
     UIAlertController * view = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -118,26 +119,40 @@
 
 - (IBAction)AddTeam:(id)sender {
     
-    UIAlertView *av = [[UIAlertView alloc]initWithTitle:nil message:@"請輸入球隊名稱" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"新增", nil];
-    av.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [av textFieldAtIndex:0].delegate = self;
-    [av show];
+    UIAlertController * alert=   [UIAlertController
+                                  alertControllerWithTitle:@"請輸入球隊名稱"
+                                  message:nil
+                                  preferredStyle:UIAlertControllerStyleAlert];
     
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-   if (buttonIndex ==1) {
-       
-       Team * teamObject = [Team createTeam];
-       teamObject[@"name"] = [alertView textFieldAtIndex:0].text;
-       teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
-       teamObject[@"isDeleted"] = [NSNumber numberWithBool:NO];
-       teamObject[@"players"] = [@[self.currentPlayer] mutableCopy];
-       [[DataSource sharedInstance] addTeam:teamObject];
-       
-       [self.tableView reloadData];
-       [teamObject saveInBackground];
-        }
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action) {
+                                                   UITextField *nameTextField = alert.textFields.firstObject;
+                                                   
+                                                   Team * teamObject = [Team createTeam];
+                                                   teamObject[@"name"] = nameTextField.text;
+                                                   teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
+                                                   teamObject[@"isDeleted"] = [NSNumber numberWithBool:NO];
+                                                   teamObject[@"players"] = [@[self.currentPlayer] mutableCopy];
+                                                   [[DataSource sharedInstance] addTeam:teamObject];
+                                                   
+                                                   [self.tableView reloadData];
+                                                   [teamObject saveInBackground];
+                                                   
+                                               }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {
+                                                       [alert dismissViewControllerAnimated:YES completion:nil];
+                                                   }];
+    
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"球隊名稱";
+    }];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 #pragma mark - Table view data source
@@ -152,11 +167,20 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MyTeamListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyTeamListCell" forIndexPath:indexPath];
+    TeamListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyTeamListCell" forIndexPath:indexPath];
     
     // Configure the cell...
     cell.teamName.text = self.teamArray[indexPath.row][@"name"];
+    cell.rightButtons = @[[MGSwipeButton buttonWithTitle:@"退出\n球隊" backgroundColor:[UIColor redColor]],
+                          [MGSwipeButton buttonWithTitle:@"編輯\n名稱" backgroundColor:[UIColor lightGrayColor]],[MGSwipeButton buttonWithTitle:@"編輯\n照片" backgroundColor:[UIColor lightGrayColor]]];
+    
+    cell.rightSwipeSettings.transition = MGSwipeTransition3D;
+    cell.delegate = self;
+    
+    
     [cell.photoButton addTarget:self action:@selector(photoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
     cell.photoButton.tag = indexPath.row;
     if (self.teamArray[indexPath.row][@"photo"]) {
         PFFile * photo = self.teamArray[indexPath.row][@"photo"];
@@ -199,26 +223,94 @@
 */
 
 
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return @"離開";
+-(BOOL) swipeTableCell:(MGSwipeTableCell*) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion{
+    
+    NSIndexPath * indexPath = [self.tableView indexPathForCell:cell];
+    
+    switch (index) {
+        case 0:{
+            //delete team = remove myself from this team
+            Team * teamToBeDelete = self.teamArray[indexPath.row];
+            [teamToBeDelete deletePlayer:self.currentPlayer];
+            
+            [[DataSource sharedInstance].teamArray removeObject:self.teamArray[indexPath.row]];
+            
+            [self refreshData];
+            return YES;
+            break;
+        }
+            
+        case 1:{
+            UIAlertController * alert=   [UIAlertController
+                                          alertControllerWithTitle:@"修改球隊名稱"
+                                          message:nil
+                                          preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action) {
+                                                           UITextField *nameTextField = alert.textFields.firstObject;
+                                                           self.teamArray[indexPath.row][@"name"] = nameTextField.text;
+                                                           
+                                                           [self.tableView reloadData];
+                                                           Team *teamObject = self.teamArray[indexPath.row];
+                                                           [teamObject pinInBackground];
+                                                           [teamObject saveInBackground];
+                                                           
+                                                       }];
+            UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                           handler:^(UIAlertAction * action) {
+                                                               [alert dismissViewControllerAnimated:YES completion:nil];
+                                                           }];
+            
+            [alert addAction:ok];
+            [alert addAction:cancel];
+            
+            [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+                textField.text = self.teamArray[indexPath.row][@"name"];
+            }];
+            
+            [self presentViewController:alert animated:YES completion:nil];
+            
+            return YES;
+        }
+           
+        case 2:{
+            
+            
+            MGSwipeButton * button = cell.rightButtons[2];
+            button.tag = indexPath.row;
+            [self photoButtonPressed:button];
+            return YES;
+        }
+            
+        default:
+            break;
+    }
+    
+    
+    return YES;
 }
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
-        //delete team = remove myself from this team
-        Team * teamToBeDelete = self.teamArray[indexPath.row];
-        [teamToBeDelete deletePlayer:self.currentPlayer];
-        
-        
-        [[DataSource sharedInstance].teamArray removeObject:self.teamArray[indexPath.row]];
-        
-        [self refreshData];
-        
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
+
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return @"離開";
+//}
+//// Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        
+//        //delete team = remove myself from this team
+//        Team * teamToBeDelete = self.teamArray[indexPath.row];
+//        [teamToBeDelete deletePlayer:self.currentPlayer];
+//        
+//        
+//        [[DataSource sharedInstance].teamArray removeObject:self.teamArray[indexPath.row]];
+//        
+//        [self refreshData];
+//        
+//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//    }   
+//}
 
 #pragma mark - refresh Data
 - (void)refreshData{
