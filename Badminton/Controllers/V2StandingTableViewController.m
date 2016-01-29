@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
 @property (strong, nonatomic) NSString * selectedPlayerId;
+@property (weak, nonatomic) IBOutlet UIButton *teamButton;
+@property (weak, nonatomic) IBOutlet UIButton *yearButton;
 
 @end
 
@@ -31,6 +33,16 @@
     self.activityIndicatorView.center = self.view.center;
     [self.activityIndicatorView startAnimating];
     [self.view addSubview:self.activityIndicatorView];
+    
+    self.teamButton.layer.borderWidth = 1.0f;
+    self.teamButton.layer.borderColor = [UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
+    self.teamButton.layer.cornerRadius = 5.0;
+    self.teamButton.clipsToBounds = YES;
+    
+    self.yearButton.layer.borderWidth = 1.0f;
+    self.yearButton.layer.borderColor = [UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
+    self.yearButton.layer.cornerRadius = 5.0;
+    self.yearButton.clipsToBounds = YES;
     
     self.teamArray = [DataSource sharedInstance].teamArray;
     if (self.teamArray.count == 0) {
