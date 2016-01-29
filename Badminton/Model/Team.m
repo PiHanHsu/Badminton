@@ -47,6 +47,26 @@
     
 }
 
+- (void)deletePlayer: (Player *)player{
+    [self.players removeObject:player];
+    self.players = [self.players mutableCopy];
+    
+    [self saveInBackground];
+    //[self removePlayerStanding:player];
+}
+
+- (void)deleteTeam{
+    self[@"isDeleted"] = [NSNumber numberWithBool:YES];
+    [self saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded){
+            NSLog(@"YES");
+        }
+    }];
+}
+
+- (void) removePlayerStanding: (Player *) player{
+    
+}
 - (void) createPlayerStanding: (Player *) player{
     
     NSString * playerId = player.objectId;

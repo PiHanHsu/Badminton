@@ -54,7 +54,7 @@
     
     //set up Photo Button
     self.photoButton.layer.borderWidth = 5.0f;
-    self.photoButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    self.photoButton.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
     self.photoButton.layer.cornerRadius = 75.0;
     self.photoButton.clipsToBounds = YES;
     
@@ -246,8 +246,8 @@
 - (IBAction)logoutPressed:(id)sender {
     
     [PFUser logOut];
-    //[PFUser unpinAllObjects];
-    //[PFObject unpinAllObjects];
+    [PFUser unpinAllObjects];
+    [PFObject unpinAllObjects];
     
     UINavigationController * rootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RootNavigatoinController"];
     [self presentViewController:rootVC animated:YES completion:nil];

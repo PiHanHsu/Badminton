@@ -24,6 +24,8 @@
 
 +(Team *) createTeam;
 - (void)addPlayer: (Player *)player;
+- (void)deletePlayer: (Player *)player;
+- (void)deleteTeam;
 //- (NSMutableArray *) loadTeamPlayerStandingArray;
 
 -(void) loadTeamPlayerStandingArrayWithDone:(void (^)(NSArray * teamPlayerStandingArray))doneHandle;

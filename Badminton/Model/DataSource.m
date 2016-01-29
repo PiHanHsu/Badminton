@@ -112,22 +112,15 @@
         }];
     }
     
-    //this query doesn't work!!
-    PFQuery * queryFromPlayers = [Team query];
-    [queryFromPlayers whereKey:@"players" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:self.currentPlayer.objectId]];
-    
-    PFQuery * query = [Team query];
-    [query whereKey:@"createBy" equalTo:user.objectId];
-    [query whereKey:@"isDeleted" equalTo:[NSNumber numberWithBool:NO]];
-    
-    PFQuery *queryAll = [PFQuery orQueryWithSubqueries:@[query,queryFromPlayers]];
-    
-    [queryAll findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
+    PFQuery * query = [PFQuery queryWithClassName:@"Team"];
+    [query whereKey:@"players" equalTo:[PFObject objectWithoutDataWithClassName:@"Player" objectId:self.currentPlayer.objectId]];
+    [query includeKey:@"players"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray * teams, NSError * error){
        
         self.teamArray = [teams mutableCopy];
-//        for (Team * teamObject in self.teamArray) {
-//            [teamObject pinInBackground];
-//        }
+        for (Team * teamObject in self.teamArray) {
+            [teamObject pinInBackground];
+        }
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"loadingDataFinished" object:self];
     }];
@@ -140,6 +133,9 @@
 }
 -(void) deleteTeam:(Team *) teamObject{
     [self.teamArray removeObject:teamObject];
+    [teamObject deleteTeam];
+    
+    
     
 }
 

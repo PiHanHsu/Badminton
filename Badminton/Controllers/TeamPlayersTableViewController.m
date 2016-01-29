@@ -225,13 +225,15 @@
        
         if (indexPath.section == 1) {
             Player * playerToBeDeleted = self.femalePlayerArray[indexPath.row];
+            [self.teamObject deletePlayer:playerToBeDeleted];
             [self.teamObject[@"players"] removeObject: playerToBeDeleted];
             [self.teamObject saveEventually];
-
+            
             [self.femalePlayerArray removeObjectAtIndex:indexPath.row];
             [self.tableView reloadData];
         }else if (indexPath.section == 0){
             Player * playerToBeDeleted = self.malePlayerArray[indexPath.row];
+            [self.teamObject deletePlayer:playerToBeDeleted];
             [self.teamObject[@"players"] removeObject: playerToBeDeleted];
             [self.teamObject saveEventually];
             
