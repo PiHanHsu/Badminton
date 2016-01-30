@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *team2ScoreTextField;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (weak, nonatomic) IBOutlet UITextField *team1TieBreakScoreTextField;
+@property (weak, nonatomic) IBOutlet UITextField *team2TieBreakScoreTextField;
 
 @end

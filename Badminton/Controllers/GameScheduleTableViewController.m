@@ -16,7 +16,7 @@
 
 
 
-@interface GameScheduleTableViewController ()<UIAlertViewDelegate>
+@interface GameScheduleTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 
 @property (strong, nonatomic) ScoreBoard * scoreboard;
 @property(nonatomic,strong) UIDynamicAnimator *animator;
@@ -327,17 +327,14 @@
     self.scoreBoardDestinationView = [[UIView alloc]init];
     
     if (indexPath.row > 3) {
-        self.scoreBoardDestinationView.center =CGPointMake(160, 64 +62*indexPath.row - 130 -5);
+        self.scoreBoardDestinationView.center =CGPointMake(self.view.center.x, 64 +62*indexPath.row - 130 -5);
     }else{
-        self.scoreBoardDestinationView.center = CGPointMake(160, 64+62*indexPath.row + 62 + 5);
+        self.scoreBoardDestinationView.center = CGPointMake(self.view.center.x, 64+62*indexPath.row + 62 + 5);
     }
     
-    self.scoreboard.layer.cornerRadius = 10.0;
-    self.scoreboard.clipsToBounds = YES;
-    self.scoreboard.cancelButton.layer.cornerRadius = 5.0;
-    self.scoreboard.cancelButton.clipsToBounds = YES;
-    self.scoreboard.saveButton.layer.cornerRadius = 5.0;
-    self.scoreboard.saveButton.clipsToBounds = YES;
+    self.scoreboard.team1ScoreTextField.delegate =self;
+    self.scoreboard.team2ScoreTextField.delegate =self;
+    
     [self.scoreboard.cancelButton addTarget:self action:@selector(cancelScoreBoard:) forControlEvents:UIControlEventTouchUpInside];
     [self.scoreboard.saveButton addTarget:self action:@selector(saveScoreBoard:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -419,6 +416,38 @@
     [self.scoreboard.team2ScoreTextField resignFirstResponder];
 
 }
+
+
+#pragma mark - TextField Delegate
+
+- (BOOL)textField:(UITextField *)textField
+shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string {
+    
+    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSLog(@"team1: %@, team2: %@",self.scoreboard.team1ScoreTextField.text,self.scoreboard.team2ScoreTextField.text );
+    
+    if ([newString isEqualToString:@"7"] || [newString isEqualToString:@"6"]) {
+        //show tiebreak
+        if (textField == self.scoreboard.team1ScoreTextField) {
+            if ([self.scoreboard.team2ScoreTextField.text isEqualToString:@"7"] || [self.scoreboard.team2ScoreTextField.text isEqualToString:@"6"]) {
+                self.scoreboard.team1TieBreakScoreTextField.hidden = NO;
+                self.scoreboard.team2TieBreakScoreTextField.hidden = NO;
+            }
+        }else if (textField == self.scoreboard.team2ScoreTextField) {
+            if ([self.scoreboard.team1ScoreTextField.text isEqualToString:@"7"] || [self.scoreboard.team1ScoreTextField.text isEqualToString:@"6"]) {
+                self.scoreboard.team1TieBreakScoreTextField.hidden = NO;
+                self.scoreboard.team2TieBreakScoreTextField.hidden = NO;
+            }
+        }
+    }else{
+        self.scoreboard.team1TieBreakScoreTextField.hidden = YES;
+        self.scoreboard.team2TieBreakScoreTextField.hidden = YES;
+    }
+    return YES;
+
+}
+
 
 - (void)updateStangingWithWinTeam: (NSMutableArray *) winTeam loseTeam:(NSMutableArray *)loseTeam gameType:(NSString *)gameType team:(NSString *) team{
     for (NSString * winner in winTeam) {
