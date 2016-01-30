@@ -139,7 +139,7 @@
     
     UIAlertController * alert=   [UIAlertController
                                   alertControllerWithTitle:@"選擇球賽類別"
-                                  message:@"\n\n\n\n\n\n\n輸入球隊名稱"
+                                  message:@"\n\n\n\n\n "
                                   preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"新增" style:UIAlertActionStyleDefault
@@ -167,7 +167,7 @@
     self.sportsTypePickerData = @[@[@"羽    球", @"網    球", @"桌    球"]];
 
     
-    self.sportsTypePickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(50, 5, 170, 150)];
+    self.sportsTypePickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(50, 30, 170, 120)];
     //self.sportsTypePickerView = [[UIPickerView alloc]init];
     self.sportsTypePickerView.delegate = self;
     self.sportsTypePickerView.dataSource = self;
@@ -179,7 +179,7 @@
     [alert addAction:cancel];
     
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = @"球隊名稱";
+        textField.placeholder = @"輸入球隊名稱";
     }];
     
     [self presentViewController:alert animated:YES completion:nil];
