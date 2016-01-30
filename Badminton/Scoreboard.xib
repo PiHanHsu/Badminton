@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -29,28 +28,56 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSI-ML-fvj">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSI-ML-fvj">
                     <rect key="frame" x="183" y="93" width="100" height="30"/>
                     <color key="backgroundColor" red="1" green="0.7468603841" blue="0.11802370030000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Gy4-eM-f7c"/>
+                        <constraint firstAttribute="width" constant="100" id="faJ-HW-nv7"/>
+                    </constraints>
                     <state key="normal" title="Save">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aus-dr-7DL">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aus-dr-7DL">
                     <rect key="frame" x="30" y="93" width="100" height="30"/>
                     <color key="backgroundColor" red="0.7725490196" green="0.7725490196" blue="0.7725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="YEv-rr-Uhg"/>
+                        <constraint firstAttribute="width" constant="100" id="foo-5n-uyn"/>
+                    </constraints>
                     <state key="normal" title="Cancel">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Pfd-RX-Kdt">
+                    <rect key="frame" x="90" y="5" width="35" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="KaM-FU-fAb">
+                    <rect key="frame" x="243" y="5" width="35" height="30"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
             </subviews>
             <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="vSI-ML-fvj" secondAttribute="bottom" constant="7" id="6UY-af-Sj3"/>
+                <constraint firstAttribute="trailing" secondItem="vSI-ML-fvj" secondAttribute="trailing" constant="27" id="F7t-NG-FHj"/>
+                <constraint firstItem="Aus-dr-7DL" firstAttribute="leading" secondItem="j9I-nK-x1L" secondAttribute="leading" constant="30" id="O5v-3J-O6r"/>
+                <constraint firstAttribute="bottom" secondItem="Aus-dr-7DL" secondAttribute="bottom" constant="7" id="nhx-Mh-H8Q"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="cancelButton" destination="Aus-dr-7DL" id="d0y-ef-4OT"/>
                 <outlet property="saveButton" destination="vSI-ML-fvj" id="f6N-8k-xkC"/>
                 <outlet property="team1ScoreTextField" destination="LGL-ub-A32" id="S2Z-vD-u9l"/>
+                <outlet property="team1TieBreakScoreTextField" destination="Pfd-RX-Kdt" id="66R-7k-GWa"/>
                 <outlet property="team2ScoreTextField" destination="zNJ-fo-rf6" id="GJh-oX-lrk"/>
+                <outlet property="team2TieBreakScoreTextField" destination="KaM-FU-fAb" id="4TQ-KF-NpT"/>
             </connections>
             <point key="canvasLocation" x="164" y="381"/>
         </view>
