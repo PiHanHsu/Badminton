@@ -24,6 +24,8 @@
 
 @dynamic winScore;
 @dynamic loseScore;
+@dynamic winTieBreakScore;
+@dynamic loseTieBreakScore;
 
 @dynamic gameType;
 @dynamic place;
@@ -31,6 +33,9 @@
 @dynamic gameDate;
 @dynamic team1Score;
 @dynamic team2Score;
+@dynamic team1TieBreakScore;
+@dynamic team2TieBreakScore;
+@dynamic sportsType;
 @dynamic isFinished;
 
 @dynamic playerArray;
@@ -49,8 +54,10 @@
     self.gameScheduleArray = [[NSMutableArray alloc]initWithCapacity:0];
     self.team1Array = [[NSMutableArray alloc]initWithCapacity:0];
     self.team2Array = [[NSMutableArray alloc]initWithCapacity:0];
-    self.team1Score =@"";
-    self.team2Score =@"";
+    self.team1Score = @"";
+    self.team2Score = @"";
+    self.team1TieBreakScore = @"";
+    self.team2TieBreakScore = @"";
     self.isFinished = [NSNumber numberWithBool:NO];
     
     self.playerArray = [[NSMutableArray alloc]initWithArray:malePlayerArray];
@@ -60,7 +67,7 @@
         self.team1Array[0] = [NSMutableArray arrayWithObjects:self.playerArray[0], nil];
         self.team2Array[0] = [NSMutableArray arrayWithObjects:
                               self.playerArray[1], nil];
-        self.gameScheduleArray[0] = [NSMutableArray arrayWithObjects:self.team1Array[0],self.team2Array[0],self.team1Score, self.team2Score,self.isFinished, nil];
+        self.gameScheduleArray[0] = [NSMutableArray arrayWithObjects:self.team1Array[0],self.team2Array[0],self.team1Score, self.team2Score,self.isFinished,self.team1TieBreakScore, self.team2TieBreakScore, nil];
     }else if ((malePlayerArray.count + femalePlayerArray.count) == 3 ){
         self.team1Array[0] = [NSMutableArray arrayWithObject:self.playerArray[0]];
         self.team2Array[0] = [NSMutableArray arrayWithObject:self.playerArray[1]];
@@ -70,7 +77,7 @@
         self.team2Array[2] = [NSMutableArray arrayWithObject:self.playerArray[0]];
         
         for (int i = 0 ; i < 3 ; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }
     
@@ -93,6 +100,8 @@
     self.team2Array = [[NSMutableArray alloc]initWithCapacity:0];
     self.team1Score =@"";
     self.team2Score =@"";
+    self.team1TieBreakScore = @"";
+    self.team2TieBreakScore = @"";
     self.isFinished = [NSNumber numberWithBool:NO];
     
     self.playerArray = [[NSMutableArray alloc]initWithArray:malePlayerArray];
@@ -124,7 +133,7 @@
         self.team2Array[7] = [NSMutableArray arrayWithObjects:malePlayerArray[2],malePlayerArray[4], nil];
         
         for (int i = 0 ; i <8; i++) {
-             self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+             self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }else if (malePlayerArray.count == 4 && femalePlayerArray.count ==3){
         self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
@@ -152,7 +161,7 @@
         self.team2Array[7] = [NSMutableArray arrayWithObjects:malePlayerArray[2],malePlayerArray[1], nil];
         
         for (int i = 0 ; i <8; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }else if (malePlayerArray.count == 5 && femalePlayerArray.count ==2){
         self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
@@ -176,7 +185,7 @@
         self.team2Array[6] = [NSMutableArray arrayWithObjects:malePlayerArray[4],femalePlayerArray[1], nil];
         
         for (int i = 0 ; i <7; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }else if (malePlayerArray.count == 6 && femalePlayerArray.count ==2){
         self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
@@ -198,7 +207,7 @@
         self.team2Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[1],malePlayerArray[3], nil];
         
         for (int i = 0 ; i < 6; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
 
     }else if (malePlayerArray.count == 4 && femalePlayerArray.count ==4){
@@ -221,7 +230,7 @@
         self.team2Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[1], nil];
         
         for (int i = 0 ; i <6; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }else if (malePlayerArray.count == 4 && femalePlayerArray.count ==2){
         self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
@@ -243,7 +252,7 @@
         self.team2Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[1],malePlayerArray[2], nil];
         
         for (int i = 0 ; i <6; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }else if (malePlayerArray.count == 3 && femalePlayerArray.count ==3){
         self.team1Array[0] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[0], nil];
@@ -265,7 +274,7 @@
         self.team2Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[0], nil];
         
         for (int i = 0 ; i <6; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
 
     }else if (malePlayerArray.count == 3 && femalePlayerArray.count ==2){
@@ -297,7 +306,7 @@
         self.team2Array[8] = [NSMutableArray arrayWithObjects:malePlayerArray[2], nil];
         
         for (int i = 0 ; i < 9 ; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
 
     }else{
@@ -395,11 +404,11 @@
     
     if (playersArray.count == 4) {
         for (int i = 0 ; i < 3 ; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }else{
         for (int i = 0 ; i < playersArray.count ; i++) {
-            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+            self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
         }
     }
     
@@ -444,7 +453,7 @@
     }
    
     //NSMutableArray * randomArray = [@[] mutableCopy];
-    self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, nil];
+    self.gameScheduleArray[i] = [NSMutableArray arrayWithObjects:self.team1Array[i],self.team2Array[i],self.team1Score, self.team2Score,self.isFinished, self.team1TieBreakScore, self.team2TieBreakScore, nil];
     return self.gameScheduleArray;
 }
 

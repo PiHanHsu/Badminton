@@ -17,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *gameNumberLabel;
 @property (weak, nonatomic) IBOutlet UILabel *team1ScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *team2ScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *team1TieBreakScoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *team2TieBreakScoreLabel;
 
 @end

@@ -282,11 +282,11 @@
          cell.player4Label.text = self.game.gameScheduleArray[indexPath.row][1][1][@"userName"];
      }
     
-
-    
-    
     cell.team1ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][2];
     cell.team2ScoreLabel.text = self.game.gameScheduleArray[indexPath.row][3];
+    cell.team1TieBreakScoreLabel.text = self.game.gameScheduleArray[indexPath.row][5];
+    cell.team2TieBreakScoreLabel.text = self.game.gameScheduleArray[indexPath.row][6];
+    
     if ([self.game.gameScheduleArray[indexPath.row][2] intValue] > 0){
         if ([cell.team1ScoreLabel.text intValue] > [cell.team2ScoreLabel.text intValue]) {
             cell.team1ScoreLabel.textColor = [UIColor redColor];
@@ -351,6 +351,8 @@
     [self.tabBarController.tabBar setHidden:YES];
     UIButton *saveButton = (UIButton *) sender;
     
+    BOOL isTieBreak = NO;
+    
     if (self.tempTeam1Array.count == 1) {
        self.gameType = @"single";
     }else if ([self.tempTeam1Array[0][@"isMale"] boolValue] == [self.tempTeam1Array[1][@"isMale"] boolValue]) {
@@ -363,8 +365,17 @@
     PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
     if ([self.scoreboard.team1ScoreTextField.text intValue] >
         [self.scoreboard.team2ScoreTextField.text intValue]) {
-        gameObject[@"winTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
-        gameObject[@"loseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
+        int winTeamScore = [self.scoreboard.team1ScoreTextField.text intValue];
+        int loseTeamScore = [self.scoreboard.team2ScoreTextField.text intValue];
+        gameObject[@"winTeamScore"] = [NSNumber numberWithInt:winTeamScore];
+        gameObject[@"loseTeamScore"] = [NSNumber numberWithInt:loseTeamScore];
+        if ([self.teamObject[@"sportsType"] isEqualToString:@"網    球"]) {
+            if (winTeamScore == 7 && loseTeamScore == 6) {
+                isTieBreak = YES;
+                gameObject[@"winTieBreakScore"] = [NSNumber numberWithInt:[self.scoreboard.team1TieBreakScoreTextField.text intValue]];
+                gameObject[@"loseTieBreakScore"] = [NSNumber numberWithInt:[self.scoreboard.team2TieBreakScoreTextField.text intValue]];
+            }
+        }
         NSMutableArray * winTeam = [@[] mutableCopy];
         NSMutableArray * loseTeam = [@[] mutableCopy];
         for (int i = 0 ; i < self.tempTeam1Array.count ; i++) {
@@ -378,9 +389,18 @@
 
        
     }else{
-        gameObject[@"winTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team2ScoreTextField.text intValue]];
-        gameObject[@"loseTeamScore"] = [NSNumber numberWithInt:[self.scoreboard.team1ScoreTextField.text intValue]];
+        int winTeamScore = [self.scoreboard.team2ScoreTextField.text intValue];
+        int loseTeamScore = [self.scoreboard.team1ScoreTextField.text intValue];
+        gameObject[@"winTeamScore"] = [NSNumber numberWithInt:winTeamScore];
+        gameObject[@"loseTeamScore"] = [NSNumber numberWithInt:loseTeamScore];
         
+        if ([self.teamObject[@"sportsType"] isEqualToString:@"網    球"]) {
+            if (winTeamScore == 7 && loseTeamScore == 6) {
+                isTieBreak = YES;
+                gameObject[@"winTieBreakScore"] = [NSNumber numberWithInt:[self.scoreboard.team1TieBreakScoreTextField.text intValue]];
+                gameObject[@"loseTieBreakScore"] = [NSNumber numberWithInt:[self.scoreboard.team2TieBreakScoreTextField.text intValue]];
+            }
+        }
         NSMutableArray * winTeam = [@[] mutableCopy];
         NSMutableArray * loseTeam = [@[] mutableCopy];
         for (int i = 0 ; i < self.tempTeam1Array.count ; i++) {
@@ -396,12 +416,18 @@
     gameObject[@"date"] = date;
     gameObject[@"team"] = [NSString stringWithFormat:@"%@", self.teamObject.objectId];
     gameObject[@"gameType"] = self.gameType;
+    gameObject[@"sportsType"] = self.teamObject[@"sportsType"];
+    
     
     [gameObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error){
-        if (!error) {
+        if (succeeded) {
             self.game.gameScheduleArray[saveButton.tag][2]=self.scoreboard.team1ScoreTextField.text;
             self.game.gameScheduleArray[saveButton.tag][3]=self.scoreboard.team2ScoreTextField.text;
             self.game.gameScheduleArray[saveButton.tag][4] = [NSNumber numberWithBool:YES];
+            if (isTieBreak) {
+                self.game.gameScheduleArray[saveButton.tag][5]=self.scoreboard.team1TieBreakScoreTextField.text;
+                self.game.gameScheduleArray[saveButton.tag][6]=self.scoreboard.team2TieBreakScoreTextField.text;
+            }
             
             [self.tableView reloadData];
             [self countUnfinishGames];
@@ -425,27 +451,30 @@ shouldChangeCharactersInRange:(NSRange)range
 replacementString:(NSString *)string {
     
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSLog(@"team1: %@, team2: %@",self.scoreboard.team1ScoreTextField.text,self.scoreboard.team2ScoreTextField.text );
-    
-    if ([newString isEqualToString:@"7"] || [newString isEqualToString:@"6"]) {
-        //show tiebreak
-        if (textField == self.scoreboard.team1ScoreTextField) {
-            if ([self.scoreboard.team2ScoreTextField.text isEqualToString:@"7"] || [self.scoreboard.team2ScoreTextField.text isEqualToString:@"6"]) {
-                self.scoreboard.team1TieBreakScoreTextField.hidden = NO;
-                self.scoreboard.team2TieBreakScoreTextField.hidden = NO;
+    if ([self.teamObject[@"sportsType"] isEqualToString:@"網    球"]){
+        if ([newString isEqualToString:@"7"] || [newString isEqualToString:@"6"]) {
+            //show tiebreak
+            if (textField == self.scoreboard.team1ScoreTextField) {
+                if ([self.scoreboard.team2ScoreTextField.text isEqualToString:@"7"] || [self.scoreboard.team2ScoreTextField.text isEqualToString:@"6"]) {
+                    self.scoreboard.team1TieBreakScoreTextField.hidden = NO;
+                    self.scoreboard.team2TieBreakScoreTextField.hidden = NO;
+                }
+            }else if (textField == self.scoreboard.team2ScoreTextField) {
+                if ([self.scoreboard.team1ScoreTextField.text isEqualToString:@"7"] || [self.scoreboard.team1ScoreTextField.text isEqualToString:@"6"]) {
+                    self.scoreboard.team1TieBreakScoreTextField.hidden = NO;
+                    self.scoreboard.team2TieBreakScoreTextField.hidden = NO;
+                }
             }
-        }else if (textField == self.scoreboard.team2ScoreTextField) {
-            if ([self.scoreboard.team1ScoreTextField.text isEqualToString:@"7"] || [self.scoreboard.team1ScoreTextField.text isEqualToString:@"6"]) {
-                self.scoreboard.team1TieBreakScoreTextField.hidden = NO;
-                self.scoreboard.team2TieBreakScoreTextField.hidden = NO;
-            }
+        }else{
+            self.scoreboard.team1TieBreakScoreTextField.hidden = YES;
+            self.scoreboard.team2TieBreakScoreTextField.hidden = YES;
         }
-    }else{
-        self.scoreboard.team1TieBreakScoreTextField.hidden = YES;
-        self.scoreboard.team2TieBreakScoreTextField.hidden = YES;
+        
     }
+    
+    
     return YES;
-
+    
 }
 
 

@@ -308,6 +308,18 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G71-gB-rc4">
+                                            <rect key="frame" x="115" y="4" width="21" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWd-EH-amN">
+                                            <rect key="frame" x="219" y="3" width="21" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
@@ -318,7 +330,9 @@
                                     <outlet property="player3Label" destination="0VA-aR-wXc" id="ldt-tA-YYM"/>
                                     <outlet property="player4Label" destination="q15-gz-BPa" id="g4n-si-kVB"/>
                                     <outlet property="team1ScoreLabel" destination="4fA-1I-BVP" id="kvC-ab-GEg"/>
+                                    <outlet property="team1TieBreakScoreLabel" destination="G71-gB-rc4" id="TM2-3G-iDw"/>
                                     <outlet property="team2ScoreLabel" destination="kmJ-nc-Acv" id="Bpd-b9-azg"/>
+                                    <outlet property="team2TieBreakScoreLabel" destination="aWd-EH-amN" id="C2h-bp-5bB"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

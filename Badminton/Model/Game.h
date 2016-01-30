@@ -32,6 +32,8 @@ typedef enum {
 
 @property (strong, nonatomic) NSNumber * winScore;
 @property (strong, nonatomic) NSNumber * loseScore;
+@property (strong, nonatomic) NSNumber * winTieBreakScore;
+@property (strong, nonatomic) NSNumber * loseTieBreakScore;
 
 @property (strong, nonatomic) NSString * gameType;
 @property (strong, nonatomic) NSString * place;
@@ -40,6 +42,10 @@ typedef enum {
 
 @property (strong, nonatomic) NSString * team1Score;
 @property (strong, nonatomic) NSString * team2Score;
+@property (strong, nonatomic) NSString * team1TieBreakScore;
+@property (strong, nonatomic) NSString * team2TieBreakScore;
+@property (strong, nonatomic) NSString * sportsType;
+
 @property (strong, nonatomic) NSNumber * isFinished;
 
 @property (strong, nonatomic) NSMutableArray * playerArray;
