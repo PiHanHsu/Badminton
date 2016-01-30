@@ -20,6 +20,7 @@
 @dynamic teamPlayerStandingArray;
 @dynamic isDeleted;
 @dynamic photo;
+@dynamic sportsType;
 
 
 +(void)load {

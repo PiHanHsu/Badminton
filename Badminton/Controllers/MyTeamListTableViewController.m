@@ -15,7 +15,8 @@
 #import "TeamListTableViewCell.h"
 
 
-@interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, MGSwipeTableCellDelegate>
+@interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, MGSwipeTableCellDelegate,UIPickerViewDataSource, UIPickerViewDelegate>
+
 @property (strong, nonatomic) NSString * teamName;
 @property (strong, nonatomic) NSMutableArray * teamArray;
 @property (strong, nonatomic) Team * teamObject;
@@ -23,6 +24,9 @@
 @property (strong, nonatomic) UIImage * teamImage;
 @property (assign, nonatomic) NSInteger tempIndex;
 @property (strong, nonatomic) Player * currentPlayer;
+@property (strong, nonatomic) UIPickerView *sportsTypePickerView;
+@property (strong, nonatomic) NSArray * sportsTypePickerData;
+
 
 @end
 
@@ -117,20 +121,36 @@
     [self presentViewController:view animated:YES completion:nil];
 }
 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 1;
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    return 3;
+}
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return self.sportsTypePickerData[component][row];
+}
+
 - (IBAction)AddTeam:(id)sender {
     
     UIAlertController * alert=   [UIAlertController
-                                  alertControllerWithTitle:@"請輸入球隊名稱"
-                                  message:nil
+                                  alertControllerWithTitle:@"選擇球賽類別"
+                                  message:@"\n\n\n\n\n\n\n輸入球隊名稱"
                                   preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"新增" style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction * action) {
                                                    UITextField *nameTextField = alert.textFields.firstObject;
                                                    
                                                    Team * teamObject = [Team createTeam];
                                                    teamObject[@"name"] = nameTextField.text;
                                                    teamObject[@"createBy"] = [NSString stringWithFormat:@"%@", [PFUser currentUser].objectId];
+                                                   NSInteger row = [self.sportsTypePickerView selectedRowInComponent:0];
+                                                   teamObject[@"sportsType"] = self.sportsTypePickerData[0][row];
                                                    teamObject[@"isDeleted"] = [NSNumber numberWithBool:NO];
                                                    teamObject[@"players"] = [@[self.currentPlayer] mutableCopy];
                                                    [[DataSource sharedInstance] addTeam:teamObject];
@@ -139,11 +159,22 @@
                                                    [teamObject saveInBackground];
                                                    
                                                }];
-    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
                                                        [alert dismissViewControllerAnimated:YES completion:nil];
                                                    }];
     
+    self.sportsTypePickerData = @[@[@"羽    球", @"網    球", @"桌    球"]];
+
+    
+    self.sportsTypePickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(50, 5, 170, 150)];
+    //self.sportsTypePickerView = [[UIPickerView alloc]init];
+    self.sportsTypePickerView.delegate = self;
+    self.sportsTypePickerView.dataSource = self;
+    
+    
+    NSLog(@"alertview width:%f",alert.view.frame.size.width);
+    [alert.view addSubview:self.sportsTypePickerView];
     [alert addAction:ok];
     [alert addAction:cancel];
     
@@ -152,6 +183,7 @@
     }];
     
     [self presentViewController:alert animated:YES completion:nil];
+    //[self.sportsTypePickerView selectRow:0 inComponent:0 animated:YES];
     
 }
 

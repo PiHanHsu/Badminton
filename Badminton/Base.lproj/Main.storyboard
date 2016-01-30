@@ -1246,7 +1246,6 @@ SCOREBOARD</string>
         <!--Standing Table View Controller-->
         <scene sceneID="MFD-RA-sQe">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lLN-Zt-gxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="qmZ-6b-845" customClass="V2StandingTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PdY-Or-5aD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -1385,6 +1384,7 @@ SCOREBOARD</string>
                         <segue destination="eHT-dv-lBX" kind="push" identifier="Go To Stats" id="bqM-HJ-aNT"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lLN-Zt-gxY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2532" y="1181"/>
         </scene>

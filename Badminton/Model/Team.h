@@ -21,6 +21,7 @@
 @property (strong, nonatomic) NSArray * teamPlayerStandingArray; // of each player standing
 @property (assign, nonatomic) BOOL isDeleted;
 @property (strong, nonatomic) PFFile * photo;
+@property (strong, nonatomic) NSString * sportsType;
 
 +(Team *) createTeam;
 - (void)addPlayer: (Player *)player;
