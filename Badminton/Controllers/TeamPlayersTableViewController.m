@@ -118,7 +118,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return self.malePlayerArray.count;
+            if (self.malePlayerArray.count > 0) {
+                return self.malePlayerArray.count;
+            }else if (self.malePlayerArray.count == 0 && self.femalePlayerArray.count > 0){
+                return self.femalePlayerArray.count;
+            }else{
+                return 0;
+            }
+            
             break;
             
         case 1:
@@ -141,7 +148,7 @@
     //tableView.sectionHeaderHeight = 44;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 21)];
-    if(section == 0)
+    if(section == 0 && self.malePlayerArray.count > 0)
         label.text = @"Male Player";
     else
         label.text = @"Female Player";
@@ -162,8 +169,14 @@
     // Configure the cell...
     switch (indexPath.section) {
         case 0:
-            cell.playerLabel.text = self.malePlayerArray[indexPath.row][@"userName"];
-            cell.playerSwitch.player = self.malePlayerArray[indexPath.row];
+            if (self.malePlayerArray.count > 0) {
+                cell.playerLabel.text = self.malePlayerArray[indexPath.row][@"userName"];
+                cell.playerSwitch.player = self.malePlayerArray[indexPath.row];
+            }else {
+                cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
+                cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
+            }
+            
             break;
         case 1:
             cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
