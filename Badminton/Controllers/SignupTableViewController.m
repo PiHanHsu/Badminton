@@ -123,6 +123,12 @@
 }
 
 -(void) signUpSuccess{
+    self.nickNameTextField.text = @"";
+    self.nameTextField.text = @"";
+    self.emailTextField.text = @"";
+    self.passwordTextField.text = @"";
+    self.reTypePasswordTextField.text = @"";
+    
     UITabBarController * tabbarVC =[self.storyboard instantiateViewControllerWithIdentifier:@"TabbarViewController"];
     
     [tabbarVC setSelectedIndex:0];
