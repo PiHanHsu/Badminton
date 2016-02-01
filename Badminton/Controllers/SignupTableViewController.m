@@ -10,8 +10,10 @@
 #import "PlayListDataSource.h"
 #import "MyTeamListTableViewController.h"
 
-@interface SignupTableViewController ()<UITextFieldDelegate>
+@interface SignupTableViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
+@property (strong, nonatomic) UIImagePickerController *photoPicker;
+
 @end
 
 @implementation SignupTableViewController
@@ -20,21 +22,19 @@
     [super viewDidLoad];
     self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
     self.indicator.hidden = YES;
-    self.photoImageView.image = [UIImage imageNamed:@"malePlayer@2x.jpg"];
-    self.photoImageView.backgroundColor = [UIColor grayColor];
     self.photoImageView.layer.cornerRadius = 5.0;
     self.photoImageView.clipsToBounds = YES;
     
-    switch (self.genderSegmentedControl.selectedSegmentIndex) {
-        case 0:
-            self.photoImageView.image = [UIImage imageNamed:@"male Player"];
-            break;
-        case 1:
-            self.photoImageView.image = [UIImage imageNamed:@"female Player"];
-            break;
-        default:
-            break;
-    }
+//    switch (self.genderSegmentedControl.selectedSegmentIndex) {
+//        case 0:
+//            self.photoImageView.image = [UIImage imageNamed:@"male Player"];
+//            break;
+//        case 1:
+//            self.photoImageView.image = [UIImage imageNamed:@"female Player"];
+//            break;
+//        default:
+//            break;
+//    }
     
     //user login with FB
     if ([PFUser currentUser]) {
@@ -59,13 +59,8 @@
                                        }
                                    }];
         }
-
+        
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -79,15 +74,85 @@
     return 4;
 }
 
+#pragma mark image picker delegate
+- (IBAction)changePhotoButtonPressed:(id)sender {
+    UIAlertController * view = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction* fromCamera = [UIAlertAction
+                                 actionWithTitle:@"開啟相機"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * action)
+                                 {
+                                     if ([UIImagePickerController isSourceTypeAvailable:(UIImagePickerControllerSourceTypeSavedPhotosAlbum)]) {
+                                         
+                                         [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+                                         
+                                     }
+                                     
+                                     
+                                     [view dismissViewControllerAnimated:YES completion:nil];
+                                     
+                                 }];
+    UIAlertAction* fromAlbum = [UIAlertAction
+                                actionWithTitle:@"從相機膠卷選取"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action)
+                                {
+                                    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+                                        [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                                    }
+                                    [view dismissViewControllerAnimated:YES completion:nil];
+                                    
+                                }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"取消"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [view dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    [view addAction:fromCamera];
+    [view addAction:fromAlbum];
+    [view addAction:cancel];
+    [self presentViewController:view animated:YES completion:nil];
+    
+    
+}
+
+
+- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType{
+    
+    UIImagePickerController *photoPicker = [[UIImagePickerController alloc] init];
+    photoPicker.sourceType = sourceType;
+    photoPicker.delegate = self;
+    photoPicker.allowsEditing = YES;
+    photoPicker.showsCameraControls = YES;
+    
+    self.photoPicker = photoPicker;
+    [self presentViewController:self.photoPicker animated:YES completion:nil];
+}
+
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    
+    UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
+    self.photoImageView.image = photoImage;
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    self.photoPicker = nil;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+    self.photoPicker = nil;
+}
+
 #pragma mark Sign up
 
 - (IBAction)goPressed:(id)sender {
     [self.indicator startAnimating];
-//    if(![self isPasswordsMatch]) {
-//        //[self.activityIndicatorView stopAnimating];
-//        //[self.activityIndicatorView removeFromSuperview];
-//        return;
-//    }
     
     if (self.genderSegmentedControl.selectedSegmentIndex == 0) {
         self.isMale = YES;
@@ -103,21 +168,46 @@
         if (!error) {
             [self.indicator stopAnimating];
             [self.indicator hidesWhenStopped];
-            PFObject * player = [PFObject objectWithClassName:@"Player"];
-            player[@"name"] = self.nameTextField.text;
-            player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
-            player[@"userName"] = self.nickNameTextField.text;
-            player[@"email"] =self.emailTextField.text;
-            player[@"user"] = user.objectId;
-            //TODO player photo
+            if (self.photoImageView.image) {
+                NSData *imageData = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
+                PFFile *photoFile = [PFFile fileWithData:imageData];
+                PFObject * player = [PFObject objectWithClassName:@"Player"];
+                player[@"name"] = self.nameTextField.text;
+                player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
+                player[@"userName"] = self.nickNameTextField.text;
+                player[@"email"] =self.emailTextField.text;
+                player[@"user"] = user.objectId;
+                player [@"photo"] = photoFile;
+                
+                [player saveInBackground];
+                [self signUpSuccess];
+            }else{
+                PFObject * player = [PFObject objectWithClassName:@"Player"];
+                player[@"name"] = self.nameTextField.text;
+                player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
+                player[@"userName"] = self.nickNameTextField.text;
+                player[@"email"] =self.emailTextField.text;
+                player[@"user"] = user.objectId;
+                
+                [player saveInBackground];
+                [self signUpSuccess];
+            }
             
-            [player saveInBackground];
-            [self signUpSuccess];
-    
+            
         } else {
             NSString *errorString = [error userInfo][@"error"];
             NSLog(@"sign up error: %@", errorString);
-            // Show the errorString somewhere and let the user try again.
+            
+            
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Oops Sorry!!" message:@"Something went wrong, can't sign up now. Please try agian later!" preferredStyle:UIAlertControllerStyleAlert];
+            
+            UIAlertAction * ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
+            
         }
     }];
 }
@@ -229,15 +319,5 @@
     
     return isEmpty;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
