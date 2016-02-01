@@ -121,6 +121,8 @@
     [self presentViewController:view animated:YES completion:nil];
 }
 
+#pragma mark - PickerView Delegate
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 1;
 }
@@ -171,9 +173,7 @@
     //self.sportsTypePickerView = [[UIPickerView alloc]init];
     self.sportsTypePickerView.delegate = self;
     self.sportsTypePickerView.dataSource = self;
-    
-    
-    NSLog(@"alertview width:%f",alert.view.frame.size.width);
+ 
     [alert.view addSubview:self.sportsTypePickerView];
     [alert addAction:ok];
     [alert addAction:cancel];

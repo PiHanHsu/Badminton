@@ -11,7 +11,7 @@
 #import "Standing.h"
 #import "StandingTableViewController.h"
 
-@interface V2StandingTableViewController ()
+@interface V2StandingTableViewController ()<UIPickerViewDataSource, UIPickerViewDelegate>
 @property (strong, nonatomic) NSArray * playerArray;
 @property (strong, nonatomic) NSArray * teamPlayersStandingArray;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
@@ -20,6 +20,11 @@
 @property (strong, nonatomic) NSString * selectedPlayerId;
 @property (weak, nonatomic) IBOutlet UIButton *teamButton;
 @property (weak, nonatomic) IBOutlet UIButton *yearButton;
+@property (strong, nonatomic) UIPickerView * pickerView;
+@property (strong, nonatomic) NSArray * pickerData;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *filterBarButton;
+@property (strong, nonatomic) NSMutableArray * teamNameList;
+@property (strong, nonatomic) NSArray * yearList;
 
 @end
 
@@ -58,18 +63,24 @@
         [alert addAction:ok];
         [self presentViewController:alert animated:YES completion:nil];
     }else{
+        
         self.teamObject = self.teamArray[0];
+        self.teamNameList = [@[] mutableCopy];
+        for (Team * teamObject in self.teamArray){
+            NSString * teamName = teamObject[@"name"];
+            [self.teamNameList addObject:teamName];
+        }
+        self.yearList = @[@"All", @"2015", @"2016"];
+
+        [self.teamButton setTitle:self.teamObject[@"name"] forState:UIControlStateNormal];
+        [self.yearButton setTitle:@"Year: All" forState:UIControlStateNormal];
+        [self.yearButton addTarget:self action:@selector(selectYear:) forControlEvents:UIControlEventTouchUpInside];
         [self.teamObject loadTeamPlayerStandingArrayWithDone:^(NSArray * array){
             self.teamPlayersStandingArray = [self createWinRateWithPlayerStatsArray:array];
             [self.activityIndicatorView stopAnimating];
             [self.tableView reloadData];
         }];
     }
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(NSArray *) createWinRateWithPlayerStatsArray: (NSArray *)playerStatsArray{
@@ -115,6 +126,89 @@
     playerStatsArray = [playerStatsArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:descriptor]];
     
     return playerStatsArray;
+}
+
+#pragma mark - IBAction
+
+- (IBAction)fliterBarButtonPressed:(id)sender {
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"選擇球隊及年份" message:@"\n\n\n\n" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
+                                               handler:^(UIAlertAction * action) {
+                                                   [alert dismissViewControllerAnimated:YES completion:nil];
+                                               }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {
+                                                       [alert dismissViewControllerAnimated:YES completion:nil];
+                                                   }];
+    
+    
+    self.pickerData = @[self.teamNameList,self.yearList];
+    
+    
+    self.pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(10, 20, 250, 120)];
+    //self.pickerView = [[UIPickerView alloc]init];
+    self.pickerView.delegate = self;
+    self.pickerView.dataSource = self;
+    
+    [alert.view addSubview:self.pickerView];
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+
+#pragma mark - PickerView Delegate
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 2;
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    switch (component) {
+        case 0:
+            return self.teamNameList.count;
+            break;
+        case 1:
+            return self.yearList.count;
+            break;
+        default:
+            break;
+    }
+    return 0;
+}
+
+- (NSString*)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return self.pickerData[component][row];
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    UILabel* pickerLabel = (UILabel*)view;
+    if (!pickerLabel)
+    {
+        pickerLabel = [[UILabel alloc] init];
+        [pickerLabel setFont:[UIFont fontWithName:@"Helvetica" size:14]];
+        pickerLabel.textAlignment = NSTextAlignmentCenter;
+       
+    }
+   
+    switch (component) {
+        case 0:
+             pickerLabel.text=[self.teamNameList objectAtIndex:row];
+            break;
+        case 1:
+             pickerLabel.text=[self.yearList objectAtIndex:row];
+            break;
+        default:
+            break;
+    }
+
+   
+    return pickerLabel;
 }
 
 #pragma mark - Table view data source

@@ -1411,8 +1411,15 @@ SCOREBOARD</string>
                             <outlet property="delegate" destination="qmZ-6b-845" id="KoP-st-DPL"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Jas-Hy-OlZ"/>
+                    <navigationItem key="navigationItem" id="Jas-Hy-OlZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="84q-KT-pHI">
+                            <connections>
+                                <action selector="fliterBarButtonPressed:" destination="qmZ-6b-845" id="suT-2o-U1x"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="filterBarButton" destination="84q-KT-pHI" id="9mT-cY-OmV"/>
                         <outlet property="gameTypeSegmentedControl" destination="SCv-RM-sdp" id="QlE-2j-dYO"/>
                         <outlet property="teamButton" destination="kcu-5u-gKs" id="jNv-qz-fJx"/>
                         <outlet property="yearButton" destination="mOS-hz-fx8" id="Gam-0l-GLM"/>
