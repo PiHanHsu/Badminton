@@ -74,7 +74,7 @@
 #pragma mark - IBAction
 
 - (IBAction)fliterBarButtonPressed:(id)sender {
-    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"選擇球隊及年份" message:@"\n\n\n\n" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"選擇球隊及年份" message:@"\n\n\n\n\n\n" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction * action) {
@@ -104,7 +104,7 @@
     self.pickerData = @[self.teamNameList,self.yearList];
     
     
-    self.pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(10, 20, 250, 120)];
+    self.pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(10, 20, 250, 150)];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     
@@ -148,7 +148,7 @@
     if (!pickerLabel)
     {
         pickerLabel = [[UILabel alloc] init];
-        [pickerLabel setFont:[UIFont fontWithName:@"Helvetica" size:14]];
+        [pickerLabel setFont:[UIFont fontWithName:@"Helvetica" size:15]];
         pickerLabel.textAlignment = NSTextAlignmentCenter;
         
     }
