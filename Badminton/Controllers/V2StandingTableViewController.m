@@ -80,7 +80,7 @@
 
     }
     
-    [self createPlayerStats];
+    [self createPlayerStatsWithYear:9999];
 }
 
 
@@ -94,7 +94,15 @@
                                                    NSInteger row1 = [self.pickerView selectedRowInComponent:0];
                                                    NSInteger row2 = [self.pickerView selectedRowInComponent:1];
                                                    self.teamObject = self.teamArray[row1];
-                                                   [self createPlayerStats];
+
+                                                   NSInteger year;
+                                                   if (row2 == 0) {
+                                                       year = 9999;
+                                                   }else{
+                                                       year = [self.yearList[row2] integerValue];
+                                                   }
+                                                   
+                                                   [self createPlayerStatsWithYear:year];
                                                    [alert dismissViewControllerAnimated:YES completion:nil];
                                                }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleDefault
@@ -319,13 +327,41 @@
 
 #pragma mark - create Data
 
-- (void) createPlayerStats{
+- (void) createPlayerStatsWithYear: (NSInteger) year{
     
     self.teamPlayers = [@[] mutableCopy];
     
     PFQuery * query = [PFQuery queryWithClassName:@"Game"];
     query.limit = 1000;
     [query whereKey:@"team" equalTo:self.teamObject.objectId];
+    if (year == 9999) {
+        NSDate * now = [NSDate date];
+       [query whereKey:@"createdAt" lessThan:now];
+    }else{
+        NSCalendar *calendar = [[NSCalendar alloc]
+                                initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDateComponents *components = [[NSDateComponents alloc] init];
+        [components setYear:year];
+        [components setMonth:1];
+        [components setDay:1];
+        [components setHour:0];
+        [components setMinute:0];
+        
+        NSDate *startDate = [calendar dateFromComponents:components];
+        
+        NSCalendar *calendar2 = [[NSCalendar alloc]
+                                initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        NSDateComponents *endComponents = [[NSDateComponents alloc] init];
+        [endComponents setYear:year];
+        [endComponents setMonth:12];
+        [endComponents setDay:31];
+        [components setHour:23];
+        [components setMinute:59];
+        
+        NSDate *endDate = [calendar2 dateFromComponents:endComponents];
+        [query whereKey:@"createdAt" lessThan:endDate];
+        [query whereKey:@"createdAt" greaterThan:startDate];
+    }
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
         NSMutableArray * singleWinGameArray = [@[] mutableCopy];
