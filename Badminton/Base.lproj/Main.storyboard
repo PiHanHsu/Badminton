@@ -332,13 +332,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G71-gB-rc4">
                                             <rect key="frame" x="115" y="4" width="21" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aWd-EH-amN">
                                             <rect key="frame" x="219" y="3" width="21" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -1287,11 +1287,11 @@ SCOREBOARD</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="E3g-4x-863">
-                            <rect key="frame" x="0.0" y="64" width="320" height="100"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="90"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JHu-H6-3s7">
-                                    <rect key="frame" x="16" y="56" width="288" height="28"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JHu-H6-3s7">
+                                    <rect key="frame" x="16" y="46" width="288" height="28"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="8eM-7u-kAp">
                                             <rect key="frame" x="0.0" y="0.0" width="288" height="28"/>
@@ -1312,37 +1312,41 @@ SCOREBOARD</string>
                                         </stackView>
                                     </subviews>
                                 </stackView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOS-hz-fx8">
-                                    <rect key="frame" x="164" y="16" width="140" height="30"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="team name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZK-Rb-YAS">
+                                    <rect key="frame" x="16" y="17" width="186" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="nIJ-so-QhP"/>
+                                        <constraint firstAttribute="height" constant="21" id="DrP-by-zPS"/>
                                     </constraints>
-                                    <state key="normal" title="年份"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcu-5u-gKs">
-                                    <rect key="frame" x="16" y="16" width="140" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year : All" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uNc-x0-qDp">
+                                    <rect key="frame" x="220" y="17" width="80" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="f1j-Fu-kkA"/>
+                                        <constraint firstAttribute="width" constant="80" id="99Z-sZ-u9Z"/>
+                                        <constraint firstAttribute="height" constant="21" id="oVp-2X-5xt"/>
                                     </constraints>
-                                    <state key="normal" title="隊名"/>
-                                </button>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="kcu-5u-gKs" firstAttribute="leading" secondItem="SCv-RM-sdp" secondAttribute="leading" id="8GE-xs-4mj"/>
+                                <constraint firstAttribute="trailing" secondItem="uNc-x0-qDp" secondAttribute="trailing" constant="20" id="2s9-Hv-gBC"/>
+                                <constraint firstItem="uNc-x0-qDp" firstAttribute="leading" secondItem="iZK-Rb-YAS" secondAttribute="trailing" constant="18" id="65D-ZP-1gt"/>
                                 <constraint firstAttribute="bottom" secondItem="SCv-RM-sdp" secondAttribute="bottom" constant="16" id="DBU-69-KkP"/>
                                 <constraint firstItem="SCv-RM-sdp" firstAttribute="leading" secondItem="E3g-4x-863" secondAttribute="leading" constant="16" id="E7G-fS-ooq"/>
-                                <constraint firstItem="mOS-hz-fx8" firstAttribute="leading" secondItem="kcu-5u-gKs" secondAttribute="trailing" constant="8" id="Im5-KV-ROR"/>
-                                <constraint firstItem="mOS-hz-fx8" firstAttribute="trailing" secondItem="SCv-RM-sdp" secondAttribute="trailing" id="InZ-sO-tKi"/>
-                                <constraint firstItem="kcu-5u-gKs" firstAttribute="width" secondItem="mOS-hz-fx8" secondAttribute="width" id="LZh-9G-qyi"/>
-                                <constraint firstItem="mOS-hz-fx8" firstAttribute="top" secondItem="kcu-5u-gKs" secondAttribute="top" id="bhv-no-4J9"/>
+                                <constraint firstItem="JHu-H6-3s7" firstAttribute="top" secondItem="uNc-x0-qDp" secondAttribute="bottom" constant="8" id="YjO-mz-Te7"/>
+                                <constraint firstItem="JHu-H6-3s7" firstAttribute="top" secondItem="iZK-Rb-YAS" secondAttribute="bottom" constant="8" id="gdR-20-7Z6"/>
+                                <constraint firstItem="iZK-Rb-YAS" firstAttribute="leading" secondItem="E3g-4x-863" secondAttribute="leading" constant="16" id="pwo-zV-cvP"/>
                                 <constraint firstAttribute="trailing" secondItem="SCv-RM-sdp" secondAttribute="trailing" constant="16" id="sZ1-kK-Mpf"/>
-                                <constraint firstItem="kcu-5u-gKs" firstAttribute="top" secondItem="E3g-4x-863" secondAttribute="top" constant="16" id="wZV-ld-KlW"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StandingTableViewCell" id="PsJ-iX-Sox" customClass="StandingTableViewCell">
-                                <rect key="frame" x="0.0" y="192" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="182" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PsJ-iX-Sox" id="W7y-BS-a9z">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -1421,8 +1425,8 @@ SCOREBOARD</string>
                     <connections>
                         <outlet property="filterBarButton" destination="84q-KT-pHI" id="9mT-cY-OmV"/>
                         <outlet property="gameTypeSegmentedControl" destination="SCv-RM-sdp" id="QlE-2j-dYO"/>
-                        <outlet property="teamButton" destination="kcu-5u-gKs" id="jNv-qz-fJx"/>
-                        <outlet property="yearButton" destination="mOS-hz-fx8" id="Gam-0l-GLM"/>
+                        <outlet property="teamNameLabel" destination="iZK-Rb-YAS" id="8gU-ye-PXl"/>
+                        <outlet property="yearLabel" destination="uNc-x0-qDp" id="XCR-v1-uvC"/>
                         <segue destination="eHT-dv-lBX" kind="push" identifier="Go To Stats" id="bqM-HJ-aNT"/>
                     </connections>
                 </tableViewController>

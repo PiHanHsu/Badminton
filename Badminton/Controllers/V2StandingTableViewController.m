@@ -8,21 +8,20 @@
 
 #import "V2StandingTableViewController.h"
 #import "StandingTableViewCell.h"
-#import "Standing.h"
 #import "StandingTableViewController.h"
 
 @interface V2StandingTableViewController ()<UIPickerViewDataSource, UIPickerViewDelegate>
-@property (strong, nonatomic) NSArray * playerArray;
-@property (strong, nonatomic) NSArray * teamPlayersStandingArray;
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameTypeSegmentedControl;
 
 @property (strong, nonatomic) UIActivityIndicatorView *activityIndicatorView;
-@property (strong, nonatomic) NSString * selectedPlayerId;
-@property (weak, nonatomic) IBOutlet UIButton *teamButton;
-@property (weak, nonatomic) IBOutlet UIButton *yearButton;
 @property (strong, nonatomic) UIPickerView * pickerView;
 @property (strong, nonatomic) NSArray * pickerData;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *filterBarButton;
+@property (weak, nonatomic) IBOutlet UILabel *teamNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yearLabel;
+
+
 @property (strong, nonatomic) NSMutableArray * teamNameList;
 @property (strong, nonatomic) NSArray * yearList;
 @property (strong, nonatomic) NSMutableArray * teamPlayers;
@@ -41,16 +40,6 @@
     self.activityIndicatorView.center = self.view.center;
     [self.activityIndicatorView startAnimating];
     [self.view addSubview:self.activityIndicatorView];
-    
-    self.teamButton.layer.borderWidth = 1.0f;
-    self.teamButton.layer.borderColor = [UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
-    self.teamButton.layer.cornerRadius = 5.0;
-    self.teamButton.clipsToBounds = YES;
-    
-    self.yearButton.layer.borderWidth = 1.0f;
-    self.yearButton.layer.borderColor = [UIColor colorWithRed:130.0/255.0 green:180.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
-    self.yearButton.layer.cornerRadius = 5.0;
-    self.yearButton.clipsToBounds = YES;
     
     self.teamArray = [DataSource sharedInstance].teamArray;
     if (self.teamArray.count == 0) {
@@ -74,11 +63,9 @@
             [self.teamNameList addObject:teamName];
         }
         self.yearList = @[@"All", @"2015", @"2016"];
-
-        [self.teamButton setTitle:self.teamObject[@"name"] forState:UIControlStateNormal];
-        [self.yearButton setTitle:@"Year: All" forState:UIControlStateNormal];
-
     }
+    
+    self.teamNameLabel.text = self.teamObject[@"name"];
     
     [self createPlayerStatsWithYear:9999];
 }
@@ -94,12 +81,15 @@
                                                    NSInteger row1 = [self.pickerView selectedRowInComponent:0];
                                                    NSInteger row2 = [self.pickerView selectedRowInComponent:1];
                                                    self.teamObject = self.teamArray[row1];
+                                                   self.teamNameLabel.text = self.teamObject[@"name"];
 
                                                    NSInteger year;
                                                    if (row2 == 0) {
                                                        year = 9999;
+                                                       self.yearLabel.text = @"Year : All";
                                                    }else{
                                                        year = [self.yearList[row2] integerValue];
+                                                       self.yearLabel.text = [NSString stringWithFormat:@"%ld",(long)year];
                                                    }
                                                    
                                                    [self createPlayerStatsWithYear:year];
@@ -263,7 +253,6 @@
     
     self.selectedPlayer = self.teamPlayersArray[indexPath.row];
     
-    self.selectedPlayerId = self.teamPlayersStandingArray[indexPath.row][@"playerId"];
     [self performSegueWithIdentifier:@"Go To Stats" sender:nil];
     
 }
@@ -274,7 +263,7 @@
     if ([segue.destinationViewController isKindOfClass:[StandingTableViewController class]]) {
         StandingTableViewController * vc = segue.destinationViewController;
         vc.currentPlayerForStats = self.selectedPlayer;
-        //vc.playerId = self.selectedPlayerId;
+       
     }
     
     
