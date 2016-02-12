@@ -13,6 +13,18 @@
 @property (strong, nonatomic) NSString * objectId;
 @property (strong, nonatomic) NSString * userName;
 @property (strong, nonatomic) NSString * name;
+@property (strong, nonatomic) NSNumber * totalWins;
+@property (strong, nonatomic) NSNumber * totalLosses;
+@property (strong, nonatomic) NSNumber * totalWinRate;
+@property (strong, nonatomic) NSNumber * singleWins;
+@property (strong, nonatomic) NSNumber * singleLosses;
+@property (strong, nonatomic) NSNumber * singleWinRate;
+@property (strong, nonatomic) NSNumber * doubleWins;
+@property (strong, nonatomic) NSNumber * doubleLosses;
+@property (strong, nonatomic) NSNumber * doubleWinRate;
+@property (strong, nonatomic) NSNumber * mixWins;
+@property (strong, nonatomic) NSNumber * mixLosses;
+@property (strong, nonatomic) NSNumber * mixWinRate;
 
 +(Player *) createPlayer;
 @end

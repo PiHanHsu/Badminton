@@ -13,6 +13,18 @@
 @dynamic userName;
 @dynamic name;
 
+@dynamic singleWins;
+@dynamic singleLosses;
+@dynamic singleWinRate;
+@dynamic doubleWins;
+@dynamic doubleLosses;
+@dynamic doubleWinRate;
+@dynamic mixWins;
+@dynamic mixLosses;
+@dynamic mixWinRate;
+@dynamic totalWins;
+@dynamic totalLosses;
+@dynamic totalWinRate;
 
 +(void)load {
     [self registerSubclass];
