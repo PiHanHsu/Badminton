@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSArray * yearList;
 @property (strong, nonatomic) NSMutableArray * teamPlayers;
 @property (strong, nonatomic) NSArray * teamPlayersArray;
+@property (strong, nonatomic) Player * selectedPlayer;
 
 @end
 
@@ -90,6 +91,10 @@
     
     UIAlertAction* ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault
                                                handler:^(UIAlertAction * action) {
+                                                   NSInteger row1 = [self.pickerView selectedRowInComponent:0];
+                                                   NSInteger row2 = [self.pickerView selectedRowInComponent:1];
+                                                   self.teamObject = self.teamArray[row1];
+                                                   [self createPlayerStats];
                                                    [alert dismissViewControllerAnimated:YES completion:nil];
                                                }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"cancel" style:UIAlertActionStyleDefault
@@ -102,7 +107,6 @@
     
     
     self.pickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(10, 20, 250, 120)];
-    //self.pickerView = [[UIPickerView alloc]init];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     
@@ -222,25 +226,25 @@
         
         cell.winsLabel.text = [NSString stringWithFormat:@"%@", player.totalWins];
         cell.losesLabel.text = [NSString stringWithFormat:@"%@", player.totalLosses];
-        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", player.totalWinRate.floatValue];
+        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", fabs(player.totalWinRate.floatValue)];
         
     }else if (self.gameTypeSegmentedControl.selectedSegmentIndex == 1) {
         
         cell.winsLabel.text = [NSString stringWithFormat:@"%@", player.mixWins];
         cell.losesLabel.text = [NSString stringWithFormat:@"%@", player.mixLosses];
-        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", player.mixWinRate.floatValue];
+        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", fabs(player.mixWinRate.floatValue)];
         
     }else if (self.gameTypeSegmentedControl.selectedSegmentIndex == 2) {
         
         cell.winsLabel.text = [NSString stringWithFormat:@"%@", player.doubleWins];
         cell.losesLabel.text = [NSString stringWithFormat:@"%@", player.doubleLosses];
-        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", player.doubleWinRate.floatValue];
+        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", fabs(player.doubleWinRate.floatValue)];
         
     }else if (self.gameTypeSegmentedControl.selectedSegmentIndex == 3) {
         
         cell.winsLabel.text = [NSString stringWithFormat:@"%@", player.singleWins];
         cell.losesLabel.text = [NSString stringWithFormat:@"%@", player.singleLosses];
-        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", player.singleWinRate.floatValue];
+        cell.rateLabel.text = [NSString stringWithFormat:@"%.f%%", fabs(player.singleWinRate.floatValue)];
         
     }
     
@@ -248,19 +252,21 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    self.selectedPlayer = self.teamPlayersArray[indexPath.row];
+    
     self.selectedPlayerId = self.teamPlayersStandingArray[indexPath.row][@"playerId"];
-    NSLog(@"id: %@", self.selectedPlayerId);
     [self performSegueWithIdentifier:@"Go To Stats" sender:nil];
     
 }
 
 //[self.teamObject loadTeamPlayerStandingArray];
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    
     if ([segue.destinationViewController isKindOfClass:[StandingTableViewController class]]) {
         StandingTableViewController * vc = segue.destinationViewController;
-        vc.playerId = self.selectedPlayerId;
+        vc.currentPlayerForStats = self.selectedPlayer;
+        //vc.playerId = self.selectedPlayerId;
     }
     
     
@@ -318,6 +324,7 @@
     self.teamPlayers = [@[] mutableCopy];
     
     PFQuery * query = [PFQuery queryWithClassName:@"Game"];
+    query.limit = 1000;
     [query whereKey:@"team" equalTo:self.teamObject.objectId];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
@@ -365,34 +372,40 @@
             NSString * playerId = player.objectId;
             player.singleWins = [NSNumber numberWithUnsignedLong:[singleWinGameSet countForObject:playerId]];
             player.singleLosses= [NSNumber numberWithUnsignedLong:[singleLossGameSet countForObject:playerId]];
-            if (player.singleWins > 0 || player.singleLosses > 0) {
+            if ([player.singleWins intValue] > 0 || [player.singleLosses intValue] > 0) {
                 float singleWinRate = player.singleWins.floatValue / (player.singleWins.floatValue + player.singleLosses.floatValue) * 100;
                 player.singleWinRate = [NSNumber numberWithFloat:singleWinRate];
-            }else{
-                player.singleWinRate = [NSNumber numberWithFloat:0];
+            }else {
+                
+                player.singleWinRate = [NSNumber numberWithFloat:-0.00001];
                 
             }
             
             player.doubleWins = [NSNumber numberWithUnsignedLong:[doubleWinGameSet countForObject:playerId]];
             player.doubleLosses = [NSNumber numberWithUnsignedLong:[doubleLossGameSet countForObject:playerId]];
-            if (player.doubleWins > 0 || player.doubleLosses > 0) {
+            if ([player.doubleWins intValue] > 0 || [player.doubleLosses intValue] > 0) {
                 float doubleWinRate = player.doubleWins.floatValue / (player.doubleWins.floatValue + player.doubleLosses.floatValue) * 100;
                 player.doubleWinRate = [NSNumber numberWithFloat:doubleWinRate];
+            }else{
+                player.doubleWinRate = [NSNumber numberWithFloat:0];
             }
             
             player.mixWins = [NSNumber numberWithUnsignedLong:[mixWinGameSet countForObject:playerId]];
             player.mixLosses = [NSNumber numberWithUnsignedLong:[mixLossGameSet countForObject:playerId]];
-            if ( player.mixWins > 0 || player.mixLosses > 0) {
+            if ( [player.mixWins intValue]> 0 || [player.mixLosses intValue] > 0) {
                 float mixWinRate = player.mixWins.floatValue / (player.mixWins.floatValue + player.mixLosses.floatValue) * 100;
                 player.mixWinRate = [NSNumber numberWithFloat:mixWinRate];
             }else{
-                player.mixWinRate = [NSNumber numberWithFloat:0];
+                player.mixWinRate = [NSNumber numberWithFloat:-0.00001];
             }
+            
             player.totalWins =[NSNumber numberWithInt:player.singleWins.intValue +player.doubleWins.intValue + player.mixWins.intValue];
             player.totalLosses =[NSNumber numberWithInt:player.singleLosses.intValue +player.doubleLosses.intValue + player.mixLosses.intValue];
-            if (player.totalWins > 0 || player.totalLosses > 0) {
+            if ([player.totalWins intValue] > 0 || [player.totalLosses intValue] > 0) {
                 float totalWinRate = player.totalWins.floatValue / (player.totalWins.floatValue + player.totalLosses.floatValue) * 100;
                 player.totalWinRate = [NSNumber numberWithFloat:totalWinRate];
+            }else{
+                player.totalWinRate = [NSNumber numberWithFloat:0];
             }
             
             [self.teamPlayers addObject:player];

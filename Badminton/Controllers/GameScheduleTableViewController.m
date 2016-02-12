@@ -435,7 +435,7 @@
         }
     }];
     
-    [self updateStangingWithWinTeam:gameObject[@"winTeam"] loseTeam:gameObject[@"loseTeam"] gameType:gameObject[@"gameType"] team:self.teamObject.objectId];
+//    [self updateStangingWithWinTeam:gameObject[@"winTeam"] loseTeam:gameObject[@"loseTeam"] gameType:gameObject[@"gameType"] team:self.teamObject.objectId];
     
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];

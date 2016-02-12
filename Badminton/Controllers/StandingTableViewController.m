@@ -47,18 +47,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
-    [self getStandings];
+    //[self getStandings];
+    self.playerId = self.currentPlayerForStats.objectId;
     [[DataSource sharedInstance] loadGamesFromServer:self.playerId];
-    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
-    [query whereKey:@"objectId" equalTo:self.playerId];
-    self.currentPlayerForStats = [query getFirstObject];
+//    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+//    [query whereKey:@"objectId" equalTo:self.playerId];
+//    self.currentPlayerForStats = [query getFirstObject];
     self.title = self.currentPlayerForStats[@"userName"];
     
-//    self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    self.indicator.center = self.view.center;
+    self.overAllWinLabel.text = [NSString stringWithFormat:@"%@", self.currentPlayerForStats.totalWins];
+    self.overallLoseLabel.text = [NSString stringWithFormat:@"%@", self.currentPlayerForStats.totalLosses];
+    self.doubleWinLabel.text =[NSString stringWithFormat:@"%@", self.currentPlayerForStats.doubleWins];
+    self.doubleLoseLabel.text = [NSString stringWithFormat:@"%@", self.currentPlayerForStats.doubleLosses];
+    self.mixWinLabel.text = [NSString stringWithFormat:@"%@", self.currentPlayerForStats.mixWins];
+    self.mixLoseLabel.text= [NSString stringWithFormat:@"%@", self.currentPlayerForStats.mixLosses];
+    self.singleWinLabel.text = [NSString stringWithFormat:@"%@", self.currentPlayerForStats.singleWins];
+    self.singleLoseLabel.text = [NSString stringWithFormat:@"%@", self.currentPlayerForStats.singleLosses];
     
     [self.activityIndicatorView startAnimating];
-   // [self.view addSubview:self.indicator];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -217,48 +223,6 @@
     }
     
 }
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"reuseCell" forIndexPath:indexPath];
-//    
-//    // Configure the cell...
-//    
-//    return cell;
-//}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 
 #pragma mark - Navigation
