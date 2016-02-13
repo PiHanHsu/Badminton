@@ -263,6 +263,7 @@
     if ([segue.destinationViewController isKindOfClass:[StandingTableViewController class]]) {
         StandingTableViewController * vc = segue.destinationViewController;
         vc.currentPlayerForStats = self.selectedPlayer;
+        vc.teamObject = self.teamObject;
        
     }
     

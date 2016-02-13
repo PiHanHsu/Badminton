@@ -49,7 +49,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     //[self getStandings];
     self.playerId = self.currentPlayerForStats.objectId;
-    [[DataSource sharedInstance] loadGamesFromServer:self.playerId];
+    [[DataSource sharedInstance] loadGamesFromServerWithPlayer:self.playerId withTeam:self.teamObject];
 //    PFQuery * query = [PFQuery queryWithClassName:@"Player"];
 //    [query whereKey:@"objectId" equalTo:self.playerId];
 //    self.currentPlayerForStats = [query getFirstObject];

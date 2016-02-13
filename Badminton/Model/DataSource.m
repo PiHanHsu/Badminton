@@ -134,17 +134,28 @@
 -(void) deleteTeam:(Team *) teamObject{
     [self.teamArray removeObject:teamObject];
     [teamObject deleteTeam];
-    
-    
-    
 }
 
+- (void) loadGamesFromServerWithPlayer:(NSString *)playerId withTeam:(Team *) teamObject{
+    PFQuery * queryWinGames = [PFQuery queryWithClassName:@"Game"];
+    [queryWinGames whereKey:@"winTeam" equalTo:playerId];
+    [queryWinGames whereKey:@"team" equalTo:teamObject.objectId];
+    PFQuery * queryLoseGames = [PFQuery queryWithClassName:@"Game"];
+    [queryWinGames whereKey:@"team" equalTo:teamObject.objectId];
+    [queryLoseGames whereKey:@"loseTeam" equalTo:playerId];
+    
+    PFQuery *queryBoth = [PFQuery orQueryWithSubqueries:@[queryWinGames , queryLoseGames]];
+    [queryBoth findObjectsInBackgroundWithBlock:^(NSArray *gamesArray, NSError * error){
+        NSSortDescriptor *descriptor=[[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+        
+        self.currentPlayerGamesArray = [gamesArray sortedArrayUsingDescriptors:[NSArray arrayWithObject: descriptor]];
+        [self createStatsArray:self.currentPlayerGamesArray player:playerId];
+        
+    }];
+}
 
 - (void) loadGamesFromServer: (NSString *) playerId{
-//    PFUser * user = [PFUser currentUser];
-//    PFQuery * getUserId = [PFQuery queryWithClassName:@"Player"];
-//    [getUserId whereKey:@"user" equalTo:user.objectId];
-//    PFObject * currentPlayer = [getUserId getFirstObject];
+
     PFQuery * queryWinGames = [PFQuery queryWithClassName:@"Game"];
     [queryWinGames whereKey:@"winTeam" equalTo:playerId];
     PFQuery * queryLoseGames = [PFQuery queryWithClassName:@"Game"];

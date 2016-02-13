@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Player.h"
+#import "Team.h"
 
 @interface StandingTableViewController : UITableViewController
 @property (strong, nonatomic) NSString * playerId;
 @property (strong, nonatomic) Player * currentPlayerForStats;
+@property (strong, nonatomic) Team * teamObject;
 
 @end

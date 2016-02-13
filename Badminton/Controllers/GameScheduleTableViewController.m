@@ -435,8 +435,6 @@
         }
     }];
     
-//    [self updateStangingWithWinTeam:gameObject[@"winTeam"] loseTeam:gameObject[@"loseTeam"] gameType:gameObject[@"gameType"] team:self.teamObject.objectId];
-    
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];
     [self.scoreboard.team2ScoreTextField resignFirstResponder];
@@ -475,58 +473,6 @@ replacementString:(NSString *)string {
     
     return YES;
     
-}
-
-
-- (void)updateStangingWithWinTeam: (NSMutableArray *) winTeam loseTeam:(NSMutableArray *)loseTeam gameType:(NSString *)gameType team:(NSString *) team{
-    for (NSString * winner in winTeam) {
-        PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
-        [query whereKey:@"playerId" equalTo:winner];
-        [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:team]];
-        [query getFirstObjectInBackgroundWithBlock:^(PFObject * object, NSError * error) {
-            [object incrementKey:@"wins"];
-            
-            if ([gameType isEqualToString:@"double"]) {
-                [object incrementKey:@"doublewins"];
-            }else if ([gameType isEqualToString:@"mix"]){
-                [object incrementKey:@"mixWins"];
-
-            }else if ([gameType isEqualToString:@"single"]){
-                [object incrementKey:@"singleWins"];
-            }
-
-            NSLog(@"newObject: %@", object);
-            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
-                
-                if (error) {
-                    NSLog(@"error: %@", error);
-                }else{
-                    NSLog(@"Winner Standing updated to Parse");
-                }
-            }];
-        }];
-    }
-    
-    for (NSString * loser in loseTeam) {
-        PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
-        [query whereKey:@"playerId" equalTo:loser];
-        [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:team]];
-        [query getFirstObjectInBackgroundWithBlock:^(PFObject * object, NSError * error) {
-            [object incrementKey:@"loses"];
-
-            if ([gameType isEqualToString:@"double"]) {
-                [object incrementKey:@"doubleLoses"];
-                
-            }else if ([gameType isEqualToString:@"mix"]){
-                [object incrementKey:@"mixLoses"];
-
-            }else if ([gameType isEqualToString:@"single"]){
-                [object incrementKey:@"singleLoses"];
-
-            }
-            [object saveInBackground];
-         }];
-    }    
 }
 
 - (void) cancelScoreBoard: (id) sender {

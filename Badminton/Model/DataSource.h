@@ -36,6 +36,7 @@
 - (void) loadTeamsFromServer;
 - (void) loadPlayersFromServer;
 - (void) loadGamesFromServer: (NSString *) playerId;
+- (void) loadGamesFromServerWithPlayer:(NSString *)playerId withTeam:(Team *) teamObject;
 
 -(void) addTeam:(Team *) teamObject;
 -(void) deleteTeam:(Team *) teamObject;
