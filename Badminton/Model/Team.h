@@ -29,6 +29,6 @@
 - (void)deleteTeam;
 //- (NSMutableArray *) loadTeamPlayerStandingArray;
 
--(void) loadTeamPlayerStandingArrayWithDone:(void (^)(NSArray * teamPlayerStandingArray))doneHandle;
+
 
 @end

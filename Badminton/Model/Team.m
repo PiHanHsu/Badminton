@@ -7,7 +7,6 @@
 //
 
 #import "Team.h"
-#import "Standing.h"
 
 @implementation Team
 
@@ -44,7 +43,6 @@
     self.players = [self.players mutableCopy];
     
     [self saveInBackground];
-    [self createPlayerStanding:player];
     
 }
 
@@ -53,7 +51,6 @@
     self.players = [self.players mutableCopy];
     
     [self saveInBackground];
-    //[self removePlayerStanding:player];
 }
 
 - (void)deleteTeam{
@@ -63,52 +60,6 @@
             NSLog(@"YES");
         }
     }];
-}
-
-- (void) removePlayerStanding: (Player *) player{
-    
-}
-- (void) createPlayerStanding: (Player *) player{
-    
-    NSString * playerId = player.objectId;
-    if (![self.teamPlayerStandingArray containsObject:playerId]) {
-        Standing * standingObject = [Standing createPlayerStanding];
-        standingObject[@"player"] = player;
-        standingObject[@"playerId"] = player.objectId;
-        standingObject[@"team"] = self;
-        standingObject[@"wins"] = [NSNumber numberWithInt:0];
-        standingObject[@"singleWins"] = [NSNumber numberWithInt:0];
-        standingObject[@"doubleWins"] = [NSNumber numberWithInt:0];
-        standingObject[@"mixWins"] = [NSNumber numberWithInt:0];
-        standingObject[@"loses"] = [NSNumber numberWithInt:0];
-        standingObject[@"singleLoses"] = [NSNumber numberWithInt:0];
-        standingObject[@"doubleLoses"] = [NSNumber numberWithInt:0];
-        standingObject[@"mixLoses"] = [NSNumber numberWithInt:0];
-        
-        [standingObject saveInBackground];
-    }
-}
-
--(void) loadTeamPlayerStandingArrayWithDone:(void (^)(NSArray * teamPlayerStandingArray))doneHandle{
-    self.teamPlayerStandingArray = [@[] mutableCopy];
-    
-    PFQuery * query = [PFQuery queryWithClassName:@"Standing"];
-    [query whereKey:@"team" equalTo:[PFObject objectWithoutDataWithClassName:@"Team" objectId:self.objectId]];
-    //self.teamPlayerStandingArray = [[NSMutableArray alloc]initWithArray:[query findObjects]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * array, NSError * error){
-        if (!error){
-            self.teamPlayerStandingArray = array;
-//            for (PFObject * standing in array) {
-//                [standing pinInBackground];
-//            }
-            if (doneHandle) {
-                doneHandle (self.teamPlayerStandingArray);
-            }
-        }else{
-            NSLog(@"error:%@ ", error);
-        }
-    }];
-    //return self.teamPlayerStandingArray;
 }
 
 - (NSArray *) malePlayersArray: (NSArray *) playerArray{
