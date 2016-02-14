@@ -14,5 +14,6 @@
 @property (strong, nonatomic) NSString * playerId;
 @property (strong, nonatomic) Player * currentPlayerForStats;
 @property (strong, nonatomic) Team * teamObject;
+@property (strong, nonatomic) NSArray * gameArray;
 
 @end

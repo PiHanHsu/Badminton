@@ -274,11 +274,6 @@
             [statsWithMixGame addObject:statsDict];
         }
         
-        
-        
-        //[self.statsWithTeammatesArray addObject:statsDict];
-            //   NSLog(@"Name=%@, Wins=%lu", item, (unsigned long)[winSet countForObject:item]);
-            //   NSLog(@"Name=%@, Loses=%lu", item, (unsigned long)[loseSet countForObject:item]);
     }
     
     self.statsWithTeammatesByDoubleGameArray = [[NSArray alloc]initWithArray:statsWithDoubleGame];

@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSMutableArray * teamPlayers;
 @property (strong, nonatomic) NSArray * teamPlayersArray;
 @property (strong, nonatomic) Player * selectedPlayer;
+@property (strong, nonatomic) NSArray * gamesArray; // array of game records
 
 @end
 
@@ -257,19 +258,6 @@
     
 }
 
-//[self.teamObject loadTeamPlayerStandingArray];
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
-    if ([segue.destinationViewController isKindOfClass:[StandingTableViewController class]]) {
-        StandingTableViewController * vc = segue.destinationViewController;
-        vc.currentPlayerForStats = self.selectedPlayer;
-        vc.teamObject = self.teamObject;
-       
-    }
-    
-    
-}
-
 #pragma mark SegmentedControlSwitch
 
 - (IBAction)segmentedControlSwitch:(id)sender {
@@ -354,6 +342,9 @@
     }
     
     [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
+        
+        self.gamesArray = objects;
+        
         NSMutableArray * singleWinGameArray = [@[] mutableCopy];
         NSMutableArray * singleLossGameArray = [@[] mutableCopy];
         NSMutableArray * doubleWinGameArray = [@[] mutableCopy];
@@ -445,6 +436,17 @@
         [self.activityIndicatorView stopAnimating];
         [self.tableView reloadData];
     }];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.destinationViewController isKindOfClass:[StandingTableViewController class]]) {
+        StandingTableViewController * vc = segue.destinationViewController;
+        vc.currentPlayerForStats = self.selectedPlayer;
+        vc.teamObject = self.teamObject;
+        vc.gameArray = self.gamesArray;
+        
+    }
     
     
 }
