@@ -152,6 +152,7 @@
         
     }
     
+    NSLog(@"playerStats Count: %lu", playerGameArray.count);
     //NSLog(@"playerStatsArray: %@", self.currentPlayerStatsArray);
     [self getSteakWins:self.currentPlayerStatsArray];
     [self getBestTeammate:self.currentPlayerStatsArray player:playerId];
@@ -207,6 +208,7 @@
         }
     }
     
+    NSLog(@"double game: %lu", statsWithDoubleGame.count);
     self.playerStatsWithDoubleGameArray = [[NSArray alloc]initWithArray:statsWithDoubleGame];
     self.playerStatsWithMixGameArray = [[NSArray alloc]initWithArray:statsWithMixGame];
     

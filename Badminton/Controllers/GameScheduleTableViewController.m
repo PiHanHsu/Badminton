@@ -321,6 +321,10 @@
     if ([self.game.gameScheduleArray[indexPath.row][4] boolValue]) {
         return;
     }
+    
+    self.tempTeam1Array = self.game.gameScheduleArray[indexPath.row][0];
+    self.tempTeam2Array = self.game.gameScheduleArray[indexPath.row][1];
+    
     [self.scoreboard.team1ScoreTextField becomeFirstResponder];
 
     self.scoreboard = [[[NSBundle mainBundle] loadNibNamed:@"ScoreBoard" owner:self options:nil] objectAtIndex:0];
@@ -354,14 +358,29 @@
     BOOL isTieBreak = NO;
     
     if (self.tempTeam1Array.count == 1) {
-       self.gameType = @"single";
-    }else if ([self.tempTeam1Array[0][@"isMale"] boolValue] == [self.tempTeam1Array[1][@"isMale"] boolValue]) {
+        self.gameType = @"single";
+    }else if ([self.tempTeam1Array[0][@"isMale"] boolValue] == [self.tempTeam1Array[1][@"isMale"] boolValue]  && [self.tempTeam2Array[0][@"isMale"] boolValue] == [self.tempTeam2Array[1][@"isMale"] boolValue]) {
         self.gameType = @"double";
-    }else{
+    }else if ([self.tempTeam1Array[0][@"isMale"] boolValue] != [self.tempTeam1Array[1][@"isMale"] boolValue]  && [self.tempTeam2Array[0][@"isMale"] boolValue] != [self.tempTeam2Array[1][@"isMale"] boolValue]){
         self.gameType = @"mix";
+    }else{
+        // not double or mix,
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"注意！" message:@"此為非男雙女雙混雙賽事，比分記錄將不會被儲存" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+            
+        }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
+        [self viewDismiss];
+        [self.scoreboard.team1ScoreTextField resignFirstResponder];
+        [self.scoreboard.team2ScoreTextField resignFirstResponder];
+        return;
     }
-    
-    //TODO Save Game to Parse
+
+    //Save Game score to Parse
     PFObject * gameObject = [PFObject objectWithClassName:@"Game"];
     if ([self.scoreboard.team1ScoreTextField.text intValue] >
         [self.scoreboard.team2ScoreTextField.text intValue]) {
@@ -387,7 +406,6 @@
         gameObject[@"winTeam"] = winTeam;
         gameObject[@"loseTeam"] = loseTeam;
 
-       
     }else{
         int winTeamScore = [self.scoreboard.team2ScoreTextField.text intValue];
         int loseTeamScore = [self.scoreboard.team1ScoreTextField.text intValue];
@@ -438,9 +456,10 @@
     [self viewDismiss];
     [self.scoreboard.team1ScoreTextField resignFirstResponder];
     [self.scoreboard.team2ScoreTextField resignFirstResponder];
-
 }
-
+-(void) saveGameScoreToParse{
+    
+}
 
 #pragma mark - TextField Delegate
 

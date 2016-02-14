@@ -28,6 +28,7 @@
 @property (nonatomic, strong) NSArray *statsWithTeammatesByMixGameArray;
 @property (strong, nonatomic) PFObject * currentPlayer;
 @property (strong, nonatomic) UIImage * currentPlayerImage;
+@property (strong, nonatomic) NSArray * gameArrayWithTeamAndYear; // selected team and year 
 
 
 
@@ -37,6 +38,7 @@
 - (void) loadPlayersFromServer;
 - (void) loadGamesFromServer: (NSString *) playerId;
 - (void) loadGamesFromServerWithPlayer:(NSString *)playerId withTeam:(Team *) teamObject;
+- (void) loadGamesFromServerWithYear: (int) year Team:(Team *) teamObject;
 
 -(void) addTeam:(Team *) teamObject;
 -(void) deleteTeam:(Team *) teamObject;
