@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E8484CBD1B6BA5B100B39463"
-               BuildableName = "Badminton.app"
+               BuildableName = "MyScoreBoard.app"
                BlueprintName = "Badminton"
                ReferencedContainer = "container:Badminton.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E8484CBD1B6BA5B100B39463"
-            BuildableName = "Badminton.app"
+            BuildableName = "MyScoreBoard.app"
             BlueprintName = "Badminton"
             ReferencedContainer = "container:Badminton.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E8484CBD1B6BA5B100B39463"
-            BuildableName = "Badminton.app"
+            BuildableName = "MyScoreBoard.app"
             BlueprintName = "Badminton"
             ReferencedContainer = "container:Badminton.xcodeproj">
          </BuildableReference>
@@ -99,7 +99,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E8484CBD1B6BA5B100B39463"
-            BuildableName = "Badminton.app"
+            BuildableName = "MyScoreBoard.app"
             BlueprintName = "Badminton"
             ReferencedContainer = "container:Badminton.xcodeproj">
          </BuildableReference>

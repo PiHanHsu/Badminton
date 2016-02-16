@@ -18,6 +18,11 @@ PODS:
     - FBSDKLoginKit (~> 4.9.0-beta)
     - FBSDKTVOSKit (~> 4.9.0-beta)
     - Parse (~> 1.11)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
 
 DEPENDENCIES:
   - FBSDKCoreKit
@@ -25,6 +30,8 @@ DEPENDENCIES:
   - MGSwipeTableCell
   - Parse
   - ParseFacebookUtilsV4
+  - SDWebImage
+  - UIActivityIndicator-for-SDWebImage
 
 SPEC CHECKSUMS:
   Bolts: f52a250053bb517ca874523c3913776359ab3def
@@ -33,5 +40,7 @@ SPEC CHECKSUMS:
   MGSwipeTableCell: 5ae3b9a15efda26b201adc8676b24040febe6ff6
   Parse: de2c52a9a1421b91ae7594ab8ce191afd184f19b
   ParseFacebookUtilsV4: 216e03bd560404eed09a4875c75f0c1cdf758070
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
 COCOAPODS: 0.39.0

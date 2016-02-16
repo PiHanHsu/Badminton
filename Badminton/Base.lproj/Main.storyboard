@@ -466,6 +466,16 @@ SCOREBOARD</string>
                                         <action selector="LoginPressed:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="ZcD-jw-dxQ"/>
                                     </connections>
                                 </button>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hiR-Pg-Lqk">
+                                    <rect key="frame" x="29" y="0.0" width="160" height="30"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <state key="normal" title="Forgot Password...">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="forgotPasswordPressed:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="AXc-a8-l7L"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -1148,11 +1158,14 @@ SCOREBOARD</string>
                                         <constraint firstAttribute="width" constant="150" id="YJU-Q5-ayk"/>
                                         <constraint firstAttribute="height" constant="150" id="uzh-Jy-I3C"/>
                                     </constraints>
-                                    <state key="normal" title="photo" image="user_placeholder.png">
+                                    <state key="normal" title="photo">
                                         <color key="titleColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dBt-2N-YSj">
+                                    <rect key="frame" x="162" y="8" width="150" height="150"/>
+                                </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="tVU-df-epj">
                                     <rect key="frame" x="217" y="63" width="40" height="40"/>
                                     <constraints>
@@ -1163,9 +1176,13 @@ SCOREBOARD</string>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstItem="dBt-2N-YSj" firstAttribute="centerY" secondItem="icA-Tb-ZKM" secondAttribute="centerY" id="0ol-Mf-gMO"/>
                                 <constraint firstAttribute="bottom" secondItem="EGd-8M-UwN" secondAttribute="bottom" constant="20" symbolic="YES" id="1UV-9u-Nfc"/>
+                                <constraint firstItem="dBt-2N-YSj" firstAttribute="height" secondItem="icA-Tb-ZKM" secondAttribute="height" id="CpG-WZ-LFq"/>
+                                <constraint firstItem="dBt-2N-YSj" firstAttribute="width" secondItem="icA-Tb-ZKM" secondAttribute="width" id="DLf-v7-4Ic"/>
                                 <constraint firstItem="icA-Tb-ZKM" firstAttribute="centerX" secondItem="tVU-df-epj" secondAttribute="centerX" id="Jdh-aF-bFt"/>
                                 <constraint firstItem="icA-Tb-ZKM" firstAttribute="centerY" secondItem="tVU-df-epj" secondAttribute="centerY" id="TcN-Wx-SRu"/>
+                                <constraint firstItem="dBt-2N-YSj" firstAttribute="centerX" secondItem="icA-Tb-ZKM" secondAttribute="centerX" id="Vqb-gU-NQw"/>
                                 <constraint firstItem="icA-Tb-ZKM" firstAttribute="top" secondItem="ukx-1c-UQE" secondAttribute="topMargin" id="bEc-Na-O1o"/>
                                 <constraint firstAttribute="trailing" secondItem="EGd-8M-UwN" secondAttribute="trailing" id="jVJ-UB-3gJ"/>
                                 <constraint firstItem="icA-Tb-ZKM" firstAttribute="trailing" secondItem="ukx-1c-UQE" secondAttribute="trailingMargin" id="kaG-SE-QuT"/>
@@ -1269,7 +1286,9 @@ SCOREBOARD</string>
                     <connections>
                         <outlet property="cameraImage" destination="tVU-df-epj" id="hng-RF-mWe"/>
                         <outlet property="emailTextField" destination="Gwe-T3-Mh8" id="ZbH-S7-8Gt"/>
+                        <outlet property="logoutButton" destination="QVO-kk-4Yn" id="ZaA-On-MW2"/>
                         <outlet property="photoButton" destination="icA-Tb-ZKM" id="27r-Ux-yTF"/>
+                        <outlet property="photoImageView" destination="dBt-2N-YSj" id="2da-uZ-XQT"/>
                         <outlet property="realNameTextField" destination="YYi-4o-yUE" id="Xwe-2F-tzn"/>
                         <outlet property="userNameTextField" destination="yNh-hg-Rft" id="TOh-Sc-Iew"/>
                     </connections>

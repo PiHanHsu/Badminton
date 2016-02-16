@@ -11,6 +11,8 @@
 #import <Parse/Parse.h>
 #import "Player.h"
 #import "DataSource.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 @interface ProfileTableViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -25,7 +27,9 @@
 @property (strong, nonatomic) UIImage * photoImage;
 @property (strong, nonatomic) UIImagePickerController *photoPicker;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
 @property (assign) BOOL isEditState;
 
 @end
@@ -41,11 +45,31 @@
     self.realNameTextField.text = currentPlayer[@"name"];
     self.emailTextField.text = currentPlayer[@"email"];
     
+    
+    //set up Photo Button
+    self.photoButton.layer.borderWidth = 5.0f;
+    self.photoButton.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
+    self.photoButton.layer.cornerRadius = 75.0;
+    self.photoButton.clipsToBounds = YES;
+
+    self.photoImageView.layer.borderWidth = 5.0f;
+    self.photoImageView.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
+    self.photoImageView.layer.cornerRadius = 75.0;
+    self.photoImageView.clipsToBounds = YES;
+    
     PFFile * photo = currentPlayer[@"photo"];
+    
     if (photo) {
-        [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
-           [self.photoButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
-        }];
+        NSLog(@"url: %@",photo.url);
+
+        NSURL * imageURL = [NSURL URLWithString:photo.url];
+       
+        
+        [self.photoImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        
+//        [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
+//           [self.photoButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+//        }];
     }
     self.userNameTextField.enabled = NO;
     self.realNameTextField.enabled = NO;
@@ -71,9 +95,72 @@
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if (indexPath.row == 3) {
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"請輸入新密碼" message:@"修改密碼完成後請重新登入" preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action) {
+                                                       UITextField *pw1TextField = alert.textFields.firstObject;
+                                                           
+                                                           PFUser * user = [PFUser currentUser];
+                                                           user.password = pw1TextField.text;
+                                                           [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                                                               if (succeeded) {
+                                                                   [self logoutPressed:self.logoutButton];
+                                                        }
+                                                           }];
+                                                           [alert dismissViewControllerAnimated:YES completion:nil];
+                                                       }];
+        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {
+                                                       
+                                                       [alert dismissViewControllerAnimated:YES completion:nil];
+                                                   }];
+        ok.enabled= NO;
+        
+        [alert addAction:cancel];
+        [alert addAction:ok];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Enter New Password";
+            textField.secureTextEntry = YES;
+            [textField addTarget:self
+                          action:@selector(alertTextFieldDidChange:)
+                forControlEvents:UIControlEventEditingChanged];
+        }];
+        [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.placeholder = @"Re-enter New Password";
+            textField.secureTextEntry = YES;
+            [textField addTarget:self
+                          action:@selector(alertTextFieldDidChange:)
+                forControlEvents:UIControlEventEditingChanged];
+        }];
+        
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    
+}
+
+- (void)alertTextFieldDidChange:(UITextField *)sender
+{
+    UIAlertController *alert = (UIAlertController *)self.presentedViewController;
+    if (alert) {
+        UITextField *pw1TextField = alert.textFields.firstObject;
+        
+        UITextField *pw2TextField = alert.textFields.lastObject;
+        UIAlertAction *ok = alert.actions.lastObject;
+        
+        if ([pw1TextField.text isEqualToString:pw2TextField.text]) {
+            ok.enabled = YES;
+        }else{
+            ok.enabled = NO;
+        }
+    }
 }
 
 #pragma mark - Table view data source
@@ -111,7 +198,7 @@
 - (void)updateProfile{
     
     if (self.photoButton.imageView.image) {
-        NSData *imageData = UIImageJPEGRepresentation(self.photoButton.imageView.image, 1.0);
+        NSData *imageData = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
         PFFile *photoFile = [PFFile fileWithData:imageData];
         PFQuery * query = [PFQuery queryWithClassName:@"Player"];
         [query whereKey:@"user" equalTo:[PFUser currentUser].objectId];
@@ -123,14 +210,29 @@
             player[@"email"] = self.emailTextField.text;
             player [@"photo"] = photoFile;
             
-            [player saveInBackground];
+            PFUser * user = [PFUser currentUser];
+            user[@"email"] = self.emailTextField.text;
+            user[@"username"] = self.emailTextField.text;
+            
+            [user saveInBackground];
+            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    NSLog(@"url: %@",photoFile.url);
+                    //player[@"photoURL"] = photoFile.url;
+                }
+            }];
         }];
     }else{
         PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
-        currentPlayer[@"userName"] = self.userNameTextField.text;
+        currentPlayer[@"username"] = self.userNameTextField.text;
         currentPlayer[@"name"] = self.realNameTextField.text;
         currentPlayer[@"email"] = self.emailTextField.text;
         
+        PFUser * user = [PFUser currentUser];
+        user[@"email"] = self.emailTextField.text;
+        user[@"userName"] = self.emailTextField.text;
+        
+        [user saveInBackground];
         [currentPlayer saveInBackground];
     }
 }
@@ -233,6 +335,8 @@
     
     
     UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
+    self.photoImageView.image = photoImage;
+    
     [self.photoButton setImage:photoImage forState:UIControlStateNormal];
     
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -244,7 +348,15 @@
     self.photoPicker = nil;
 }
 
-
+- (UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize;
+{
+    UIGraphicsBeginImageContext( newSize );
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
 - (IBAction)logoutPressed:(id)sender {
     
     [PFUser logOut];

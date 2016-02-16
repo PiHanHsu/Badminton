@@ -39,15 +39,20 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UIActivityIndicator-for-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>4E286D373D75563CE26E479A68203892</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5E3D1E051598F933CBB2EE903DF3A2D6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -58,6 +63,21 @@
 			<true/>
 		</dict>
 		<key>8C463CD491D989B457394A7AA95384BC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8CDF2783C8D572420ADB50C60336243D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>93CE3E338D7EE251AAAAB00C34DEEBD2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>99758F15633ADD4F4EAC8BB4BD5C007C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

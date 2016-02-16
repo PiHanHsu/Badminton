@@ -30,8 +30,6 @@
 		E85EB2721B80E2AD0094875E /* PlayerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2711B80E2AD0094875E /* PlayerTableViewCell.m */; };
 		E85EB2751B80EF480094875E /* PlayListDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E85EB2741B80EF480094875E /* PlayListDataSource.m */; };
 		E870EE451C5BB5D100A85174 /* TeamListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E870EE441C5BB5D100A85174 /* TeamListTableViewCell.m */; };
-		E870EE4A1C5BCC1900A85174 /* user_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE481C5BCC1900A85174 /* user_placeholder@2x.png */; };
-		E870EE4D1C5BCCA300A85174 /* user_placeholder@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE4C1C5BCCA300A85174 /* user_placeholder@3x.png */; };
 		E870EE521C5BD50600A85174 /* camera-icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE501C5BD50600A85174 /* camera-icon@3x.png */; };
 		E870EE531C5BD50600A85174 /* camera-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E870EE511C5BD50600A85174 /* camera-icon@2x.png */; };
 		E877D8121B8A205C007D9E53 /* SignupTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E877D8111B8A205C007D9E53 /* SignupTableViewController.m */; };
@@ -84,7 +82,7 @@
 		E836496B1B92D42600F172A4 /* ScoreBoard.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreBoard.xib; sourceTree = "<group>"; };
 		E836496D1B92D48400F172A4 /* ScoreBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreBoard.h; path = Views/ScoreBoard.h; sourceTree = "<group>"; };
 		E836496E1B92D48400F172A4 /* ScoreBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScoreBoard.m; path = Views/ScoreBoard.m; sourceTree = "<group>"; };
-		E8484CBE1B6BA5B100B39463 /* Badminton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Badminton.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8484CBE1B6BA5B100B39463 /* MyScoreBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyScoreBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8484CC21B6BA5B100B39463 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8484CC31B6BA5B100B39463 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E8484CC51B6BA5B100B39463 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -106,8 +104,6 @@
 		E85EB2741B80EF480094875E /* PlayListDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayListDataSource.m; path = Model/PlayListDataSource.m; sourceTree = "<group>"; };
 		E870EE431C5BB5D100A85174 /* TeamListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamListTableViewCell.h; sourceTree = "<group>"; };
 		E870EE441C5BB5D100A85174 /* TeamListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamListTableViewCell.m; sourceTree = "<group>"; };
-		E870EE481C5BCC1900A85174 /* user_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_placeholder@2x.png"; sourceTree = "<group>"; };
-		E870EE4C1C5BCCA300A85174 /* user_placeholder@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_placeholder@3x.png"; sourceTree = "<group>"; };
 		E870EE501C5BD50600A85174 /* camera-icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon@3x.png"; sourceTree = "<group>"; };
 		E870EE511C5BD50600A85174 /* camera-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon@2x.png"; sourceTree = "<group>"; };
 		E877D8101B8A205C007D9E53 /* SignupTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupTableViewController.h; sourceTree = "<group>"; };
@@ -188,7 +184,7 @@
 		E8484CBF1B6BA5B100B39463 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E8484CBE1B6BA5B100B39463 /* Badminton.app */,
+				E8484CBE1B6BA5B100B39463 /* MyScoreBoard.app */,
 				E8484CD71B6BA5B100B39463 /* BadmintonTests.xctest */,
 			);
 			name = Products;
@@ -213,8 +209,6 @@
 				E8D324761BA3FCD8009210DC /* scoreboard.ttf */,
 				E83649061B8DE10D00F172A4 /* femalePlayer@2x.jpg */,
 				E83649041B8DE10900F172A4 /* malePlayer@2x.jpg */,
-				E870EE481C5BCC1900A85174 /* user_placeholder@2x.png */,
-				E870EE4C1C5BCCA300A85174 /* user_placeholder@3x.png */,
 				E870EE501C5BD50600A85174 /* camera-icon@3x.png */,
 				E870EE511C5BD50600A85174 /* camera-icon@2x.png */,
 				E8484CC51B6BA5B100B39463 /* AppDelegate.h */,
@@ -337,7 +331,7 @@
 			);
 			name = Badminton;
 			productName = Badminton;
-			productReference = E8484CBE1B6BA5B100B39463 /* Badminton.app */;
+			productReference = E8484CBE1B6BA5B100B39463 /* MyScoreBoard.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E8484CD61B6BA5B100B39463 /* BadmintonTests */ = {
@@ -401,11 +395,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E870EE4D1C5BCCA300A85174 /* user_placeholder@3x.png in Resources */,
 				E8D324771BA3FE3A009210DC /* scoreboard.ttf in Resources */,
 				E870EE531C5BD50600A85174 /* camera-icon@2x.png in Resources */,
 				E83649051B8DE10900F172A4 /* malePlayer@2x.jpg in Resources */,
-				E870EE4A1C5BCC1900A85174 /* user_placeholder@2x.png in Resources */,
 				E8C283611B88A0C90018F3A1 /* LoginPageImage.png in Resources */,
 				E8C283651B88AE7E0018F3A1 /* teams.png in Resources */,
 				E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */,
@@ -633,7 +625,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pihanhsu.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MyScoreBoard;
 			};
 			name = Debug;
 		};
@@ -648,7 +640,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pihanhsu.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = MyScoreBoard;
 			};
 			name = Release;
 		};

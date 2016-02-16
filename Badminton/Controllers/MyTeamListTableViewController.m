@@ -13,6 +13,8 @@
 #import "Team.h"
 #import "DataSource.h"
 #import "TeamListTableViewCell.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 
 @interface MyTeamListTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate, MGSwipeTableCellDelegate,UIPickerViewDataSource, UIPickerViewDelegate>
@@ -218,13 +220,17 @@
         PFFile * photo = self.teamArray[indexPath.row][@"photo"];
         if (photo) {
             
-            [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
-                if (error) {
-                    NSLog(@"load photo error: %@", error);
-                }else{
-                    cell.teamImage.image = [UIImage imageWithData:imageData];
-                }
-            }];
+            NSURL * imageURL = [NSURL URLWithString:photo.url];
+            [cell.teamImage setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"teams"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            cell.teamImage.layer.cornerRadius = 5.0f;
+            cell.teamImage.clipsToBounds = YES;
+//            [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
+//                if (error) {
+//                    NSLog(@"load photo error: %@", error);
+//                }else{
+//                    cell.teamImage.image = [UIImage imageWithData:imageData];
+//                }
+//            }];
         }
         
     }
@@ -320,34 +326,12 @@
     return YES;
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return @"離開";
-//}
-//// Override to support editing the table view.
-//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (editingStyle == UITableViewCellEditingStyleDelete) {
-//        
-//        //delete team = remove myself from this team
-//        Team * teamToBeDelete = self.teamArray[indexPath.row];
-//        [teamToBeDelete deletePlayer:self.currentPlayer];
-//        
-//        
-//        [[DataSource sharedInstance].teamArray removeObject:self.teamArray[indexPath.row]];
-//        
-//        [self refreshData];
-//        
-//    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-//        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-//    }   
-//}
-
 #pragma mark - refresh Data
 - (void)refreshData{
     self.teamArray = [DataSource sharedInstance].teamArray;
     [self.tableView reloadData];
     
 }
-
 
 #pragma mark image picker delegate
 
@@ -406,7 +390,6 @@
 
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
