@@ -207,20 +207,31 @@
             
             player[@"userName"] = self.userNameTextField.text;
             player[@"name"] = self.realNameTextField.text;
-            player[@"email"] = self.emailTextField.text;
             player [@"photo"] = photoFile;
             
             PFUser * user = [PFUser currentUser];
-            user[@"email"] = self.emailTextField.text;
-            user[@"username"] = self.emailTextField.text;
+           
+            if (![self.emailTextField.text isEqualToString:user[@"email"]]) {
+                player[@"email"] = self.emailTextField.text;
+                user[@"email"] = self.emailTextField.text;
+                user[@"username"] = self.emailTextField.text;
+                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                    if (succeeded) {
+                        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"登入帳號已更新" message:@"請重新登入" preferredStyle:UIAlertControllerStyleAlert];
+                        UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                            
+                            [self logoutPressed:self.logoutButton];
+                            [alert dismissViewControllerAnimated:alert completion:nil];
+                        }];
+                        
+                        [alert addAction:ok];
+                        [self presentViewController:alert animated:YES completion:nil];
+                    }
+                }];
+            }
             
-            [user saveInBackground];
-            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                    NSLog(@"url: %@",photoFile.url);
-                    //player[@"photoURL"] = photoFile.url;
-                }
-            }];
+            [player saveInBackground];
+            
         }];
     }else{
         PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;

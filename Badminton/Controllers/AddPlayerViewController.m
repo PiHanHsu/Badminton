@@ -85,10 +85,10 @@
     if (searchText){
         self.searchResults = nil;
         PFQuery *queryWithuserName = [PFQuery queryWithClassName:@"Player"];
-        [queryWithuserName whereKey:@"userName" containsString:searchText];
+        [queryWithuserName whereKey:@"nameForSearch" containsString:[searchText lowercaseString]];
         
         PFQuery * queryWithName = [PFQuery queryWithClassName:@"Player"];
-        [queryWithName whereKey:@"name" containsString:searchText];
+        [queryWithName whereKey:@"email" containsString:[searchText lowercaseString]];
         
         PFQuery *query = [PFQuery orQueryWithSubqueries:@[queryWithuserName,queryWithName]];
         [query findObjectsInBackgroundWithBlock:^(NSArray * results, NSError * error){

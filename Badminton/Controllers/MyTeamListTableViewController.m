@@ -41,6 +41,8 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.rowHeight = 120;
     
+    self.tempIndex = -1;
+    
     self.teamArray = [DataSource sharedInstance].teamArray;
     if (self.teamArray.count == 0 ) {
         UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"請新增一個球隊，或請隊友將您加入現有球隊" message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -212,18 +214,24 @@
     cell.delegate = self;
     
     
-    [cell.photoButton addTarget:self action:@selector(photoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //[cell.photoButton addTarget:self action:@selector(photoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    //cell.photoButton.tag = indexPath.row;
     
+    cell.teamImage.layer.cornerRadius = 5.0f;
+    cell.teamImage.clipsToBounds = YES;
     
-    cell.photoButton.tag = indexPath.row;
-    if (self.teamArray[indexPath.row][@"photo"]) {
-        PFFile * photo = self.teamArray[indexPath.row][@"photo"];
-        if (photo) {
-            
-            NSURL * imageURL = [NSURL URLWithString:photo.url];
-            [cell.teamImage setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"teams"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            cell.teamImage.layer.cornerRadius = 5.0f;
-            cell.teamImage.clipsToBounds = YES;
+    if (indexPath.row == self.tempIndex) {
+        cell.teamImage.image = self.teamImage;
+    }else{
+        if (self.teamArray[indexPath.row][@"photo"]) {
+            PFFile * photo = self.teamArray[indexPath.row][@"photo"];
+            if (photo) {
+                
+                NSURL * imageURL = [NSURL URLWithString:photo.url];
+                [cell.teamImage setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"teams"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                
+    }
+   
 //            [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
 //                if (error) {
 //                    NSLog(@"load photo error: %@", error);
@@ -349,6 +357,8 @@
     UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
     self.teamImage = photoImage;
     
+    [self.tableView reloadData];
+    
     [self updateTeamPhoto];
     [self dismissViewControllerAnimated:YES completion:nil];
     self.photoPicker = nil;
@@ -375,14 +385,13 @@
             NSLog(@"error: %@", error);
         }else{
             team[@"photo"] = photoFile;
-            [team pinInBackgroundWithBlock:^(BOOL succeed, NSError * error){
+            [team saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (!error) {
-                    [self.tableView reloadData];
+                    self.tempIndex = -1;
                 }else {
                     NSLog(@"error: %@", error);
                 }
             }];
-            [team saveInBackground];
         }
     }];
     
