@@ -13,6 +13,8 @@
 #import "DataSource.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <UIImageView+UIActivityIndicatorForSDWebImage.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+
 
 @interface ProfileTableViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -369,6 +371,9 @@
     return newImage;
 }
 - (IBAction)logoutPressed:(id)sender {
+    
+    FBSDKLoginManager * loginManager = [[FBSDKLoginManager alloc]init];
+    [loginManager logOut];
     
     [PFUser logOut];
     [PFUser unpinAllObjects];
