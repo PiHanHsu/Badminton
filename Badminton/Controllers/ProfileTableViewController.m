@@ -59,19 +59,19 @@
     self.photoImageView.layer.cornerRadius = 75.0;
     self.photoImageView.clipsToBounds = YES;
     
-    PFFile * photo = currentPlayer[@"photo"];
-    
-    if (photo) {
-        NSLog(@"url: %@",photo.url);
-
-        NSURL * imageURL = [NSURL URLWithString:photo.url];
-       
-        
+    if (currentPlayer[@"pictureUrl"]) {
+        NSString * url = currentPlayer[@"pictureUrl"];
+         NSURL * imageURL = [NSURL URLWithString:url];
         [self.photoImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        
-//        [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
-//           [self.photoButton setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
-//        }];
+    }else{
+        PFFile * photo = currentPlayer[@"photo"];
+        if (photo) {
+            NSLog(@"url: %@",photo.url);
+            NSURL * imageURL = [NSURL URLWithString:photo.url];
+            [self.photoImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    }
+    
+ 
     }
     self.userNameTextField.enabled = NO;
     self.realNameTextField.enabled = NO;
@@ -375,9 +375,10 @@
     FBSDKLoginManager * loginManager = [[FBSDKLoginManager alloc]init];
     [loginManager logOut];
     
-    [PFUser logOut];
+   
     [PFUser unpinAllObjects];
     [PFObject unpinAllObjects];
+    [PFUser logOut];
     
     UINavigationController * rootVC = [self.storyboard instantiateViewControllerWithIdentifier:@"RootNavigatoinController"];
     [self presentViewController:rootVC animated:YES completion:nil];

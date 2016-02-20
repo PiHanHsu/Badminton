@@ -340,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Badminton/Controllers/LoginTableViewController.m"
-            timestampString = "477418895.62066"
+            timestampString = "477593483.483399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "-saveUserDataToParse"
             landmarkType = "5">
          </BreakpointContent>
@@ -355,13 +355,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Badminton/Controllers/LoginTableViewController.m"
-            timestampString = "477418895.62066"
+            filePath = "Badminton/Controllers/AddPlayerViewController.m"
+            timestampString = "477584027.361676"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "-saveUserDataToParse"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-searchBarCancelButtonClicked:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Badminton/Controllers/AddPlayerViewController.m"
+            timestampString = "477584027.361676"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "-searchDisplayController:shouldReloadTableForSearchString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -372,43 +388,75 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Badminton/Controllers/LoginTableViewController.m"
-            timestampString = "477415230.617407"
+            timestampString = "477593483.483399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "-FBLogin:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Badminton/Controllers/SignupTableViewController.m"
+            timestampString = "477658302.956129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "-createPlayerData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Badminton/Controllers/SignupTableViewController.m"
+            timestampString = "477658302.956129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "224"
+            endingLineNumber = "224"
+            landmarkName = "-createPlayerData"
             landmarkType = "5">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[LoginTableViewController FBLogin:]"
+                  symbolName = "-[SignupTableViewController createPlayerData]"
                   moduleName = "MyScoreBoard"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/PiHanHsu/Developer/Badminton/Badminton/Controllers/LoginTableViewController.m"
-                  timestampString = "477416433.013837"
+                  urlString = "file:///Users/PiHanHsu/Developer/Badminton/Badminton/Controllers/SignupTableViewController.m"
+                  timestampString = "477657915.351"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "280">
+                  startingLineNumber = "222"
+                  endingLineNumber = "222"
+                  offsetFromSymbolStart = "1288">
                </Location>
                <Location
                   shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__36-[LoginTableViewController FBLogin:]_block_invoke"
+                  symbolName = "__45-[SignupTableViewController createPlayerData]_block_invoke"
                   moduleName = "MyScoreBoard"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/PiHanHsu/Developer/Badminton/Badminton/Controllers/LoginTableViewController.m"
-                  timestampString = "477416433.014215"
+                  urlString = "file:///Users/PiHanHsu/Developer/Badminton/Badminton/Controllers/SignupTableViewController.m"
+                  timestampString = "477657915.351258"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "148"
-                  endingLineNumber = "148"
-                  offsetFromSymbolStart = "72">
+                  startingLineNumber = "222"
+                  endingLineNumber = "222"
+                  offsetFromSymbolStart = "48">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -419,13 +467,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Badminton/Controllers/LoginTableViewController.m"
-            timestampString = "477415284.780259"
+            filePath = "Badminton/Controllers/SignupTableViewController.m"
+            timestampString = "477658302.956129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "-FBLogin:"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "-createPlayerData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -435,13 +483,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Badminton/Controllers/LoginTableViewController.m"
-            timestampString = "477418895.62066"
+            filePath = "Badminton/Controllers/SignupTableViewController.m"
+            timestampString = "477658302.956129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "190"
-            endingLineNumber = "190"
-            landmarkName = "-saveUserDataToParse"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "-createPlayerData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -451,13 +499,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Badminton/Controllers/LoginTableViewController.m"
-            timestampString = "477418895.62066"
+            filePath = "Badminton/Controllers/SignupTableViewController.m"
+            timestampString = "477658302.956129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
-            landmarkName = "-FBLogin:"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "-createPlayerData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Badminton/Controllers/SignupTableViewController.m"
+            timestampString = "477658302.956129"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "-signUpSuccess"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

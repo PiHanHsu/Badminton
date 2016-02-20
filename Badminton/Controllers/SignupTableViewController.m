@@ -9,10 +9,14 @@
 #import "SignupTableViewController.h"
 #import "PlayListDataSource.h"
 #import "MyTeamListTableViewController.h"
+#import "DataSource.h"
 
 @interface SignupTableViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
 @property (strong, nonatomic) UIImagePickerController *photoPicker;
+@property (strong, nonatomic) PFUser * currentUser;
+@property (strong, nonatomic) NSString * userId;
+
 
 @end
 
@@ -24,20 +28,20 @@
     self.indicator.hidden = YES;
     self.photoImageView.layer.cornerRadius = 5.0;
     self.photoImageView.clipsToBounds = YES;
-    
-//    switch (self.genderSegmentedControl.selectedSegmentIndex) {
-//        case 0:
-//            self.photoImageView.image = [UIImage imageNamed:@"male Player"];
-//            break;
-//        case 1:
-//            self.photoImageView.image = [UIImage imageNamed:@"female Player"];
-//            break;
-//        default:
-//            break;
-//    }
+    self.currentUser = [PFUser currentUser];
+    //    switch (self.genderSegmentedControl.selectedSegmentIndex) {
+    //        case 0:
+    //            self.photoImageView.image = [UIImage imageNamed:@"male Player"];
+    //            break;
+    //        case 1:
+    //            self.photoImageView.image = [UIImage imageNamed:@"female Player"];
+    //            break;
+    //        default:
+    //            break;
+    //    }
     
     //user login with FB
-    if ([PFUser currentUser]) {
+    if (self.currentUser) {
         NSLog(@"currentUser!!");
         self.nameTextField.text = [PFUser currentUser][@"name"];
         self.emailTextField.text = [PFUser currentUser][@"email"];
@@ -159,71 +163,118 @@
     }else
         self.isMale = NO;
     
-    PFUser *user = [PFUser user];
-    user.username = [self.emailTextField.text lowercaseString];
-    user.password = self.passwordTextField.text;
-    user.email = self.emailTextField.text;
-    
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            [self.indicator stopAnimating];
-            [self.indicator hidesWhenStopped];
-            if (self.photoImageView.image) {
-                NSData *imageData = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
-                PFFile *photoFile = [PFFile fileWithData:imageData];
-                PFObject * player = [PFObject objectWithClassName:@"Player"];
-                player[@"name"] = self.nameTextField.text;
-                player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
-                player[@"userName"] = self.nickNameTextField.text;
-                player[@"email"] =self.emailTextField.text;
-                player[@"user"] = user.objectId;
-                player [@"photo"] = photoFile;
-                
-                [player saveInBackground];
-                [self signUpSuccess];
-            }else{
-                PFObject * player = [PFObject objectWithClassName:@"Player"];
-                player[@"name"] = self.nameTextField.text;
-                player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
-                player[@"userName"] = self.nickNameTextField.text;
-                player[@"email"] =self.emailTextField.text;
-                player[@"user"] = user.objectId;
-                
-                [player saveInBackground];
-                [self signUpSuccess];
+    if (self.currentUser) {
+        self.currentUser.username = [self.emailTextField.text lowercaseString];
+        self.currentUser.password = self.passwordTextField.text;
+        self.currentUser.email = self.emailTextField.text;
+        [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                [self createPlayerData];
             }
-            
-            
-        } else {
-            NSString *errorString = [error userInfo][@"error"];
-            NSLog(@"sign up error: %@", errorString);
-            
-            
-            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Oops Sorry!!" message:@"Something went wrong, can't sign up now. Please try agian later!" preferredStyle:UIAlertControllerStyleAlert];
-            
-            UIAlertAction * ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [alert dismissViewControllerAnimated:YES completion:nil];
-            }];
-            
-            [alert addAction:ok];
-            [self presentViewController:alert animated:YES completion:nil];
-            
-        }
-    }];
+        }];
+        
+    }else{
+        PFUser *user = [PFUser user];
+        user.username = [self.emailTextField.text lowercaseString];
+        user.password = self.passwordTextField.text;
+        user.email = self.emailTextField.text;
+        
+        
+        [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (!error) {
+                
+                self.userId = user.objectId;
+                [self createPlayerData];
+            } else {
+                NSString *errorString = [error userInfo][@"error"];
+                NSLog(@"sign up error: %@", errorString);
+                
+                
+                //TODO: add "invalid email" error message
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Oops Sorry!!" message:@"Something went wrong, can't sign up now. Please try agian later!" preferredStyle:UIAlertControllerStyleAlert];
+                
+                UIAlertAction * ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [alert dismissViewControllerAnimated:YES completion:nil];
+                }];
+                
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+            }
+        }];
+        
+    }
+    
+}
+
+-(void) createPlayerData{
+    if (self.photoImageView.image) {
+        NSData *imageData = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
+        PFFile *photoFile = [PFFile fileWithData:imageData];
+        PFObject * player = [PFObject objectWithClassName:@"Player"];
+        player[@"name"] = self.nameTextField.text;
+        player[@"nameForSearch"] = [self.nickNameTextField.text lowercaseString];
+        player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
+        player[@"userName"] = self.nickNameTextField.text;
+        player[@"email"] =self.emailTextField.text;
+        
+        player[@"user"] = self.userId;
+        player [@"photo"] = photoFile;
+        
+        [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                [self signUpSuccess];
+                
+            }
+        }];
+    }else{
+        PFObject * player = [PFObject objectWithClassName:@"Player"];
+        player[@"name"] = self.nameTextField.text;
+        player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
+        player[@"userName"] = self.nickNameTextField.text;
+        player[@"nameForSearch"] = [self.nickNameTextField.text lowercaseString];
+        player[@"email"] =self.emailTextField.text;
+        player[@"user"] = self.currentUser.objectId;
+        
+        [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                [self signUpSuccess];
+                
+            }
+        }];
+    }
+    
+    
 }
 
 -(void) signUpSuccess{
-    self.nickNameTextField.text = @"";
-    self.nameTextField.text = @"";
-    self.emailTextField.text = @"";
-    self.passwordTextField.text = @"";
-    self.reTypePasswordTextField.text = @"";
     
-    UITabBarController * tabbarVC =[self.storyboard instantiateViewControllerWithIdentifier:@"TabbarViewController"];
     
-    [tabbarVC setSelectedIndex:0];
-    [self presentViewController:tabbarVC animated:YES completion:nil];
-}
+    
+    [PFUser logInWithUsernameInBackground:[self.emailTextField.text lowercaseString]
+                                 password:self.passwordTextField.text
+                                    block:^(PFUser *user, NSError *error) {
+                                        if (user) {
+                                            
+                                            [[DataSource sharedInstance] loadTeamsFromServer];
+                                        } else {
+                                            UIAlertView * av = [[UIAlertView alloc]
+                                                                initWithTitle:@"Oops, Sorry!"
+                                                                message:@"Can not login. Please Try Again."
+                                                                delegate:self
+                                                                cancelButtonTitle:@"OK"
+                                                                otherButtonTitles:nil, nil];
+                                            [av show];
+                                            [self.indicator stopAnimating];
+                                            self.nickNameTextField.text = @"";
+                                            self.nameTextField.text = @"";
+                                            self.emailTextField.text = @"";
+                                            self.passwordTextField.text = @"";
+                                            self.reTypePasswordTextField.text = @"";
+                                         }
+                                    }];
+    
+   }
 
 #pragma mark textField delegate
 

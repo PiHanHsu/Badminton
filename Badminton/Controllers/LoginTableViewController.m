@@ -54,8 +54,8 @@
     //if currentUser, byPass Login
     PFUser *currentUser = [PFUser currentUser];
     if (currentUser) {
+        //[self _ViewControllerAnimated:YES];
         [self.indicator startAnimating];
-        //[[PlayListDataSource sharedInstance] loadingTeamDataFromParse];
         [[DataSource sharedInstance] loadTeamsFromServer];
     }
     
@@ -137,60 +137,50 @@
 
 - (IBAction)FBLogin:(UIButton *)sender {
     
-    //TODO: FBLogin ok, but can't save data to Parse, still need to debug
     
-    //    // Set permissions required from the facebook user account
-    //    NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
-    //
-    //    [self.indicator startAnimating];
-    //
-    //    // Login PFUser using Facebook
-    //    [PFFacebookUtils logInInBackgroundWithReadPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
-    //        if (!user) {
-    //            NSString *errorMessage = nil;
-    //            if (!error) {
-    //                NSLog(@"Uh oh. The user cancelled the Facebook login.");
-    //                errorMessage = @"Uh oh. The user cancelled the Facebook login.";
-    //            } else {
-    //                NSLog(@"Uh oh. An error occurred: %@", error);
-    //                errorMessage = [error localizedDescription];
-    //            }
-    //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Error"
-    //                                                            message:errorMessage
-    //                                                           delegate:nil
-    //                                                  cancelButtonTitle:nil
-    //                                                  otherButtonTitles:@"Dismiss", nil];
-    //            [alert show];
-    //        } else {
-    //            if (user.isNew) {
-    //                NSLog(@"User with facebook signed up and logged in!");
-    //                [self saveUserDataToParse];
-    //            } else {
-    //                NSLog(@"User with facebook logged in!");
-    //                [self.indicator stopAnimating];
-    //                [[DataSource sharedInstance] loadTeamsFromServer];
-    //            }
-    //        }
-    //
-    //    }];
+    // Set permissions required from the facebook user account
+    NSArray *permissionsArray = @[ @"user_about_me", @"email", @"user_relationships", @"user_birthday", @"user_location"];
+    
+    [self.indicator startAnimating];
+    
+    // Login PFUser using Facebook
+    [PFFacebookUtils logInInBackgroundWithReadPermissions:permissionsArray block:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSString *errorMessage = nil;
+            if (!error) {
+                NSLog(@"Uh oh. The user cancelled the Facebook login.");
+                errorMessage = @"Uh oh. The user cancelled the Facebook login.";
+            } else {
+                NSLog(@"Uh oh. An error occurred: %@", error);
+                errorMessage = [error localizedDescription];
+            }
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Log In Error"
+                                                            message:errorMessage
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:@"Dismiss", nil];
+            [alert show];
+        } else {
+            if (user.isNew) {
+                NSLog(@"User with facebook signed up and logged in!");
+                [self saveUserDataToParse];
+            } else {
+                NSLog(@"User with facebook logged in!");
+                [self.indicator stopAnimating];
+                
+                [[DataSource sharedInstance] loadTeamsFromServer];
+            }
+        }
+        
+    }];
     
 }
 
 
 -(void) saveUserDataToParse
 {
-    //TODO: need param
     NSDictionary * params = @{@"fields": @"id, name, first_name, last_name, email, gender"};
     
-    //    FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-    //                                  initWithGraphPath:@"...?fields={fieldname_of_type_CoverPhoto}"
-    //                                  parameters:params
-    //                                  HTTPMethod:@"GET"];
-    //    [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
-    //                                          id result,
-    //                                          NSError *error) {
-    //        // Handle the result
-    //    }];
     FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:params];
     [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
         // handle response
@@ -200,19 +190,88 @@
             
             NSString *facebookID = userData[@"id"];
             NSString *name = userData[@"name"];
-            NSString *email =userData[@"email"];
+            NSString *email;
+            if (userData[@"email"]) {
+                email =userData[@"email"];
+            }
+            
             NSString *pictureURL =[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID];
             NSString *gender =userData[@"gender"];
             
             [[PFUser currentUser] setObject:name forKey:@"name"];
-            //[[PFUser currentUser] setObject:facebookID forKey:@"facebookID"];
-            [[PFUser currentUser] setObject:email forKey:@"email"];
-            [[PFUser currentUser] setObject:pictureURL forKey:@"pictureURL"];
-            [[PFUser currentUser] setObject:gender forKey:@"gender"];
+            [[PFUser currentUser] setObject:facebookID forKey:@"facebookID"];
+            //[[PFUser currentUser] setObject:email forKey:@"email"];
+            //[[PFUser currentUser] setObject:pictureURL forKey:@"pictureURL"];
+            //[[PFUser currentUser] setObject:gender forKey:@"gender"];
+            
+            
             
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeed, NSError* error){
                 if (!error){
-                    [self performSegueWithIdentifier:@"Go to Sign up Page" sender:nil];
+                    
+                    PFObject * player = [PFObject objectWithClassName:@"Player"];
+                    player[@"name"] = name;
+                    player[@"nameForSearch"] = [name lowercaseString];
+                    if ([gender isEqualToString:@"女性"]){
+                        player[@"isMale"] = [NSNumber numberWithBool:NO];
+                    }else{
+                        player[@"isMale"] = [NSNumber numberWithBool:YES];
+                    }
+                    
+                    player[@"userName"] = name;
+                    if (email) {
+                        player[@"email"] =email;
+                    }
+                    
+                    player[@"user"] = [PFUser currentUser].objectId;
+                    player[@"pictureUrl"] = pictureURL;
+                    
+                    UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Create Your Account" message:@"You can use FB or this email/password to Login." preferredStyle:UIAlertControllerStyleAlert];
+                    
+                    UIAlertAction * ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        UITextField *emailTextField = alert.textFields.firstObject;
+                        UITextField *passwordTextField = alert.textFields.lastObject;
+                       
+                        [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                            if (succeeded) {
+                                PFUser * currentUser = [PFUser currentUser];
+                                currentUser[@"username"] = emailTextField.text;
+                                player[@"email"] = emailTextField.text;
+                                currentUser[@"password"] = passwordTextField.text;
+                                [currentUser saveInBackground];
+                                [self _ViewControllerAnimated:YES];
+                                
+                            }
+                        }];
+
+                        [alert dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    UIAlertAction * skip = [UIAlertAction actionWithTitle:@"Skip" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+                        [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                            if (succeeded) {
+                                [self _ViewControllerAnimated:YES];
+                            }
+                        }];
+
+                        [alert dismissViewControllerAnimated:YES completion:nil];
+                    }];
+                    
+                    
+                    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                        if (email) {
+                            textField.text = email;
+                        }else
+                        textField.placeholder = @"Email";
+                    }];
+                    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+                        textField.placeholder = @"Enter Your Password";
+                    }];
+                    
+                    [alert addAction:skip];
+                    [alert addAction:ok];
+                    
+                    [self presentViewController:alert animated:YES completion:nil];
                 }
             }];
             
@@ -225,8 +284,9 @@
         }
         
     }];
-    
 }
+
+
 - (IBAction)forgotPasswordPressed:(id)sender {
     
     UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"請輸入email" message:@"重新設定密碼的連結將發送至您的email" preferredStyle:UIAlertControllerStyleAlert];
@@ -235,7 +295,7 @@
         if (self.emailTextField.text.length > 0) {
             textField.text = self.emailTextField.text;
         }else{
-          textField.placeholder = @"E-mail";
+            textField.placeholder = @"E-mail";
         }
         
     }];
