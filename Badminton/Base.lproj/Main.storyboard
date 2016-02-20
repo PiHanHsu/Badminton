@@ -29,16 +29,41 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-xS-sBc">
-                                            <rect key="frame" x="-8" y="11" width="160" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-xS-sBc">
+                                            <rect key="frame" x="62" y="11" width="170" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="170" id="6nH-un-Wam"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wi1-Q7-OTt" customClass="PlayerSwitch">
-                                            <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wi1-Q7-OTt" customClass="PlayerSwitch">
+                                            <rect key="frame" x="248" y="6" width="51" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="49" id="UYb-0m-kn1"/>
+                                                <constraint firstAttribute="height" constant="31" id="wOf-aC-USb"/>
+                                            </constraints>
                                         </switch>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LKC-U1-9UM">
+                                            <rect key="frame" x="16" y="3" width="36" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="36" id="hlv-zn-CUk"/>
+                                                <constraint firstAttribute="height" constant="36" id="zn5-Ah-CHW"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="wi1-Q7-OTt" secondAttribute="bottom" constant="-2" id="2oj-h4-1Hp"/>
+                                        <constraint firstItem="LKC-U1-9UM" firstAttribute="leading" secondItem="lxB-0c-qWt" secondAttribute="leadingMargin" constant="8" id="A1g-aa-mQ4"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Ldc-xS-sBc" secondAttribute="bottom" constant="3" id="Fnm-xN-tZf"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="wi1-Q7-OTt" secondAttribute="trailing" constant="15" id="IIh-bp-7F4"/>
+                                        <constraint firstItem="wi1-Q7-OTt" firstAttribute="top" secondItem="lxB-0c-qWt" secondAttribute="topMargin" constant="-2" id="PGV-YJ-Jwv"/>
+                                        <constraint firstItem="LKC-U1-9UM" firstAttribute="top" secondItem="lxB-0c-qWt" secondAttribute="topMargin" constant="-5" id="SpG-DN-VNm"/>
+                                        <constraint firstItem="Ldc-xS-sBc" firstAttribute="top" secondItem="lxB-0c-qWt" secondAttribute="topMargin" constant="3" id="glI-Vh-3cH"/>
+                                        <constraint firstItem="Ldc-xS-sBc" firstAttribute="leading" secondItem="LKC-U1-9UM" secondAttribute="trailing" constant="10" id="nTI-fp-Flv"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="LKC-U1-9UM" secondAttribute="bottom" constant="-4" id="o7R-jb-yVg"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="playerLabel" destination="Ldc-xS-sBc" id="M01-SK-gJB"/>
@@ -1157,6 +1182,7 @@ SCOREBOARD</string>
                                 </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dBt-2N-YSj">
                                     <rect key="frame" x="162" y="8" width="150" height="150"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="camera-icon.png" translatesAutoresizingMaskIntoConstraints="NO" id="tVU-df-epj">
                                     <rect key="frame" x="217" y="63" width="40" height="40"/>
@@ -1199,13 +1225,6 @@ SCOREBOARD</string>
                                     <rect key="frame" x="0.0" y="1" width="320" height="1"/>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DvN-WD-ZEA">
-                                    <rect key="frame" x="229" y="49" width="83" height="30"/>
-                                    <state key="normal" title="Link with FB"/>
-                                    <connections>
-                                        <action selector="linkWithFBPressed:" destination="Shs-ig-zqA" eventType="touchUpInside" id="fh4-wJ-jPc"/>
-                                    </connections>
-                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>

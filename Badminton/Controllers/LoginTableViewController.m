@@ -37,7 +37,7 @@
     
     //set up indicator
     self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    self.indicator.center = CGPointMake(160, 190);
+    self.indicator.center = self.view.center;
     self.indicator.hidden = YES;
     
     [self.view addSubview:self.indicator];
