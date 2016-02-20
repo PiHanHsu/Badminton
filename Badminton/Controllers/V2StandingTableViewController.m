@@ -71,6 +71,12 @@
     [self createPlayerStatsWithYear:9999];
 }
 
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    [self.activityIndicatorView stopAnimating];
+
+}
 
 #pragma mark - IBAction
 
@@ -188,19 +194,19 @@
     //headerView.backgroundColor = [UIColor greenColor];
     //tableView.sectionHeaderHeight = 44;
     
-    UILabel *winslabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 125, 0, 30, 30)];
+    UILabel *winslabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.45 + 62, 0, 30, 30)];
     winslabel.text = @"勝";
     winslabel.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     winslabel.backgroundColor = [UIColor clearColor];
     winslabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
     
-    UILabel *loseslabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 90, 0, 30, 30)];
+    UILabel *loseslabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.45 + 97, 0, 30, 30)];
     loseslabel.text = @"敗";
     loseslabel.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     loseslabel.backgroundColor = [UIColor clearColor];
     loseslabel.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
     
-    UILabel *winsRatelabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 55, 0, 45, 30)];
+    UILabel *winsRatelabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.45 + 127, 0, 45, 30)];
     winsRatelabel.text = @"勝率";
     winsRatelabel.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     winsRatelabel.backgroundColor = [UIColor clearColor];
@@ -251,7 +257,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+
     self.selectedPlayer = self.teamPlayersArray[indexPath.row];
     
     [self performSegueWithIdentifier:@"Go To Stats" sender:nil];

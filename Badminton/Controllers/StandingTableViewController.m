@@ -55,19 +55,19 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     
     self.title = self.currentPlayerForStats[@"userName"];
+    
+    [self.activityIndicatorView startAnimating];
+   
+
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     self.playerId = self.currentPlayerForStats.objectId;
     self.hasStreakWinsData = NO;
     self.hasBestTeammateData = NO;
     [self createStatsArray:self.gameArray player:self.playerId];
-    
-    [self.activityIndicatorView startAnimating];
-    [self displayData];
-
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
+     [self displayData];
  }
 
 - (void) viewWillDisappear:(BOOL)animated{
