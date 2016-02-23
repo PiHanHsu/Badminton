@@ -25,6 +25,7 @@
 @dynamic totalWins;
 @dynamic totalLosses;
 @dynamic totalWinRate;
+@dynamic pictureUrl;
 
 +(void)load {
     [self registerSubclass];

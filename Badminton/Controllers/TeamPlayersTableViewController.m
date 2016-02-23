@@ -13,6 +13,8 @@
 #import "AddPlayerViewController.h"
 #import "PlayerSwitch.h"
 #import "DataSource.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 @interface TeamPlayersTableViewController ()<UIAlertViewDelegate, UITextFieldDelegate>
 
@@ -165,21 +167,33 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
-    
+    NSURL * imageUrl;
     // Configure the cell...
     switch (indexPath.section) {
         case 0:
             if (self.malePlayerArray.count > 0) {
                 cell.playerLabel.text = self.malePlayerArray[indexPath.row][@"userName"];
+                imageUrl = [NSURL URLWithString:self.malePlayerArray[indexPath.row][@"pictureUrl"]];
+                cell.playerImageView.layer.cornerRadius = 18.0f;
+                cell.playerImageView.clipsToBounds = YES;
+                [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 cell.playerSwitch.player = self.malePlayerArray[indexPath.row];
             }else {
                 cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
+                imageUrl = [NSURL URLWithString:self.femalePlayerArray[indexPath.row][@"pictureUrl"]];
+                cell.playerImageView.layer.cornerRadius = 18.0f;
+                cell.playerImageView.clipsToBounds = YES;
+                [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
             }
             
             break;
         case 1:
             cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
+            imageUrl = [NSURL URLWithString:self.femalePlayerArray[indexPath.row][@"pictureUrl"]];
+            cell.playerImageView.layer.cornerRadius = 18.0f;
+            cell.playerImageView.clipsToBounds = YES;
+            [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
             break;
             

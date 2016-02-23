@@ -232,7 +232,13 @@
                 }];
             }
             
-            [player saveInBackground];
+            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                   PFFile * photo = player[@"photo"];
+                   player[@"pictureUrl"] = photo.url;
+                    [player saveInBackground];
+                }
+            }];
             
         }];
     }else{

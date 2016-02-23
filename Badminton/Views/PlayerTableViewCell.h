@@ -13,9 +13,9 @@
 
 @interface PlayerTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *playerImageView;
 @property (weak, nonatomic) IBOutlet UILabel *playerLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *switchButton;
-
 @property (weak, nonatomic) IBOutlet PlayerSwitch *playerSwitch;
 
 @end

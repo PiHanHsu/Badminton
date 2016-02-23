@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSNumber * mixWins;
 @property (strong, nonatomic) NSNumber * mixLosses;
 @property (strong, nonatomic) NSNumber * mixWinRate;
+@property (strong, nonatomic) NSString * pictureUrl;
 
 +(Player *) createPlayer;
 @end

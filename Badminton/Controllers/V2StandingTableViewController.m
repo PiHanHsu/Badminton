@@ -9,6 +9,8 @@
 #import "V2StandingTableViewController.h"
 #import "StandingTableViewCell.h"
 #import "StandingTableViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 @interface V2StandingTableViewController ()<UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -226,7 +228,11 @@
     
     Player * player = self.teamPlayersArray[indexPath.row];
     cell.playerNameLabel.text = player.userName;
-
+    NSURL * url = [NSURL URLWithString:player.pictureUrl];
+    
+    cell.playerImageView.layer.cornerRadius = 18.0f;
+    cell.playerImageView.clipsToBounds = YES;
+    [cell.playerImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     if (self.gameTypeSegmentedControl.selectedSegmentIndex == 0) {
         
