@@ -63,6 +63,8 @@
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
+    
+    //TODO, BUG, if back from next VC, the best teammate data can't calculate
     self.playerId = self.currentPlayerForStats.objectId;
     self.hasStreakWinsData = NO;
     self.hasBestTeammateData = NO;
