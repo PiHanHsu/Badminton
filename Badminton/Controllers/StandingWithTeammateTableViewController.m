@@ -9,6 +9,9 @@
 #import "StandingWithTeammateTableViewController.h"
 #import "StandingWithTeammateTableViewCell.h"
 #import <Parse/Parse.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+UIActivityIndicatorForSDWebImage.h>
+
 
 @interface StandingWithTeammateTableViewController ()
 
@@ -77,16 +80,24 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StandingWithTeammateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StandingWithTeammateTableViewCell" forIndexPath:indexPath];
-    
+    NSURL * imageUrl;
     if ([self.gameType isEqualToString:@"Double"]) {
         cell.teammateNameLabel.text = self.playerStatsWithDoubleGameArray[indexPath.row][@"player"][@"userName"];
+        
+        imageUrl = [NSURL URLWithString:self.playerStatsWithDoubleGameArray[indexPath.row][@"player"][@"pictureUrl"]];
+        
         cell.winsLabel.text = [NSString stringWithFormat:@"%@", self.playerStatsWithDoubleGameArray[indexPath.row][@"wins"]];
         cell.losesLabel.text = [NSString stringWithFormat:@"%@", self.playerStatsWithDoubleGameArray[indexPath.row][@"loses"]];
     }else{
         cell.teammateNameLabel.text = self.playerStatsWithMixGameArray[indexPath.row][@"player"][@"userName"];
+        imageUrl = [NSURL URLWithString:self.playerStatsWithMixGameArray[indexPath.row][@"player"][@"pictureUrl"]];
         cell.winsLabel.text = [NSString stringWithFormat:@"%@", self.playerStatsWithMixGameArray[indexPath.row][@"wins"]];
         cell.losesLabel.text = [NSString stringWithFormat:@"%@", self.playerStatsWithMixGameArray[indexPath.row][@"loses"]];
     }
+
+    cell.playerImageView.layer.cornerRadius = 18.0f;
+    cell.playerImageView.clipsToBounds = YES;
+    [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     return cell;
 }

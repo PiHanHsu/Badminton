@@ -1169,6 +1169,7 @@ SCOREBOARD</string>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="losesLabel" destination="Exu-5m-ZWo" id="WoA-fx-L7V"/>
+                                    <outlet property="playerImageView" destination="aQh-u5-7AZ" id="osb-St-hw0"/>
                                     <outlet property="teammateNameLabel" destination="AMF-GJ-Ky1" id="f18-cf-eXr"/>
                                     <outlet property="winsLabel" destination="6Ra-V5-4ZR" id="W90-ag-9n6"/>
                                 </connections>

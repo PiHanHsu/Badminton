@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *teammateNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *winsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *losesLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *playerImageView;
 
 @end
