@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Badminton/Controllers/V2StandingTableViewController.m"
-            timestampString = "477680488.677186"
+            timestampString = "477828777.690019"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "-segmentedControlSwitch:"
             landmarkType = "5">
          </BreakpointContent>

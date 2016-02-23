@@ -417,6 +417,8 @@
 
 - (NSMutableArray *) randomCreateBymalePlayers:(NSMutableArray *) malePlayerArray  femaleplayers:(NSMutableArray *) femalePlayerArray gameIndex: (int)i {
     
+    //TODO: BUG, same player in one Game
+    
     int remaining = 4;
     NSMutableArray * oneMatch = [@[] mutableCopy];
     

@@ -64,11 +64,12 @@
             [self.teamNameList addObject:teamName];
         }
         self.yearList = @[@"All", @"2015", @"2016"];
+        self.teamNameLabel.text = self.teamObject[@"name"];
+        
+        [self createPlayerStatsWithYear:9999];
     }
     
-    self.teamNameLabel.text = self.teamObject[@"name"];
     
-    [self createPlayerStatsWithYear:9999];
 }
 
 -(void)viewDidDisappear:(BOOL)animated{

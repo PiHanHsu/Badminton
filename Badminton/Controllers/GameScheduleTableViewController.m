@@ -269,12 +269,12 @@
          cell.player3Label.text = @"";
          cell.player4Label.text =@"";
      }else{
-         if ([self.game.gameScheduleArray[indexPath.row][0][1][@"isMale"] boolValue]) {
-             cell.player3Label.textColor = [UIColor blueColor];
-             cell.player4Label.textColor = [UIColor blueColor];
-         }else{
+         if (![self.game.gameScheduleArray[indexPath.row][0][1][@"isMale"] boolValue] && ![self.game.gameScheduleArray[indexPath.row][1][1][@"isMale"] boolValue]) {
              cell.player3Label.textColor = [UIColor orangeColor];
              cell.player4Label.textColor = [UIColor orangeColor];
+         }else{
+             cell.player3Label.textColor = [UIColor blueColor];
+             cell.player4Label.textColor = [UIColor blueColor];
          }
          cell.player1Label.text = self.game.gameScheduleArray[indexPath.row][0][0][@"userName"];
          cell.player3Label.text = self.game.gameScheduleArray[indexPath.row][0][1][@"userName"];
