@@ -12,7 +12,7 @@
 
 //@property (nonatomic,strong) NSMutableArray *teamArray;
 @property (nonatomic,strong) NSMutableArray *playerArray;
-@property (nonatomic,strong) NSArray *teamGamesArray;
+
 
 
 
@@ -368,20 +368,20 @@
 
 
 
-- (void) loadingTeamGames:(NSString *) teamId {
-    PFQuery * query = [PFQuery queryWithClassName:@"Game"];
-    [query whereKey:@"team" equalTo:teamId];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * gamesArray, NSError * error){
-        if (!error) {
-            self.teamGamesArray = gamesArray;
-            for (Game * oneGame in self.teamGamesArray) {
-                [oneGame pinInBackground];
-            }
-        }else{
-            NSLog(@"loading games error: %@", error);
-        }
-    }];
-}
+//- (void) loadingTeamGames:(NSString *) teamId {
+//    PFQuery * query = [PFQuery queryWithClassName:@"Game"];
+//    [query whereKey:@"team" equalTo:teamId];
+//    [query findObjectsInBackgroundWithBlock:^(NSArray * gamesArray, NSError * error){
+//        if (!error) {
+//            self.teamGamesArray = gamesArray;
+//            for (Game * oneGame in self.teamGamesArray) {
+//                [oneGame pinInBackground];
+//            }
+//        }else{
+//            NSLog(@"loading games error: %@", error);
+//        }
+//    }];
+//}
 
 - (void) createMixStandingWithmalePlayersArray: (NSMutableArray *)maleplayersArray femalePlayersArray: (NSMutableArray *)femaleplayersArray gameArray: (NSArray *) gameArray{
 

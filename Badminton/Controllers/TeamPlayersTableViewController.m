@@ -176,14 +176,14 @@
                 imageUrl = [NSURL URLWithString:self.malePlayerArray[indexPath.row][@"pictureUrl"]];
                 cell.playerImageView.layer.cornerRadius = 18.0f;
                 cell.playerImageView.clipsToBounds = YES;
-                [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 cell.playerSwitch.player = self.malePlayerArray[indexPath.row];
             }else {
                 cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
                 imageUrl = [NSURL URLWithString:self.femalePlayerArray[indexPath.row][@"pictureUrl"]];
                 cell.playerImageView.layer.cornerRadius = 18.0f;
                 cell.playerImageView.clipsToBounds = YES;
-                [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
             }
             
@@ -193,7 +193,7 @@
             imageUrl = [NSURL URLWithString:self.femalePlayerArray[indexPath.row][@"pictureUrl"]];
             cell.playerImageView.layer.cornerRadius = 18.0f;
             cell.playerImageView.clipsToBounds = YES;
-            [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
             break;
             

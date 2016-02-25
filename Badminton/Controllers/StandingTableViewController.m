@@ -55,7 +55,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
     
     self.title = self.currentPlayerForStats[@"userName"];
-    
+    self.gameArray = [DataSource sharedInstance].teamGamesArray;
     [self.activityIndicatorView startAnimating];
    
 

@@ -232,7 +232,7 @@
     
     cell.playerImageView.layer.cornerRadius = 18.0f;
     cell.playerImageView.clipsToBounds = YES;
-    [cell.playerImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [cell.playerImageView setImageWithURL:url placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     if (self.gameTypeSegmentedControl.selectedSegmentIndex == 0) {
         
@@ -357,6 +357,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
         
         self.gamesArray = objects;
+        [DataSource sharedInstance].teamGamesArray = self.gamesArray;
         
         NSMutableArray * singleWinGameArray = [@[] mutableCopy];
         NSMutableArray * singleLossGameArray = [@[] mutableCopy];
@@ -457,7 +458,7 @@
         StandingTableViewController * vc = segue.destinationViewController;
         vc.currentPlayerForStats = self.selectedPlayer;
         vc.teamObject = self.teamObject;
-        vc.gameArray = self.gamesArray;
+        //vc.gameArray = self.gamesArray;
         
     }
     

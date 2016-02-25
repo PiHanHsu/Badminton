@@ -313,7 +313,9 @@
        
         NSArray * array = [self.playerArray mutableCopy];
         for (int i = 0 ; i < array.count ; i ++) {
-            self.gameScheduleArray = [self randomCreateBymalePlayers: malePlayerArray  femaleplayers:femalePlayerArray gameIndex:i];
+            //self.gameScheduleArray = [self randomCreateBymalePlayers: malePlayerArray  femaleplayers:femalePlayerArray gameIndex:i];
+            self.gameScheduleArray = [self randomCreateByPlayers:self.playerArray];
+            
         }
     }
 

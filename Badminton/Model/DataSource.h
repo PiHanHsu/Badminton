@@ -29,7 +29,7 @@
 @property (strong, nonatomic) PFObject * currentPlayer;
 @property (strong, nonatomic) UIImage * currentPlayerImage;
 @property (strong, nonatomic) NSArray * gameArrayWithTeamAndYear; // selected team and year 
-
+@property (nonatomic,strong) NSArray *teamGamesArray;
 
 
 + (DataSource *)sharedInstance ;

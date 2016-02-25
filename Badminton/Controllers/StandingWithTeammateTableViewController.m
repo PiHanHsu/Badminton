@@ -97,7 +97,7 @@
 
     cell.playerImageView.layer.cornerRadius = 18.0f;
     cell.playerImageView.clipsToBounds = YES;
-    [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@""] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     
     return cell;
 }
