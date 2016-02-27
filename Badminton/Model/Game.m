@@ -268,9 +268,9 @@
         self.team2Array[3] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[1], nil];
         
         self.team1Array[4] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[1], nil];
-        self.team2Array[4] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[2], nil];
+        self.team2Array[4] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[2], nil];
         
-        self.team1Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[0],femalePlayerArray[2], nil];
+        self.team1Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[2],femalePlayerArray[2], nil];
         self.team2Array[5] = [NSMutableArray arrayWithObjects:malePlayerArray[1],femalePlayerArray[0], nil];
         
         for (int i = 0 ; i <6; i++) {
