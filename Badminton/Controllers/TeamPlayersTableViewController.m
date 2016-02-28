@@ -43,7 +43,7 @@
     
     [self.tabBarController.tabBar setHidden:YES];
     
-
+    
 }
 
 -(void) viewWillAppear:(BOOL)animated{
@@ -53,7 +53,7 @@
     [self.femalePlayerArray removeAllObjects];
     
     NSDate * time1 = [NSDate date];
-
+    
     for (Player * player in self.teamObject[@"players"]) {
         [player fetchIfNeededInBackgroundWithBlock:^(PFObject *playerObject, NSError * error){
             if ([player[@"isMale"] boolValue]) {
@@ -68,7 +68,7 @@
         }];
     }
     
-   
+    
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -76,13 +76,13 @@
 }
 
 - (IBAction)backButtonPressed:(id)sender {
-     [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) playBallPressed: (id)sender{
     [self performSegueWithIdentifier:@"Show Schedule" sender:nil];
-//    GameScheduleTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameScheduleVC"];
-//    [self.navigationController pushViewController:vc animated:YES];
+    //    GameScheduleTableViewController * vc = [self.storyboard instantiateViewControllerWithIdentifier:@"GameScheduleVC"];
+    //    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -137,13 +137,13 @@
         default:
             break;
     }
-   
+    
     return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-
+    
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     headerView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
     //headerView.backgroundColor = [UIColor greenColor];
@@ -168,43 +168,63 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     PlayerTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PlayerCell"forIndexPath:indexPath];
     NSURL * imageUrl;
-    // Configure the cell...
+    
     switch (indexPath.section) {
-        case 0:
+        case 0:{
             if (self.malePlayerArray.count > 0) {
-                cell.playerLabel.text = self.malePlayerArray[indexPath.row][@"userName"];
-                imageUrl = [NSURL URLWithString:self.malePlayerArray[indexPath.row][@"pictureUrl"]];
+                Player * player = self.malePlayerArray[indexPath.row];
+                cell.playerLabel.text = player.userName;
+                imageUrl = [NSURL URLWithString:player.pictureUrl];
                 cell.playerImageView.layer.cornerRadius = 18.0f;
                 cell.playerImageView.clipsToBounds = YES;
                 [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                cell.playerSwitch.player = self.malePlayerArray[indexPath.row];
+                cell.playerSwitch.player = player;
+                if ([[PlayListDataSource sharedInstance].maleSelectedArray containsObject:player]){
+                    cell.playerSwitch.on = YES;
+                }else{
+                    cell.playerSwitch.on = NO;
+                }
             }else {
-                cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
-                imageUrl = [NSURL URLWithString:self.femalePlayerArray[indexPath.row][@"pictureUrl"]];
+                Player * player = self.femalePlayerArray[indexPath.row];
+                cell.playerLabel.text = player.userName;
+                imageUrl = [NSURL URLWithString:player.pictureUrl];
                 cell.playerImageView.layer.cornerRadius = 18.0f;
                 cell.playerImageView.clipsToBounds = YES;
                 [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
+                cell.playerSwitch.player = player;
+                if ([[PlayListDataSource sharedInstance].femaleSelectedArray containsObject:player]){
+                    cell.playerSwitch.on = YES;
+                }else{
+                    cell.playerSwitch.on = NO;
+                }
             }
             
             break;
-        case 1:
-            cell.playerLabel.text = self.femalePlayerArray[indexPath.row][@"userName"];
-            imageUrl = [NSURL URLWithString:self.femalePlayerArray[indexPath.row][@"pictureUrl"]];
+
+        }
+        case 1:{
+            Player * player = self.femalePlayerArray[indexPath.row];
+            cell.playerLabel.text = player.userName;
+            imageUrl = [NSURL URLWithString:player.pictureUrl];
             cell.playerImageView.layer.cornerRadius = 18.0f;
             cell.playerImageView.clipsToBounds = YES;
             [cell.playerImageView setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"player_image_small"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            cell.playerSwitch.player = self.femalePlayerArray[indexPath.row];
+            cell.playerSwitch.player = player;
+            
+            if ([[PlayListDataSource sharedInstance].femaleSelectedArray containsObject:player]){
+                cell.playerSwitch.on = YES;
+            }else{
+                cell.playerSwitch.on = NO;
+            }
             break;
+        }
             
         default:
             break;
     }
     
-    //TODO can't switch new cell
-    cell.playerSwitch.on = NO;
     [cell.playerSwitch addTarget:self action:@selector(selectPlayers:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     return cell;
 }
 
@@ -228,17 +248,17 @@
         }
     }
     
-        
+    
 }
 
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 
 // Override to support editing the table view.
@@ -249,7 +269,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-       
+        
         if (indexPath.section == 1) {
             Player * playerToBeDeleted = self.femalePlayerArray[indexPath.row];
             [self.teamObject deletePlayer:playerToBeDeleted];
@@ -272,18 +292,18 @@
 
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 
 #pragma mark - Navigation
@@ -298,7 +318,7 @@
         GameScheduleTableViewController * vc = segue.destinationViewController;
         vc.teamObject = self.teamObject;
     }
-   
+    
 }
 
 

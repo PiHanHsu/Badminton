@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    self.playerSwitch.on = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
