@@ -667,25 +667,48 @@ SCOREBOARD</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogp-Lw-GyI">
-                                                    <rect key="frame" x="125" y="8" width="154" height="102"/>
+                                                    <rect key="frame" x="125" y="8" width="154" height="32"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="102" id="h82-qF-PCZ"/>
+                                                        <constraint firstAttribute="height" constant="32" id="YBJ-kT-89j"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zBg-6F-9ZN">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Team Member: 12" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fq-Eh-NGi">
+                                                    <rect key="frame" x="125" y="39" width="154" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zBg-6F-9ZN">
                                                     <rect key="frame" x="10" y="5" width="100" height="100"/>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Com-ym-5Zj">
+                                                    <rect key="frame" x="125" y="71" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="36" id="Tyr-Uc-p5b"/>
+                                                        <constraint firstAttribute="height" constant="36" id="com-H7-ZzJ"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="zBg-6F-9ZN" firstAttribute="centerY" secondItem="8Hq-Pc-LWO" secondAttribute="centerY" id="0Kr-aZ-dlv"/>
+                                                <constraint firstItem="zBg-6F-9ZN" firstAttribute="width" secondItem="8Hq-Pc-LWO" secondAttribute="width" id="13N-nC-e31"/>
+                                                <constraint firstItem="8fq-Eh-NGi" firstAttribute="height" secondItem="ogp-Lw-GyI" secondAttribute="height" id="6Co-cL-LCv"/>
                                                 <constraint firstAttribute="trailing" secondItem="ogp-Lw-GyI" secondAttribute="trailing" constant="41" id="890-kk-3OK"/>
+                                                <constraint firstItem="zBg-6F-9ZN" firstAttribute="centerX" secondItem="8Hq-Pc-LWO" secondAttribute="centerX" id="8Kw-aq-vKu"/>
+                                                <constraint firstItem="8fq-Eh-NGi" firstAttribute="width" secondItem="ogp-Lw-GyI" secondAttribute="width" id="8V8-MI-VrA"/>
                                                 <constraint firstItem="8Hq-Pc-LWO" firstAttribute="top" secondItem="0yu-OM-GB2" secondAttribute="top" constant="5" id="BAA-jm-Dwi"/>
+                                                <constraint firstItem="Com-ym-5Zj" firstAttribute="leading" secondItem="zBg-6F-9ZN" secondAttribute="trailing" constant="15" id="KOt-LE-0KG"/>
+                                                <constraint firstItem="Com-ym-5Zj" firstAttribute="top" secondItem="8fq-Eh-NGi" secondAttribute="bottom" id="PMG-E6-C36"/>
                                                 <constraint firstItem="8Hq-Pc-LWO" firstAttribute="centerY" secondItem="0yu-OM-GB2" secondAttribute="centerY" id="YkD-Nj-4DD"/>
+                                                <constraint firstItem="8fq-Eh-NGi" firstAttribute="centerX" secondItem="ogp-Lw-GyI" secondAttribute="centerX" id="i7A-mM-tVz"/>
                                                 <constraint firstAttribute="bottom" secondItem="8Hq-Pc-LWO" secondAttribute="bottom" constant="5" id="i7t-KM-Fq2"/>
+                                                <constraint firstItem="zBg-6F-9ZN" firstAttribute="height" secondItem="8Hq-Pc-LWO" secondAttribute="height" id="ksB-CT-b90"/>
                                                 <constraint firstItem="ogp-Lw-GyI" firstAttribute="top" secondItem="0yu-OM-GB2" secondAttribute="top" constant="8" id="smN-pz-ZWM"/>
+                                                <constraint firstItem="8fq-Eh-NGi" firstAttribute="top" secondItem="ogp-Lw-GyI" secondAttribute="bottom" constant="-1" id="tdK-71-jGR"/>
                                                 <constraint firstItem="8Hq-Pc-LWO" firstAttribute="leading" secondItem="0yu-OM-GB2" secondAttribute="leading" constant="10" id="u4u-j1-vxD"/>
                                                 <constraint firstItem="ogp-Lw-GyI" firstAttribute="leading" secondItem="8Hq-Pc-LWO" secondAttribute="trailing" constant="15" id="va1-iT-HuF"/>
                                             </constraints>
@@ -704,7 +727,11 @@ SCOREBOARD</string>
                                 <color key="backgroundColor" red="0.9137254901960784" green="0.91764705882352937" blue="0.92941176470588238" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="320" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
+                                    <outlet property="cellView" destination="0yu-OM-GB2" id="gEn-Dc-wfu"/>
+                                    <outlet property="photoButton" destination="zBg-6F-9ZN" id="Mhm-i4-qDX"/>
+                                    <outlet property="sportsTypeImageView" destination="Com-ym-5Zj" id="LRA-lc-kLr"/>
                                     <outlet property="teamImage" destination="8Hq-Pc-LWO" id="RNK-FP-Gro"/>
+                                    <outlet property="teamMemberNumLabel" destination="8fq-Eh-NGi" id="vCn-KQ-K40"/>
                                     <outlet property="teamName" destination="ogp-Lw-GyI" id="MW2-sV-pNg"/>
                                 </connections>
                             </tableViewCell>

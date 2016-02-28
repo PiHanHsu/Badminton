@@ -13,8 +13,6 @@
 		E83648CB1B8C93A100F172A4 /* Team.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648CA1B8C93A100F172A4 /* Team.m */; };
 		E83648CE1B8C93BF00F172A4 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = E83648CD1B8C93BF00F172A4 /* Game.m */; };
 		E83649031B8DD8CC00F172A4 /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = E83649021B8DD8CC00F172A4 /* Player.m */; };
-		E83649051B8DE10900F172A4 /* malePlayer@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E83649041B8DE10900F172A4 /* malePlayer@2x.jpg */; };
-		E83649071B8DE10D00F172A4 /* femalePlayer@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E83649061B8DE10D00F172A4 /* femalePlayer@2x.jpg */; };
 		E836490A1B8DF80200F172A4 /* AddPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E83649091B8DF80200F172A4 /* AddPlayerViewController.m */; };
 		E836491A1B8F696000F172A4 /* PlayerSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = E83649191B8F696000F172A4 /* PlayerSwitch.m */; };
 		E836496C1B92D42600F172A4 /* ScoreBoard.xib in Resources */ = {isa = PBXBuildFile; fileRef = E836496B1B92D42600F172A4 /* ScoreBoard.xib */; };
@@ -38,9 +36,6 @@
 		E8C283551B8892AC0018F3A1 /* LoginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283541B8892AC0018F3A1 /* LoginTableViewController.m */; };
 		E8C283581B8892CC0018F3A1 /* MyTeamListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283571B8892CC0018F3A1 /* MyTeamListTableViewController.m */; };
 		E8C2835B1B8893990018F3A1 /* MyTeamListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C2835A1B8893990018F3A1 /* MyTeamListTableViewCell.m */; };
-		E8C283611B88A0C90018F3A1 /* LoginPageImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C283601B88A0C90018F3A1 /* LoginPageImage.png */; };
-		E8C283631B88AD6B0018F3A1 /* Badminton1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E8C283621B88AD6B0018F3A1 /* Badminton1.jpg */; };
-		E8C283651B88AE7E0018F3A1 /* teams.png in Resources */ = {isa = PBXBuildFile; fileRef = E8C283641B88AE7E0018F3A1 /* teams.png */; };
 		E8C283681B88B1640018F3A1 /* TeamPlayersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C283671B88B1640018F3A1 /* TeamPlayersTableViewController.m */; };
 		E8D324771BA3FE3A009210DC /* scoreboard.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8D324761BA3FCD8009210DC /* scoreboard.ttf */; };
 		E8EDF7A41B9309EB00B56725 /* ProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EDF7A31B9309EB00B56725 /* ProfileTableViewController.m */; };
@@ -73,8 +68,6 @@
 		E83648CD1B8C93BF00F172A4 /* Game.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Game.m; path = Model/Game.m; sourceTree = "<group>"; };
 		E83649011B8DD8CC00F172A4 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = Model/Player.h; sourceTree = "<group>"; };
 		E83649021B8DD8CC00F172A4 /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Player.m; path = Model/Player.m; sourceTree = "<group>"; };
-		E83649041B8DE10900F172A4 /* malePlayer@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "malePlayer@2x.jpg"; sourceTree = "<group>"; };
-		E83649061B8DE10D00F172A4 /* femalePlayer@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "femalePlayer@2x.jpg"; sourceTree = "<group>"; };
 		E83649081B8DF80200F172A4 /* AddPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddPlayerViewController.h; sourceTree = "<group>"; };
 		E83649091B8DF80200F172A4 /* AddPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddPlayerViewController.m; sourceTree = "<group>"; };
 		E83649181B8F696000F172A4 /* PlayerSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerSwitch.h; path = Model/PlayerSwitch.h; sourceTree = "<group>"; };
@@ -118,9 +111,6 @@
 		E8C283571B8892CC0018F3A1 /* MyTeamListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeamListTableViewController.m; sourceTree = "<group>"; };
 		E8C283591B8893990018F3A1 /* MyTeamListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTeamListTableViewCell.h; sourceTree = "<group>"; };
 		E8C2835A1B8893990018F3A1 /* MyTeamListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeamListTableViewCell.m; sourceTree = "<group>"; };
-		E8C283601B88A0C90018F3A1 /* LoginPageImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LoginPageImage.png; sourceTree = "<group>"; };
-		E8C283621B88AD6B0018F3A1 /* Badminton1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Badminton1.jpg; sourceTree = "<group>"; };
-		E8C283641B88AE7E0018F3A1 /* teams.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teams.png; sourceTree = "<group>"; };
 		E8C283661B88B1640018F3A1 /* TeamPlayersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamPlayersTableViewController.h; sourceTree = "<group>"; };
 		E8C283671B88B1640018F3A1 /* TeamPlayersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamPlayersTableViewController.m; sourceTree = "<group>"; };
 		E8D324761BA3FCD8009210DC /* scoreboard.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = scoreboard.ttf; sourceTree = "<group>"; };
@@ -207,17 +197,12 @@
 			isa = PBXGroup;
 			children = (
 				E8D324761BA3FCD8009210DC /* scoreboard.ttf */,
-				E83649061B8DE10D00F172A4 /* femalePlayer@2x.jpg */,
-				E83649041B8DE10900F172A4 /* malePlayer@2x.jpg */,
 				E870EE501C5BD50600A85174 /* camera-icon@3x.png */,
 				E870EE511C5BD50600A85174 /* camera-icon@2x.png */,
 				E8484CC51B6BA5B100B39463 /* AppDelegate.h */,
 				E8484CC61B6BA5B100B39463 /* AppDelegate.m */,
 				E8484CC81B6BA5B100B39463 /* ViewController.h */,
 				E8484CC91B6BA5B100B39463 /* ViewController.m */,
-				E8C283641B88AE7E0018F3A1 /* teams.png */,
-				E8C283621B88AD6B0018F3A1 /* Badminton1.jpg */,
-				E8C283601B88A0C90018F3A1 /* LoginPageImage.png */,
 				E8484CC21B6BA5B100B39463 /* Info.plist */,
 				E8484CC31B6BA5B100B39463 /* main.m */,
 			);
@@ -397,13 +382,8 @@
 			files = (
 				E8D324771BA3FE3A009210DC /* scoreboard.ttf in Resources */,
 				E870EE531C5BD50600A85174 /* camera-icon@2x.png in Resources */,
-				E83649051B8DE10900F172A4 /* malePlayer@2x.jpg in Resources */,
-				E8C283611B88A0C90018F3A1 /* LoginPageImage.png in Resources */,
-				E8C283651B88AE7E0018F3A1 /* teams.png in Resources */,
 				E8484CCD1B6BA5B100B39463 /* Main.storyboard in Resources */,
-				E83649071B8DE10D00F172A4 /* femalePlayer@2x.jpg in Resources */,
 				E870EE521C5BD50600A85174 /* camera-icon@3x.png in Resources */,
-				E8C283631B88AD6B0018F3A1 /* Badminton1.jpg in Resources */,
 				E836496C1B92D42600F172A4 /* ScoreBoard.xib in Resources */,
 				E8484CCF1B6BA5B100B39463 /* Images.xcassets in Resources */,
 			);

@@ -206,7 +206,18 @@
     TeamListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MyTeamListCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.teamName.text = self.teamArray[indexPath.row][@"name"];
+    Team * team = self.teamArray[indexPath.row];
+    cell.teamName.text = team.name;
+    NSArray * teamPlayers = team.players;
+    cell.teamMemberNumLabel.text = [NSString stringWithFormat:@"Team players: %lu", (unsigned long)teamPlayers.count];
+    if ([team.sportsType isEqualToString:@"羽    球"]) {
+        cell.sportsTypeImageView.image = [UIImage imageNamed:@"badminton"];
+    }else if ([team.sportsType isEqualToString:@"網    球"]){
+        cell.sportsTypeImageView.image = [UIImage imageNamed:@"tennis"];
+    }else if ([team.sportsType isEqualToString:@"桌    球"]){
+        cell.sportsTypeImageView.image = [UIImage imageNamed:@"table_tennis"];
+    }
+    
     cell.rightButtons = @[[MGSwipeButton buttonWithTitle:@"退出\n球隊" backgroundColor:[UIColor redColor]],
                           [MGSwipeButton buttonWithTitle:@"編輯\n名稱" backgroundColor:[UIColor lightGrayColor]],[MGSwipeButton buttonWithTitle:@"編輯\n照片" backgroundColor:[UIColor lightGrayColor]]];
     
