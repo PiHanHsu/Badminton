@@ -31,7 +31,7 @@
     [super viewDidLoad];
     
     //set up playball Button
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
     self.tableView.tableFooterView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
     self.playBallButton = [[UIButton alloc]initWithFrame:CGRectMake(110, 15, 100, 30)];
     [self.playBallButton setTitle:@"PlayBall" forState:UIControlStateNormal];
@@ -39,10 +39,11 @@
     [self.playBallButton addTarget:self action:@selector(playBallPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.tableView.tableFooterView addSubview:self.playBallButton];
-    self.tableView.tableFooterView.hidden = NO;
+    self.tableView.tableFooterView.hidden = YES;
+    
+    
     
     [self.tabBarController.tabBar setHidden:YES];
-    
     
 }
 
@@ -140,7 +141,10 @@
     
     return 0;
 }
-
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 44;
+}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     
@@ -149,15 +153,31 @@
     //headerView.backgroundColor = [UIColor greenColor];
     //tableView.sectionHeaderHeight = 44;
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 21)];
-    if(section == 0 && self.malePlayerArray.count > 0)
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 44)];
+    if(section == 0 && self.malePlayerArray.count > 0){
         label.text = @"Male Player";
-    else
+        self.playBallButton = [[UIButton alloc]initWithFrame:CGRectMake(self.tableView.frame.size.width - 100, 7, 80, 30)];
+        [self.playBallButton setTitle:@"PlayBall" forState:UIControlStateNormal];
+        [self.playBallButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
+         [self.playBallButton setTitleColor:[UIColor colorWithRed:74.0/255.0 green:203.0/255.0 blue:53.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        self.playBallButton.layer.borderWidth = 1.0f;
+        self.playBallButton.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.playBallButton.layer.cornerRadius = 5.0;
+        self.playBallButton.clipsToBounds = YES;
+        
+        self.playBallButton.enabled = NO;
+        [self.playBallButton addTarget:self action:@selector(playBallPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:self.playBallButton];
+
+    }else{
         label.text = @"Female Player";
+    }
     
     label.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
+    
+    
     
     [headerView addSubview:label];
     
@@ -247,19 +267,9 @@
             [[PlayListDataSource sharedInstance]removeFromFemalePlayerList:playerSwitch.player];
         }
     }
-    
+    [self checkPlayBallButtonEnable];
     
 }
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
 
 // Override to support editing the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -290,21 +300,18 @@
     }
 }
 
+#pragma mark - Check play Ball Button enable
 
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
+- (void)checkPlayBallButtonEnable{
+    if (([PlayListDataSource sharedInstance].maleSelectedArray.count +[PlayListDataSource sharedInstance].femaleSelectedArray.count) > 1 ) {
+        self.playBallButton.enabled = YES;
+        self.playBallButton.layer.borderColor = [UIColor colorWithRed:74.0/255.0 green:203.0/255.0 blue:53.0/255.0 alpha:1.0].CGColor;
+    }else{
+        self.playBallButton.enabled = NO;
+        self.playBallButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    }
+    
+}
 
 #pragma mark - Navigation
 
