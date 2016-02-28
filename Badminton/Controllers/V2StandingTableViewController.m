@@ -357,7 +357,6 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray * objects, NSError * error) {
         
         self.gamesArray = objects;
-        [DataSource sharedInstance].teamGamesArray = self.gamesArray;
         
         NSMutableArray * singleWinGameArray = [@[] mutableCopy];
         NSMutableArray * singleLossGameArray = [@[] mutableCopy];
@@ -458,7 +457,7 @@
         StandingTableViewController * vc = segue.destinationViewController;
         vc.currentPlayerForStats = self.selectedPlayer;
         vc.teamObject = self.teamObject;
-        //vc.gameArray = self.gamesArray;
+        vc.gameArray = self.gamesArray;
         
     }
     

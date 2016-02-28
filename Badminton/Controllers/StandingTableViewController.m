@@ -52,24 +52,21 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 60)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
     
     self.title = self.currentPlayerForStats[@"userName"];
-    self.gameArray = [DataSource sharedInstance].teamGamesArray;
     [self.activityIndicatorView startAnimating];
    
-
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    //TODO, BUG, if back from next VC, the best teammate data can't calculate
     self.playerId = self.currentPlayerForStats.objectId;
     self.hasStreakWinsData = NO;
     self.hasBestTeammateData = NO;
     [self createStatsArray:self.gameArray player:self.playerId];
-     [self displayData];
+    [self displayData];
  }
 
 - (void) viewWillDisappear:(BOOL)animated{
@@ -112,8 +109,6 @@
 - (NSMutableArray *) createStatsArray:(NSArray *) playerGameArray player: (NSString *) playerId{
     self.currentPlayerStatsArray = [@[] mutableCopy];
     
-    NSLog(@"n = %lu", (unsigned long)playerGameArray.count);
-    
     for (int i = 0 ; i < playerGameArray.count; i++) {
         NSDictionary * statsDict = [[NSDictionary alloc] init];
         NSMutableArray * winTeam = playerGameArray[i][@"winTeam"];
@@ -124,6 +119,7 @@
             
             if (winTeam.count > 1) {
                 [winTeam removeObject:playerId];
+                [winTeam addObject:playerId];// move player to lastObject
                 teamMate = winTeam[0];
             }else{
                 teamMate = @"";
@@ -138,6 +134,7 @@
             
             if (loseTeam.count > 1) {
                 [loseTeam removeObject:playerId];
+                [loseTeam addObject:playerId];
                 teamMate = loseTeam[0];
             }else{
                 teamMate = @"";
@@ -153,9 +150,7 @@
         
         
     }
-    
-    NSLog(@"playerStats Count: %lu", playerGameArray.count);
-    //NSLog(@"playerStatsArray: %@", self.currentPlayerStatsArray);
+
     [self getSteakWins:self.currentPlayerStatsArray];
     [self getBestTeammate:self.currentPlayerStatsArray player:playerId];
     return self.currentPlayerStatsArray;
@@ -210,7 +205,6 @@
         }
     }
     
-    NSLog(@"double game: %lu", statsWithDoubleGame.count);
     self.playerStatsWithDoubleGameArray = [[NSArray alloc]initWithArray:statsWithDoubleGame];
     self.playerStatsWithMixGameArray = [[NSArray alloc]initWithArray:statsWithMixGame];
     
@@ -248,7 +242,7 @@
         }
     }
     
-    //TODO: sometimes, the number is wrong
+    //TODO: sometimes, the number is wrong, will do it on backend next version
     self.currentStreakWins = streakWins;
     self.maxStreakWins = maxStreakWins;
 //    NSLog(@"Max streakWins: %d", maxStreakWins);
