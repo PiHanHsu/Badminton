@@ -160,49 +160,61 @@
     NSMutableArray * loseTeammates = [@[] mutableCopy];
     NSMutableArray * statsWithDoubleGame = [@[] mutableCopy];
     NSMutableArray * statsWithMixGame = [@[] mutableCopy];
+    NSMutableArray * teamPlayer = [@[] mutableCopy];
     
     PFQuery * query = [PFQuery queryWithClassName:@"Player"];
     [query whereKey:@"objectId" equalTo:playerId];
     Player * playerForStats = [query getFirstObject];
     
+    for (Player * player in self.teamObject[@"players"]) {
+        [teamPlayer addObject:player.objectId];
+    }
+    
     for (NSDictionary * stats in playerStatsArray) {
         
-        if ([stats[@"winOrLose"] isEqualToString:@"Win"]){
+        if ([stats[@"winOrLose"] isEqualToString:@"Win"] && ![stats[@"gameType"] isEqualToString:@"single"]){
             [winTeammates addObject: stats[@"teammate"]];
-        }else{
+        }else if ([stats[@"winOrLose"] isEqualToString:@"Lose"] && ![stats[@"gameType"] isEqualToString:@"single"]){
             [loseTeammates addObject: stats[@"teammate"]];
         }
     }
     
     [winTeammates removeObject:@""];
+    [loseTeammates removeObject:@""];
+    
     NSCountedSet * winSet =[[NSCountedSet alloc] initWithArray:winTeammates];
     NSCountedSet * loseSet =[[NSCountedSet alloc] initWithArray:loseTeammates];
     
-    
-    //TODO, if player has 0 win, s/he will not show in winSet
-    for (id item in winSet)
-    {
-        PFQuery * query = [PFQuery queryWithClassName:@"Player"];
-        [query whereKey:@"objectId" equalTo:item];
-        Player * player = [query getFirstObject];
+    for (NSString * playerId in teamPlayer) {
         
-        NSNumber * wins = [NSNumber numberWithUnsignedLong:[winSet countForObject:item]];
-        NSNumber * loses = [NSNumber numberWithUnsignedLong:[loseSet countForObject:item]];
-        float rate = wins.floatValue / (wins.floatValue + loses.floatValue) * 100;
-        NSNumber * winRate = [NSNumber numberWithFloat:rate];
-        
-        NSDictionary * statsDict = @{@"player" : player,
-                                     @"wins" : wins,
-                                     @"loses" : loses,
-                                     @"winRate" : winRate};
-        
-        if ([playerForStats[@"isMale"]boolValue] && [player[@"isMale"] boolValue]){
-            [statsWithDoubleGame addObject:statsDict];
-        }else if (![playerForStats[@"isMale"]boolValue] && ![player[@"isMale"] boolValue] ){
-            [statsWithDoubleGame addObject:statsDict];
-        }else{
-            [statsWithMixGame addObject:statsDict];
+        if (![playerId isEqualToString:playerForStats.objectId]) {
+            PFQuery * query = [PFQuery queryWithClassName:@"Player"];
+            [query whereKey:@"objectId" equalTo:playerId];
+            Player * player = [query getFirstObject];
+            
+            NSNumber * wins = [NSNumber numberWithUnsignedLong:[winSet countForObject:playerId]];
+            NSNumber * loses = [NSNumber numberWithUnsignedLong:[loseSet countForObject:playerId]];
+            
+            // 0 win and 0 loss will not show
+            if (wins.intValue > 0 || loses.intValue > 0) {
+                float rate = wins.floatValue / (wins.floatValue + loses.floatValue) * 100;
+                NSNumber * winRate = [NSNumber numberWithFloat:rate];
+                
+                NSDictionary * statsDict = @{@"player" : player,
+                                             @"wins" : wins,
+                                             @"loses" : loses,
+                                             @"winRate" : winRate};
+                
+                if ([playerForStats[@"isMale"]boolValue] && [player[@"isMale"] boolValue]){
+                    [statsWithDoubleGame addObject:statsDict];
+                }else if (![playerForStats[@"isMale"]boolValue] && ![player[@"isMale"] boolValue] ){
+                    [statsWithDoubleGame addObject:statsDict];
+                }else{
+                    [statsWithMixGame addObject:statsDict];
+                }
+            }
         }
+        
     }
     
     self.playerStatsWithDoubleGameArray = [[NSArray alloc]initWithArray:statsWithDoubleGame];
