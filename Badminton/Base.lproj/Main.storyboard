@@ -1555,7 +1555,7 @@ SCOREBOARD</string>
         <image name="Games_Tab_icon" width="24" height="23"/>
         <image name="More_icon" width="22" height="22"/>
         <image name="Profile_Tab_icon" width="24" height="24"/>
-        <image name="Standings_tab_icon" width="24" height="18"/>
+        <image name="Standings_tab_icon" width="24" height="24"/>
         <image name="camera-icon.png" width="40" height="40"/>
         <image name="facebookLogin" width="320" height="61"/>
         <image name="teams.png" width="222" height="227"/>

@@ -214,10 +214,11 @@
     cell.delegate = self;
     
     
-    //[cell.photoButton addTarget:self action:@selector(photoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    //cell.photoButton.tag = indexPath.row;
+    [cell.photoButton addTarget:self action:@selector(photoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    cell.photoButton.tag = indexPath.row;
     
-    cell.teamImage.layer.cornerRadius = 5.0f;
+    
+    cell.teamImage.layer.cornerRadius = 50.0f;
     cell.teamImage.clipsToBounds = YES;
     
     if (indexPath.row == self.tempIndex) {
@@ -228,17 +229,10 @@
             if (photo) {
                 
                 NSURL * imageURL = [NSURL URLWithString:photo.url];
-                [cell.teamImage setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"teams"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+                [cell.teamImage setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"team_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
                 
     }
-   
-//            [photo getDataInBackgroundWithBlock:^(NSData * imageData, NSError * error){
-//                if (error) {
-//                    NSLog(@"load photo error: %@", error);
-//                }else{
-//                    cell.teamImage.image = [UIImage imageWithData:imageData];
-//                }
-//            }];
+
         }
         
     }

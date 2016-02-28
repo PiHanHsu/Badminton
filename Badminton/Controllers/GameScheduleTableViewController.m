@@ -145,7 +145,7 @@
 
 
 - (IBAction)refreshButtonPressed:(id)sender {
-    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Save Games", @"Refresh Game", nil];
+    UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:nil message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Refresh Game", nil];
     alertView.tag = 1;
     [alertView show];
     
