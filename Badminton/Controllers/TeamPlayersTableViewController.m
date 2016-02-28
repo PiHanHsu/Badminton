@@ -30,19 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //set up playball Button
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 60)];
-    self.tableView.tableFooterView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
-    self.playBallButton = [[UIButton alloc]initWithFrame:CGRectMake(110, 15, 100, 30)];
-    [self.playBallButton setTitle:@"PlayBall" forState:UIControlStateNormal];
-    [self.playBallButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [self.playBallButton addTarget:self action:@selector(playBallPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.tableView.tableFooterView addSubview:self.playBallButton];
-    self.tableView.tableFooterView.hidden = YES;
-    
-    
-    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
     [self.tabBarController.tabBar setHidden:YES];
     
 }
@@ -150,8 +139,6 @@
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     headerView.backgroundColor = [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:243.0/255.0 alpha:1.0];
-    //headerView.backgroundColor = [UIColor greenColor];
-    //tableView.sectionHeaderHeight = 44;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 288, 44)];
     if(section == 0 && self.malePlayerArray.count > 0){
@@ -176,8 +163,6 @@
     label.font = [UIFont fontWithName:@"GraphikApp-Regular" size:13]; //[UIFont systemFontOfSize:13.0];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:142.0/255.0 green:142.0/255.0 blue:142.0/255.0 alpha:1.0];
-    
-    
     
     [headerView addSubview:label];
     
