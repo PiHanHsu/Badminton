@@ -341,6 +341,8 @@
     UIImagePickerController *photoPicker = [[UIImagePickerController alloc] init];
     photoPicker.sourceType = sourceType;
     photoPicker.delegate = self;
+    photoPicker.allowsEditing = YES;
+    photoPicker.showsCameraControls = YES;
     
     self.photoPicker = photoPicker;
     [self presentViewController:self.photoPicker animated:YES completion:nil];
@@ -350,6 +352,7 @@
     
     UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
     self.teamImage = photoImage;
+
     
     [self.tableView reloadData];
     
@@ -365,7 +368,13 @@
 
 - (void)updateTeamPhoto{
     
-    NSData *imageData = UIImageJPEGRepresentation(self.teamImage, 1.0);
+    CGRect rect = CGRectMake(0,0,300,300);
+    UIGraphicsBeginImageContext( rect.size );
+    [self.teamImage drawInRect:rect];
+    UIImage * teamImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    NSData *imageData = UIImageJPEGRepresentation(teamImage, 1.0);
     PFFile *photoFile = [PFFile fileWithData:imageData];
     Team * team = self.teamArray[self.tempIndex];
     

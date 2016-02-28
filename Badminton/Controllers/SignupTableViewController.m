@@ -209,7 +209,13 @@
 
 -(void) createPlayerData{
     if (self.photoImageView.image) {
-        NSData *imageData = UIImageJPEGRepresentation(self.photoImageView.image, 1.0);
+        CGRect rect = CGRectMake(0,0,450,450);
+        UIGraphicsBeginImageContext( rect.size );
+        [self.photoImageView.image drawInRect:rect];
+        UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        NSData *imageData = UIImageJPEGRepresentation(userPhoto, 1.0);
         PFFile *photoFile = [PFFile fileWithData:imageData];
         PFObject * player = [PFObject objectWithClassName:@"Player"];
         player[@"name"] = self.nameTextField.text;
