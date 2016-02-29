@@ -10,6 +10,8 @@
 #import "PlayListDataSource.h"
 #import "MyTeamListTableViewController.h"
 #import "DataSource.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImageView+UIActivityIndicatorForSDWebImage.h>
 
 @interface SignupTableViewController ()<UITextFieldDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
@@ -24,47 +26,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.signUpBarButton.enabled = NO;
     self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
     self.indicator.hidden = YES;
+    [self.nickNameTextField becomeFirstResponder];
     self.photoImageView.layer.cornerRadius = 5.0;
     self.photoImageView.clipsToBounds = YES;
     self.currentUser = [PFUser currentUser];
-    //    switch (self.genderSegmentedControl.selectedSegmentIndex) {
-    //        case 0:
-    //            self.photoImageView.image = [UIImage imageNamed:@"male Player"];
-    //            break;
-    //        case 1:
-    //            self.photoImageView.image = [UIImage imageNamed:@"female Player"];
-    //            break;
-    //        default:
-    //            break;
-    //    }
     
     //user login with FB
     if (self.currentUser) {
         NSLog(@"currentUser!!");
-        self.nameTextField.text = [PFUser currentUser][@"name"];
+        self.firstNameTextField.text = [PFUser currentUser][@"firstName"];
+        self.lastNameTextField.text = [PFUser currentUser][@"lastName"];
         self.emailTextField.text = [PFUser currentUser][@"email"];
         NSString *userProfilePhotoURLString = [PFUser currentUser][@"pictureURL"];
-        if (userProfilePhotoURLString) {
-            NSURL *pictureURL = [NSURL URLWithString:userProfilePhotoURLString];
-            NSURLRequest *urlRequest = [NSURLRequest requestWithURL:pictureURL];
-            [NSURLConnection sendAsynchronousRequest:urlRequest
-                                               queue:[NSOperationQueue mainQueue]
-                                   completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                                       if (connectionError == nil && data != nil) {
-                                           self.photoImageView.image = [UIImage imageWithData:data];
-                                           self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
-                                           self.photoImageView.layer.cornerRadius = 5.0f;
-                                           self.photoImageView.clipsToBounds = YES;
-                                           
-                                       } else {
-                                           NSLog(@"Failed to load profile photo.");
-                                       }
-                                   }];
+        if ([PFUser currentUser][@"gender"]) {
+            NSString * gender = [PFUser currentUser][@"gender"];
+            if ([gender isEqualToString:@"女性"]){
+                self.isMale = NO;
+                self.genderSegmentedControl.selectedSegmentIndex = 1;
+            }else{
+                self.isMale = YES;
+                self.genderSegmentedControl.selectedSegmentIndex = 0;
+            }
+
         }
         
+        if (userProfilePhotoURLString) {
+            NSURL *pictureURL = [NSURL URLWithString:userProfilePhotoURLString];
+            [self.photoImageView setImageWithURL:pictureURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        }
     }
+    
+    // textfield delegate
+    self.nickNameTextField.delegate = self;
+    self.firstNameTextField.delegate = self;
+    self.lastNameTextField.delegate = self;
+    self.emailTextField.delegate = self;
+    self.passwordTextField.delegate = self;
+    self.reTypePasswordTextField.delegate = self;
 }
 
 #pragma mark - Table view data source
@@ -75,7 +76,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 4;
+    return 5;
 }
 
 #pragma mark image picker delegate
@@ -154,8 +155,7 @@
 }
 
 #pragma mark Sign up
-
-- (IBAction)goPressed:(id)sender {
+- (IBAction)signUpPressed:(id)sender {
     [self.indicator startAnimating];
     
     if (self.genderSegmentedControl.selectedSegmentIndex == 0) {
@@ -169,6 +169,7 @@
         self.currentUser.email = self.emailTextField.text;
         [self.currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if (succeeded) {
+                self.userId = self.currentUser.objectId;
                 [self createPlayerData];
             }
         }];
@@ -182,13 +183,11 @@
         
         [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (!error) {
-                
                 self.userId = user.objectId;
                 [self createPlayerData];
             } else {
                 NSString *errorString = [error userInfo][@"error"];
                 NSLog(@"sign up error: %@", errorString);
-                
                 
                 //TODO: add "invalid email" error message
                 UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Oops Sorry!!" message:@"Something went wrong, can't sign up now. Please try agian later!" preferredStyle:UIAlertControllerStyleAlert];
@@ -204,41 +203,66 @@
         }];
         
     }
-    
+
 }
+
+
 
 -(void) createPlayerData{
     if (self.photoImageView.image) {
-        CGRect rect = CGRectMake(0,0,450,450);
-        UIGraphicsBeginImageContext( rect.size );
-        [self.photoImageView.image drawInRect:rect];
-        UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
         
-        NSData *imageData = UIImageJPEGRepresentation(userPhoto, 1.0);
-        PFFile *photoFile = [PFFile fileWithData:imageData];
         PFObject * player = [PFObject objectWithClassName:@"Player"];
-        player[@"name"] = self.nameTextField.text;
+        player[@"userName"] = self.nickNameTextField.text;
         player[@"nameForSearch"] = [self.nickNameTextField.text lowercaseString];
         player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
-        player[@"userName"] = self.nickNameTextField.text;
+        player[@"firstName"] = self.firstNameTextField.text;
+        player[@"firstNameForSearch"] = [self.firstNameTextField.text lowercaseString];
+        player[@"lastName"] = self.lastNameTextField.text;
+        player[@"lastNameForSearch"] = [self.lastNameTextField.text lowercaseString];
         player[@"email"] =self.emailTextField.text;
-        
         player[@"user"] = self.userId;
-        player [@"photo"] = photoFile;
         
-        [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            if (succeeded) {
-                [self signUpSuccess];
-                
-            }
-        }];
+        if (self.currentUser) {
+            player[@"pictureUrl"] = self.currentUser[@"pictureURL"];
+            
+            //TODO, BUG, if FB login, can't save player, error: invalid session token
+            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    [self signUpSuccess];
+                }
+            }];
+        }else{
+            //resize Image
+            CGRect rect = CGRectMake(0,0,450,450);
+            UIGraphicsBeginImageContext( rect.size );
+            [self.photoImageView.image drawInRect:rect];
+            UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            NSData *imageData = UIImageJPEGRepresentation(userPhoto, 1.0);
+            PFFile *photoFile = [PFFile fileWithData:imageData];
+
+            player [@"photo"] = photoFile;
+            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                                        PFFile * photo = player[@"photo"];
+                    NSString * imageUrl = photo.url;
+                    player[@"pictureUrl"] = imageUrl;
+                    [player saveInBackground];
+                }
+            }];
+
+        }
+        
     }else{
         PFObject * player = [PFObject objectWithClassName:@"Player"];
-        player[@"name"] = self.nameTextField.text;
-        player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
         player[@"userName"] = self.nickNameTextField.text;
         player[@"nameForSearch"] = [self.nickNameTextField.text lowercaseString];
+        player[@"isMale"] = [NSNumber numberWithBool:self.isMale];
+        player[@"firstName"] = self.firstNameTextField.text;
+        player[@"firstNameForSearch"] = [self.firstNameTextField.text lowercaseString];
+        player[@"lastName"] = self.lastNameTextField.text;
+        player[@"lastNameForSearch"] = [self.lastNameTextField.text lowercaseString];
         player[@"email"] =self.emailTextField.text;
         player[@"user"] = self.currentUser.objectId;
         
@@ -264,16 +288,16 @@
                                             
                                             [[DataSource sharedInstance] loadTeamsFromServer];
                                         } else {
-                                            UIAlertView * av = [[UIAlertView alloc]
-                                                                initWithTitle:@"Oops, Sorry!"
-                                                                message:@"Can not login. Please Try Again."
-                                                                delegate:self
-                                                                cancelButtonTitle:@"OK"
-                                                                otherButtonTitles:nil, nil];
-                                            [av show];
+                                            
+                                            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Oops, Sorry!" message:@"Can not login. Please Try Again." preferredStyle:UIAlertControllerStyleAlert];
+                                            UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                                                [alert dismissViewControllerAnimated:YES completion:nil];
+                                            }];
+                                            
                                             [self.indicator stopAnimating];
                                             self.nickNameTextField.text = @"";
-                                            self.nameTextField.text = @"";
+                                            self.firstNameTextField.text = @"";
+                                            self.lastNameTextField.text = @"";
                                             self.emailTextField.text = @"";
                                             self.passwordTextField.text = @"";
                                             self.reTypePasswordTextField.text = @"";
@@ -288,9 +312,9 @@
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
     if( [self hasEmptyFieldExcept:textField newString:newString])
-        self.goButton.enabled = NO;
+        self.signUpBarButton.enabled = NO;
     else
-        self.goButton.enabled = YES;
+        self.signUpBarButton.enabled = YES;
     
     return YES;
 }
@@ -311,7 +335,7 @@
     BOOL hasEmptyField = NO;
     NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     
-    NSArray *textFieldArray = @[self.nickNameTextField,self.nameTextField,self.emailTextField,self.passwordTextField,self.reTypePasswordTextField];
+    NSArray *textFieldArray = @[self.nickNameTextField,self.firstNameTextField,self.lastNameTextField,self.emailTextField,self.passwordTextField,self.reTypePasswordTextField];
     
     for( UITextField *oneTextField in textFieldArray) {
         if(oneTextField != textFieldInEdit )
@@ -331,21 +355,23 @@
     
     if([self isTextFieldInputEmpty:self.passwordTextField]) {
         [self.passwordTextField becomeFirstResponder];
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Empty Password"
-                                                     message:@"Please type your password."
-                                                    delegate:self
-                                           cancelButtonTitle:@"OK"
-                                           otherButtonTitles:nil];
-        [av show];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Empty Password" message:@"Please type your password." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
     } else if([self isTextFieldInputEmpty:self.reTypePasswordTextField]) {
-        [self.reTypePasswordTextField becomeFirstResponder];
-        UIAlertView *av = [[UIAlertView alloc]
-                           initWithTitle:@"Empty Password"
-                           message:@"Please type your password."
-                           delegate:self
-                           cancelButtonTitle:@"OK"
-                           otherButtonTitles:nil];
-        [av show];
+        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Empty Password" message:@"Please type your password." preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:nil];
+        }];
+        
+        [alert addAction:ok];
+        [self presentViewController:alert animated:YES completion:nil];
+        
     }
     else {
         if([self.passwordTextField.text isEqualToString:self.reTypePasswordTextField.text])
@@ -353,13 +379,12 @@
         else {
             self.reTypePasswordTextField.text = nil;
             [self.reTypePasswordTextField becomeFirstResponder];
-            UIAlertView *av = [[UIAlertView alloc]
-                               initWithTitle:@"Passwords Not Match"
-                               message:@"Please retype your password."
-                               delegate:self
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles:nil];
-            [av show];
+            UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Passwords Not Match" message:@"Please retype your password." preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alert addAction:ok];
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }
     

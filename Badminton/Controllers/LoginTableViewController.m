@@ -191,6 +191,8 @@
             
             NSString *facebookID = userData[@"id"];
             NSString *name = userData[@"name"];
+            NSString *firstName = userData[@"first_name"];
+            NSString *lastName = userData[@"last_name"];
             NSString *email;
             if (userData[@"email"]) {
                 email =userData[@"email"];
@@ -200,28 +202,30 @@
             NSString *gender =userData[@"gender"];
             
             [[PFUser currentUser] setObject:name forKey:@"name"];
+            [[PFUser currentUser] setObject:firstName forKey:@"firstName"];
+            [[PFUser currentUser] setObject:lastName forKey:@"lastName"];
             [[PFUser currentUser] setObject:facebookID forKey:@"facebookID"];
-            //[[PFUser currentUser] setObject:email forKey:@"email"];
-            //[[PFUser currentUser] setObject:pictureURL forKey:@"pictureURL"];
-            //[[PFUser currentUser] setObject:gender forKey:@"gender"];
+            [[PFUser currentUser] setObject:email forKey:@"email"];
+            [[PFUser currentUser] setObject:pictureURL forKey:@"pictureURL"];
+            [[PFUser currentUser] setObject:gender forKey:@"gender"];
             
             
             
             [[PFUser currentUser] saveInBackgroundWithBlock:^(BOOL succeed, NSError* error){
                 if (!error){
                     
+//                   [self performSegueWithIdentifier:@"Go to Sign up Page" sender:nil];
                     PFObject * player = [PFObject objectWithClassName:@"Player"];
-                    player[@"name"] = name;
+                    player[@"userName"] = name;
                     player[@"nameForSearch"] = [name lowercaseString];
+                    player[@"firstName"] = firstName;
+                    player[@"firstNameForSearch"] = [firstName lowercaseString];
+                    player[@"lastName"] = lastName;
+                    player[@"lastNameForSearch"] = [lastName lowercaseString];
                     if ([gender isEqualToString:@"女性"]){
                         player[@"isMale"] = [NSNumber numberWithBool:NO];
                     }else{
                         player[@"isMale"] = [NSNumber numberWithBool:YES];
-                    }
-                    
-                    player[@"userName"] = name;
-                    if (email) {
-                        player[@"email"] =email;
                     }
                     
                     player[@"user"] = [PFUser currentUser].objectId;
@@ -274,6 +278,7 @@
                     
                     [self presentViewController:alert animated:YES completion:nil];
                 }
+                
             }];
             
         } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
@@ -286,7 +291,6 @@
         
     }];
 }
-
 
 - (IBAction)forgotPasswordPressed:(id)sender {
     

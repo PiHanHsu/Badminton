@@ -110,23 +110,12 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="lPz-NS-F8b">
-                                    <rect key="frame" x="14" y="104" width="185" height="29"/>
+                                    <rect key="frame" x="14" y="92" width="185" height="29"/>
                                     <segments>
                                         <segment title="Male"/>
                                         <segment title="Female"/>
                                     </segments>
                                 </segmentedControl>
-                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZSy-Mn-dXm">
-                                    <rect key="frame" x="14" y="66" width="185" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
-                                </textField>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your username will represent you in this app." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lp5-9h-hiE">
-                                    <rect key="frame" x="14" y="18" width="185" height="39"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_placeholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Mqk-K5-TBU">
                                     <rect key="frame" x="207" y="20" width="100" height="100"/>
                                     <constraints>
@@ -145,6 +134,11 @@
                                         <action selector="changePhotoButtonPressed:" destination="GJl-YX-PwT" eventType="touchUpInside" id="5Bb-Da-gsS"/>
                                     </connections>
                                 </button>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZSy-Mn-dXm">
+                                    <rect key="frame" x="14" y="20" width="185" height="51"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -158,19 +152,8 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="peH-r5-ADE">
-                            <rect key="frame" x="0.0" y="380" width="320" height="272"/>
+                            <rect key="frame" x="0.0" y="424" width="320" height="272"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACs-d9-hZT">
-                                    <rect key="frame" x="122" y="34" width="104" height="30"/>
-                                    <state key="normal" title="Sign up">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="goPressed:" destination="GJl-YX-PwT" eventType="touchUpInside" id="edx-1c-2Wx"/>
-                                    </connections>
-                                </button>
-                            </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <sections>
@@ -183,7 +166,22 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name (This helps your friends find you)" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nJ6-d7-73q">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nJ6-d7-73q">
+                                                    <rect key="frame" x="8" y="8" width="304" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="1I7-HV-JYL">
+                                        <rect key="frame" x="0.0" y="248" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1I7-HV-JYL" id="dwb-Se-J3c">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ehy-2U-4TO">
                                                     <rect key="frame" x="8" y="8" width="304" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -192,7 +190,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="baR-xd-CnK">
-                                        <rect key="frame" x="0.0" y="248" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="292" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="baR-xd-CnK" id="qZE-DJ-8PP">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -207,7 +205,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="AGZ-vd-Vs7">
-                                        <rect key="frame" x="0.0" y="292" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="336" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AGZ-vd-Vs7" id="MBw-lG-5H2">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -222,7 +220,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ZLs-PJ-P78">
-                                        <rect key="frame" x="0.0" y="336" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="380" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZLs-PJ-P78" id="0Ks-6Q-7GQ">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -244,16 +242,23 @@
                             <outlet property="delegate" destination="GJl-YX-PwT" id="MuV-li-yFX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="28L-GZ-ji1"/>
+                    <navigationItem key="navigationItem" id="28L-GZ-ji1">
+                        <barButtonItem key="rightBarButtonItem" title="Sign up" id="yg6-j1-gIt">
+                            <connections>
+                                <action selector="signUpPressed:" destination="GJl-YX-PwT" id="JJm-K0-5HT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="emailTextField" destination="fji-j6-jR5" id="Hax-BX-TwM"/>
+                        <outlet property="firstNameTextField" destination="nJ6-d7-73q" id="I6d-lP-AeX"/>
                         <outlet property="genderSegmentedControl" destination="lPz-NS-F8b" id="snc-ar-FcD"/>
-                        <outlet property="goButton" destination="ACs-d9-hZT" id="8Vf-fA-KYV"/>
-                        <outlet property="nameTextField" destination="nJ6-d7-73q" id="Wx3-fW-dap"/>
+                        <outlet property="lastNameTextField" destination="ehy-2U-4TO" id="QSc-Cc-7hc"/>
                         <outlet property="nickNameTextField" destination="ZSy-Mn-dXm" id="MlO-fI-o6C"/>
                         <outlet property="passwordTextField" destination="Q5G-Qc-bkO" id="DLK-LS-dqb"/>
                         <outlet property="photoImageView" destination="Mqk-K5-TBU" id="Cjg-EF-QKS"/>
                         <outlet property="reTypePasswordTextField" destination="xAu-tN-UQh" id="4Yo-vK-m1U"/>
+                        <outlet property="signUpBarButton" destination="yg6-j1-gIt" id="6aN-Jz-KOz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eW3-Q0-as8" userLabel="First Responder" sceneMemberID="firstResponder"/>
