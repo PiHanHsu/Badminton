@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "FBLoginButton@1x.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "FBLoginButton@2X.png"
+      "filename" : "sign-in-facebook@2x.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "FBLoginButton@3X.png"
+      "filename" : "sign-in-facebook @3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

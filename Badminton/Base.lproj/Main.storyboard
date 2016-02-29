@@ -31,12 +31,19 @@
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ldc-xS-sBc">
                                             <rect key="frame" x="72" y="11" width="160" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="uyD-xd-Ebt"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wi1-Q7-OTt" customClass="PlayerSwitch">
                                             <rect key="frame" x="234" y="6" width="51" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="49" id="Waf-Kl-sTK"/>
+                                                <constraint firstAttribute="height" constant="31" id="lTT-8x-fGJ"/>
+                                            </constraints>
                                         </switch>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LKC-U1-9UM">
                                             <rect key="frame" x="16" y="3" width="36" height="36"/>
@@ -47,11 +54,9 @@
                                         </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="LKC-U1-9UM" firstAttribute="centerY" secondItem="Ldc-xS-sBc" secondAttribute="centerY" id="2wo-Fc-lU3"/>
                                         <constraint firstItem="wi1-Q7-OTt" firstAttribute="centerY" secondItem="Ldc-xS-sBc" secondAttribute="centerY" id="43t-4o-rLA"/>
                                         <constraint firstItem="LKC-U1-9UM" firstAttribute="leading" secondItem="lxB-0c-qWt" secondAttribute="leadingMargin" constant="8" id="A1g-aa-mQ4"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Ldc-xS-sBc" secondAttribute="bottom" constant="3" id="Fnm-xN-tZf"/>
-                                        <constraint firstItem="LKC-U1-9UM" firstAttribute="top" secondItem="lxB-0c-qWt" secondAttribute="topMargin" constant="-5" id="SpG-DN-VNm"/>
-                                        <constraint firstItem="Ldc-xS-sBc" firstAttribute="top" secondItem="lxB-0c-qWt" secondAttribute="topMargin" constant="3" id="glI-Vh-3cH"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="wi1-Q7-OTt" secondAttribute="trailing" constant="29" id="kdK-J5-y7f"/>
                                         <constraint firstItem="Ldc-xS-sBc" firstAttribute="leading" secondItem="LKC-U1-9UM" secondAttribute="trailing" constant="20" id="nTI-fp-Flv"/>
                                         <constraint firstItem="Ldc-xS-sBc" firstAttribute="width" secondItem="lxB-0c-qWt" secondAttribute="width" multiplier="0.5" id="ves-oi-dOP"/>
@@ -471,37 +476,26 @@
                         <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="sectionIndexBackgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="rDL-bf-oP3">
-                            <rect key="frame" x="0.0" y="64" width="320" height="200"/>
+                            <rect key="frame" x="0.0" y="64" width="320" height="260"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Dz-ov-mYz">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="9Dz-ov-mYz" secondAttribute="height" multiplier="40:23" id="pR0-RV-ahL"/>
+                                        <constraint firstAttribute="width" secondItem="9Dz-ov-mYz" secondAttribute="height" multiplier="40:20" id="vnG-fJ-OF4"/>
                                     </constraints>
                                     <string key="text">WELCOME
 TO 
-SCOREBOARD</string>
+MYSCOREBOARD</string>
                                     <fontDescription key="fontDescription" name="ScoreBoard" family="Score Board" pointSize="40"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                            </subviews>
-                            <color key="backgroundColor" red="0.50980392159999999" green="0.70588235290000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="9Dz-ov-mYz" secondAttribute="trailing" id="ajX-mc-uu6"/>
-                                <constraint firstItem="9Dz-ov-mYz" firstAttribute="top" secondItem="rDL-bf-oP3" secondAttribute="top" id="bcp-fV-C6n"/>
-                                <constraint firstItem="9Dz-ov-mYz" firstAttribute="leading" secondItem="rDL-bf-oP3" secondAttribute="leading" id="cx2-gS-Pt6"/>
-                            </constraints>
-                        </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="Sp5-ab-sij">
-                            <rect key="frame" x="0.0" y="352" width="320" height="280"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lkA-lM-Zra">
-                                    <rect key="frame" x="80" y="125" width="160" height="30"/>
+                                    <rect key="frame" x="30" y="172" width="260" height="49"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="lkA-lM-Zra" secondAttribute="height" multiplier="16:3" id="6Od-35-lrY"/>
+                                        <constraint firstAttribute="width" secondItem="lkA-lM-Zra" secondAttribute="height" multiplier="325:61" id="baE-fy-gda"/>
+                                        <constraint firstAttribute="width" constant="260" id="jAb-e4-TRm"/>
                                     </constraints>
                                     <state key="normal" image="facebookLogin">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -510,12 +504,55 @@ SCOREBOARD</string>
                                         <action selector="FBLogin:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="7Na-9Y-fPf"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAu-mB-PGr">
-                                    <rect key="frame" x="80" y="80" width="160" height="30"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Aci-QS-UkU">
+                                    <rect key="frame" x="150" y="229" width="21" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="QAu-mB-PGr" secondAttribute="height" multiplier="16:3" id="Rkc-LX-dC8"/>
+                                        <constraint firstAttribute="height" constant="21" id="jz7-J7-Iag"/>
                                     </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cbp-5b-awD" userLabel="LeftLine">
+                                    <rect key="frame" x="30" y="239" width="110" height="1"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Tmd-lG-WME"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oi7-hv-M86" userLabel="RightLine">
+                                    <rect key="frame" x="181" y="239" width="109" height="1"/>
+                                    <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="LvT-Uw-aM2"/>
+                                        <constraint firstAttribute="height" constant="1" id="atp-A1-xFC"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" red="0.50980392159999999" green="0.70588235290000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="Cbp-5b-awD" firstAttribute="leading" secondItem="rDL-bf-oP3" secondAttribute="leading" constant="30" id="5vk-tZ-ynh"/>
+                                <constraint firstItem="lkA-lM-Zra" firstAttribute="top" secondItem="9Dz-ov-mYz" secondAttribute="bottom" constant="12" id="BFB-OJ-NBw"/>
+                                <constraint firstItem="Cbp-5b-awD" firstAttribute="centerY" secondItem="Aci-QS-UkU" secondAttribute="centerY" id="Eve-aV-0I2"/>
+                                <constraint firstItem="lkA-lM-Zra" firstAttribute="centerX" secondItem="rDL-bf-oP3" secondAttribute="centerX" id="Orc-yY-boB"/>
+                                <constraint firstItem="9Dz-ov-mYz" firstAttribute="top" secondItem="rDL-bf-oP3" secondAttribute="top" id="bcp-fV-C6n"/>
+                                <constraint firstItem="Oi7-hv-M86" firstAttribute="centerY" secondItem="Aci-QS-UkU" secondAttribute="centerY" id="bff-kG-T3S"/>
+                                <constraint firstAttribute="bottom" secondItem="Aci-QS-UkU" secondAttribute="bottom" constant="10" id="btZ-As-2tb"/>
+                                <constraint firstItem="Aci-QS-UkU" firstAttribute="leading" secondItem="Cbp-5b-awD" secondAttribute="trailing" constant="10" id="cD9-rV-b6W"/>
+                                <constraint firstItem="Oi7-hv-M86" firstAttribute="leading" secondItem="Aci-QS-UkU" secondAttribute="trailing" constant="10" id="eUB-bn-eYQ"/>
+                                <constraint firstItem="Aci-QS-UkU" firstAttribute="centerX" secondItem="rDL-bf-oP3" secondAttribute="centerX" id="fMx-wf-Srw"/>
+                                <constraint firstItem="9Dz-ov-mYz" firstAttribute="width" secondItem="rDL-bf-oP3" secondAttribute="width" id="gQw-SF-Jje"/>
+                                <constraint firstItem="9Dz-ov-mYz" firstAttribute="centerX" secondItem="rDL-bf-oP3" secondAttribute="centerX" id="icA-mh-Yo8"/>
+                                <constraint firstAttribute="trailing" secondItem="Oi7-hv-M86" secondAttribute="trailing" constant="30" id="q6b-Yn-Ksc"/>
+                            </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="Sp5-ab-sij">
+                            <rect key="frame" x="0.0" y="412" width="320" height="280"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAu-mB-PGr">
+                                    <rect key="frame" x="80" y="70" width="160" height="30"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" title="Create an account">
@@ -527,10 +564,10 @@ SCOREBOARD</string>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EJA-dw-I9q">
-                                    <rect key="frame" x="80" y="35" width="160" height="30"/>
+                                    <rect key="frame" x="80" y="25" width="160" height="30"/>
                                     <color key="backgroundColor" red="1" green="0.74686038406188171" blue="0.1180237003058104" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="EJA-dw-I9q" secondAttribute="height" multiplier="16:3" id="gdR-yR-TeA"/>
+                                        <constraint firstAttribute="width" constant="160" id="NsA-cK-dEK"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -541,35 +578,54 @@ SCOREBOARD</string>
                                         <action selector="LoginPressed:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="ZcD-jw-dxQ"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hiR-Pg-Lqk">
-                                    <rect key="frame" x="29" y="0.0" width="160" height="30"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <state key="normal" title="Forgot Password...">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiR-Pg-Lqk">
+                                    <rect key="frame" x="80" y="125" width="160" height="30"/>
+                                    <state key="normal">
+                                        <attributedString key="attributedTitle">
+                                            <fragment content="Forgot Password">
+                                                <attributes>
+                                                    <color key="NSColor" red="1" green="0.29138098119086409" blue="0.2643625709019134" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <font key="NSFont" size="15" name="HelveticaNeue"/>
+                                                    <integer key="NSUnderline" value="1"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                     </state>
                                     <connections>
                                         <action selector="forgotPasswordPressed:" destination="HBl-pQ-OhP" eventType="touchUpInside" id="AXc-a8-l7L"/>
                                     </connections>
                                 </button>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5TA-gZ-WPl">
+                                    <rect key="frame" x="80" y="0.0" width="160" height="30"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="5TA-gZ-WPl" secondAttribute="height" multiplier="16:3" id="TJP-bS-7fy"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="EJA-dw-I9q" secondAttribute="trailing" constant="80" id="19n-i0-SKv"/>
-                                <constraint firstItem="EJA-dw-I9q" firstAttribute="leading" secondItem="Sp5-ab-sij" secondAttribute="leading" constant="80" id="57N-Pq-SJi"/>
-                                <constraint firstItem="lkA-lM-Zra" firstAttribute="leading" secondItem="Sp5-ab-sij" secondAttribute="leading" constant="80" id="FGP-kC-vbd"/>
-                                <constraint firstItem="EJA-dw-I9q" firstAttribute="top" secondItem="Sp5-ab-sij" secondAttribute="top" constant="35" id="SLF-c3-P1h"/>
-                                <constraint firstItem="lkA-lM-Zra" firstAttribute="top" secondItem="QAu-mB-PGr" secondAttribute="bottom" constant="15" id="hVO-4a-usI"/>
-                                <constraint firstAttribute="trailing" secondItem="lkA-lM-Zra" secondAttribute="trailing" constant="80" id="kyl-3C-hUL"/>
-                                <constraint firstAttribute="trailing" secondItem="QAu-mB-PGr" secondAttribute="trailing" constant="80" id="nnP-Yy-xzc"/>
-                                <constraint firstItem="QAu-mB-PGr" firstAttribute="leading" secondItem="Sp5-ab-sij" secondAttribute="leading" constant="80" id="veJ-uA-qkI"/>
-                                <constraint firstItem="QAu-mB-PGr" firstAttribute="top" secondItem="EJA-dw-I9q" secondAttribute="bottom" constant="15" id="vtW-Co-sn3"/>
+                                <constraint firstItem="EJA-dw-I9q" firstAttribute="top" secondItem="Sp5-ab-sij" secondAttribute="top" constant="25" id="0lV-44-K8v"/>
+                                <constraint firstItem="5TA-gZ-WPl" firstAttribute="width" secondItem="Sp5-ab-sij" secondAttribute="width" multiplier="0.5" id="3vd-2E-hM1"/>
+                                <constraint firstItem="QAu-mB-PGr" firstAttribute="centerX" secondItem="EJA-dw-I9q" secondAttribute="centerX" id="7NC-Hs-cRZ"/>
+                                <constraint firstItem="hiR-Pg-Lqk" firstAttribute="top" secondItem="QAu-mB-PGr" secondAttribute="bottom" constant="25" id="Bys-GR-Cvy"/>
+                                <constraint firstItem="QAu-mB-PGr" firstAttribute="top" secondItem="EJA-dw-I9q" secondAttribute="bottom" constant="15" id="D6M-Ql-pjy"/>
+                                <constraint firstItem="QAu-mB-PGr" firstAttribute="height" secondItem="EJA-dw-I9q" secondAttribute="height" id="GTu-LQ-WKA"/>
+                                <constraint firstItem="hiR-Pg-Lqk" firstAttribute="centerX" secondItem="QAu-mB-PGr" secondAttribute="centerX" id="GyG-Ej-eze"/>
+                                <constraint firstItem="5TA-gZ-WPl" firstAttribute="top" secondItem="Sp5-ab-sij" secondAttribute="top" id="JNy-N3-dll"/>
+                                <constraint firstItem="hiR-Pg-Lqk" firstAttribute="height" secondItem="QAu-mB-PGr" secondAttribute="height" id="MXh-Tb-e5T"/>
+                                <constraint firstItem="EJA-dw-I9q" firstAttribute="height" secondItem="5TA-gZ-WPl" secondAttribute="height" id="WN1-xd-zFo"/>
+                                <constraint firstItem="hiR-Pg-Lqk" firstAttribute="width" secondItem="QAu-mB-PGr" secondAttribute="width" id="ZyT-bk-A4a"/>
+                                <constraint firstItem="EJA-dw-I9q" firstAttribute="centerX" secondItem="Sp5-ab-sij" secondAttribute="centerX" id="bI7-eY-Muv"/>
+                                <constraint firstItem="QAu-mB-PGr" firstAttribute="width" secondItem="EJA-dw-I9q" secondAttribute="width" id="c69-Xy-d4g"/>
+                                <constraint firstItem="5TA-gZ-WPl" firstAttribute="centerX" secondItem="Sp5-ab-sij" secondAttribute="centerX" id="gHn-CP-oUJ"/>
                             </constraints>
                         </view>
                         <sections>
                             <tableViewSection id="4Kg-Vw-lVu">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="44" id="t8p-va-4OR" userLabel="Email">
-                                        <rect key="frame" x="0.0" y="264" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="324" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t8p-va-4OR" id="TOj-Mh-MNG">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -589,10 +645,10 @@ SCOREBOARD</string>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.50980392156862742" green="0.70588235294117641" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <inset key="separatorInset" minX="320" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="separatorInset" minX="500" minY="0.0" maxX="0.0" maxY="0.0"/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="7js-yR-WOM" userLabel="Password">
-                                        <rect key="frame" x="0.0" y="308" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="368" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7js-yR-WOM" id="n8U-jI-DHN">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -624,6 +680,7 @@ SCOREBOARD</string>
                     <navigationItem key="navigationItem" id="Wfq-Sq-bHB"/>
                     <connections>
                         <outlet property="emailTextField" destination="OSZ-Ob-78Y" id="gK1-Aj-qL2"/>
+                        <outlet property="headerView" destination="rDL-bf-oP3" id="WPx-D3-Ef2"/>
                         <outlet property="loginButton" destination="EJA-dw-I9q" id="eqK-nP-qJt"/>
                         <outlet property="passwordTextField" destination="7HN-af-cWd" id="OgE-qY-wVp"/>
                         <outlet property="signUpButton" destination="QAu-mB-PGr" id="4fw-zd-CGT"/>
@@ -1626,7 +1683,7 @@ SCOREBOARD</string>
         <image name="Profile_Tab_icon" width="24" height="24"/>
         <image name="Standings_tab_icon" width="24" height="24"/>
         <image name="camera-icon.png" width="40" height="40"/>
-        <image name="facebookLogin" width="320" height="61"/>
+        <image name="facebookLogin" width="260" height="50"/>
         <image name="team_placeholder" width="100" height="100"/>
         <image name="user_placeholder.png" width="150" height="150"/>
     </resources>

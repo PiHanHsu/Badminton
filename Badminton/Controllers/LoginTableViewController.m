@@ -23,6 +23,8 @@
 @property (strong, nonatomic) UIActivityIndicatorView * indicator;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
+@property (weak, nonatomic) IBOutlet UIView *spaceView;
 @end
 
 @implementation LoginTableViewController
@@ -30,10 +32,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 8.0){
-        self.navigationController.navigationBarHidden = YES;
-        self.tableView.frame = CGRectMake(0, -20,  320, 480);
-    }
+    self.headerView.frame = CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.width/320 *260);
+    self.spaceView.frame = CGRectMake(0, 0, self.view.frame.size.width,self.view.frame.size.width/320 *260 * 0.05);
+    
     
     //set up indicator
     self.indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
