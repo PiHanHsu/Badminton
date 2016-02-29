@@ -18,6 +18,7 @@
 @property (strong, nonatomic) UIImagePickerController *photoPicker;
 @property (strong, nonatomic) PFUser * currentUser;
 @property (strong, nonatomic) NSString * userId;
+@property (strong, nonatomic) UIImage * updateImage;
 
 
 @end
@@ -30,7 +31,7 @@
     self.indicator.center = CGPointMake(160, self.view.frame.size.height/2);
     self.indicator.hidden = YES;
     [self.nickNameTextField becomeFirstResponder];
-    self.photoImageView.layer.cornerRadius = 5.0;
+    self.photoImageView.layer.cornerRadius = 50.0;
     self.photoImageView.clipsToBounds = YES;
     self.currentUser = [PFUser currentUser];
     
@@ -132,8 +133,10 @@
     UIImagePickerController *photoPicker = [[UIImagePickerController alloc] init];
     photoPicker.sourceType = sourceType;
     photoPicker.delegate = self;
-    photoPicker.allowsEditing = YES;
-    photoPicker.showsCameraControls = YES;
+    if (sourceType == UIImagePickerControllerSourceTypeCamera) {
+        photoPicker.allowsEditing = YES;
+        photoPicker.showsCameraControls = YES;
+    }
     
     self.photoPicker = photoPicker;
     [self presentViewController:self.photoPicker animated:YES completion:nil];
@@ -144,6 +147,7 @@
     
     UIImage *photoImage = info[@"UIImagePickerControllerOriginalImage"];
     self.photoImageView.image = photoImage;
+    self.updateImage = photoImage;
     
     [self dismissViewControllerAnimated:YES completion:nil];
     self.photoPicker = nil;
@@ -209,7 +213,7 @@
 
 
 -(void) createPlayerData{
-    if (self.photoImageView.image) {
+    if (self.updateImage) {
         
         PFObject * player = [PFObject objectWithClassName:@"Player"];
         player[@"userName"] = self.nickNameTextField.text;
@@ -222,37 +226,39 @@
         player[@"email"] =self.emailTextField.text;
         player[@"user"] = self.userId;
         
-        if (self.currentUser) {
-            player[@"pictureUrl"] = self.currentUser[@"pictureURL"];
-            
-            //TODO, BUG, if FB login, can't save player, error: invalid session token
-            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                    [self signUpSuccess];
-                }
-            }];
-        }else{
-            //resize Image
-            CGRect rect = CGRectMake(0,0,450,450);
-            UIGraphicsBeginImageContext( rect.size );
-            [self.photoImageView.image drawInRect:rect];
-            UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            
-            NSData *imageData = UIImageJPEGRepresentation(userPhoto, 1.0);
-            PFFile *photoFile = [PFFile fileWithData:imageData];
+        //resize Image
+        CGRect rect = CGRectMake(0,0,450,450);
+        UIGraphicsBeginImageContext( rect.size );
+        [self.updateImage drawInRect:rect];
+        UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        NSData *imageData = UIImageJPEGRepresentation(userPhoto, 1.0);
+        PFFile *photoFile = [PFFile fileWithData:imageData];
+        
+        player [@"photo"] = photoFile;
+        [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                PFFile * photo = player[@"photo"];
+                NSString * imageUrl = photo.url;
+                player[@"pictureUrl"] = imageUrl;
+                self.updateImage = nil;
+                [player saveInBackground];
+            }
+        }];
 
-            player [@"photo"] = photoFile;
-            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                                        PFFile * photo = player[@"photo"];
-                    NSString * imageUrl = photo.url;
-                    player[@"pictureUrl"] = imageUrl;
-                    [player saveInBackground];
-                }
-            }];
-
-        }
+        ////TODO, BUG, if FB login, can't save player, error: invalid session token
+        
+//        if (self.currentUser) {
+//            player[@"pictureUrl"] = self.currentUser[@"pictureURL"];
+//            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+//                if (succeeded) {
+//                    [self signUpSuccess];
+//                }
+//            }];
+//        }else{
+//            
+//        }
         
     }else{
         PFObject * player = [PFObject objectWithClassName:@"Player"];
@@ -264,7 +270,7 @@
         player[@"lastName"] = self.lastNameTextField.text;
         player[@"lastNameForSearch"] = [self.lastNameTextField.text lowercaseString];
         player[@"email"] =self.emailTextField.text;
-        player[@"user"] = self.currentUser.objectId;
+        player[@"user"] = self.userId;
         
         [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if (succeeded) {
@@ -279,8 +285,6 @@
 
 -(void) signUpSuccess{
     
-    
-    
     [PFUser logInWithUsernameInBackground:[self.emailTextField.text lowercaseString]
                                  password:self.passwordTextField.text
                                     block:^(PFUser *user, NSError *error) {
@@ -293,7 +297,9 @@
                                             UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                                 [alert dismissViewControllerAnimated:YES completion:nil];
                                             }];
-                                            
+                                            [alert addAction:ok];
+                                            [self presentViewController:alert animated:YES completion:nil];
+
                                             [self.indicator stopAnimating];
                                             self.nickNameTextField.text = @"";
                                             self.firstNameTextField.text = @"";

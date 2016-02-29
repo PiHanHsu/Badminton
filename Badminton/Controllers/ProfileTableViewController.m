@@ -19,20 +19,30 @@
 @interface ProfileTableViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
-@property (strong, nonatomic) Player * currentPlayer;
-@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *realNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
-@property (strong, nonatomic) UIBarButtonItem *editBarButton;
-@property (strong, nonatomic) UIBarButtonItem *cancelBarButton;
+@property (weak, nonatomic) IBOutlet UILabel *teamNumLabel;
+@property (weak, nonatomic) IBOutlet UILabel *gameNumLabel;
 @property (weak, nonatomic) IBOutlet UIButton *photoButton;
-@property (strong, nonatomic) UIImage * photoImage;
-@property (strong, nonatomic) UIImagePickerController *photoPicker;
+@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (strong, nonatomic) UIImage * updateImage;
 @property (weak, nonatomic) IBOutlet UIImageView *cameraImage;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *genderSegmentedControl;
+
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;
+@property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 
-@property (weak, nonatomic) IBOutlet UIImageView *photoImageView;
+@property (strong, nonatomic) UIBarButtonItem *editBarButton;
+@property (strong, nonatomic) UIBarButtonItem *cancelBarButton;
+
+
+@property (strong, nonatomic) UIImagePickerController *photoPicker;
+@property (strong, nonatomic) Player * currentPlayer;
+
 @property (assign) BOOL isEditState;
+@property (assign) BOOL isMale;
 
 @end
 
@@ -44,8 +54,16 @@
     PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
     self.userNameLabel.text = currentPlayer[@"userName"];
     self.userNameTextField.text = currentPlayer[@"userName"];
-    self.realNameTextField.text = currentPlayer[@"name"];
+    self.firstNameTextField.text = currentPlayer[@"firstName"];
+    self.lastNameTextField.text = currentPlayer[@"lastName"];
     self.emailTextField.text = currentPlayer[@"email"];
+    if ([currentPlayer[@"isMale"] boolValue]) {
+        self.isMale = YES;
+        self.genderSegmentedControl.selectedSegmentIndex = 0;
+    }else{
+        self.isMale = NO;
+        self.genderSegmentedControl.selectedSegmentIndex = 1;
+    }
     
     
     //set up Photo Button
@@ -53,7 +71,7 @@
     self.photoButton.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
     self.photoButton.layer.cornerRadius = 75.0;
     self.photoButton.clipsToBounds = YES;
-
+    
     self.photoImageView.layer.borderWidth = 5.0f;
     self.photoImageView.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
     self.photoImageView.layer.cornerRadius = 75.0;
@@ -61,7 +79,7 @@
     
     if (currentPlayer[@"pictureUrl"]) {
         NSString * url = currentPlayer[@"pictureUrl"];
-         NSURL * imageURL = [NSURL URLWithString:url];
+        NSURL * imageURL = [NSURL URLWithString:url];
         [self.photoImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     }else{
         PFFile * photo = currentPlayer[@"photo"];
@@ -69,13 +87,15 @@
             NSLog(@"url: %@",photo.url);
             NSURL * imageURL = [NSURL URLWithString:photo.url];
             [self.photoImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    }
-    
- 
+        }
+        
+        
     }
     self.userNameTextField.enabled = NO;
-    self.realNameTextField.enabled = NO;
+    self.firstNameTextField.enabled = NO;
+    self.lastNameTextField.enabled = NO;
     self.emailTextField.enabled = NO;
+    self.genderSegmentedControl.enabled = NO;
     [self.photoButton setUserInteractionEnabled:NO];
     self.cameraImage.hidden = YES;
     
@@ -107,23 +127,23 @@
         
         
         UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action) {
-                                                       UITextField *pw1TextField = alert.textFields.firstObject;
-                                                           
-                                                           PFUser * user = [PFUser currentUser];
-                                                           user.password = pw1TextField.text;
-                                                           [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                                                               if (succeeded) {
-                                                                   [self logoutPressed:self.logoutButton];
-                                                        }
-                                                           }];
-                                                           [alert dismissViewControllerAnimated:YES completion:nil];
-                                                       }];
-        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action) {
+                                                       UITextField *pw1TextField = alert.textFields.firstObject;
                                                        
+                                                       PFUser * user = [PFUser currentUser];
+                                                       user.password = pw1TextField.text;
+                                                       [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                                                           if (succeeded) {
+                                                               [self logoutPressed:self.logoutButton];
+                                                           }
+                                                       }];
                                                        [alert dismissViewControllerAnimated:YES completion:nil];
                                                    }];
+        UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action) {
+                                                           
+                                                           [alert dismissViewControllerAnimated:YES completion:nil];
+                                                       }];
         ok.enabled= NO;
         
         [alert addAction:cancel];
@@ -168,13 +188,13 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 4;
+    
+    return 5;
 }
 
 #pragma mark - IBActions
@@ -190,7 +210,8 @@
     } else {
         [self setEditState:NO showKeyboard:NO];
         [self.userNameTextField resignFirstResponder];
-        [self.realNameTextField resignFirstResponder];
+        [self.firstNameTextField resignFirstResponder];
+        [self.lastNameTextField resignFirstResponder];
         [self.emailTextField resignFirstResponder];
         
         [self updateProfile];
@@ -198,68 +219,75 @@
 }
 
 - (void)updateProfile{
+    if (self.genderSegmentedControl.selectedSegmentIndex == 0) {
+        self.isMale = YES;
+    }else
+        self.isMale = NO;
+    
+    PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
+    currentPlayer[@"userName"] = self.userNameTextField.text;
+    currentPlayer[@"firstName"] = self.firstNameTextField.text;
+    currentPlayer[@"lastName"] = self.lastNameTextField.text;
+    currentPlayer[@"isMale"] = [NSNumber numberWithBool:self.isMale];
     
     if (self.photoButton.imageView.image) {
-          CGRect rect = CGRectMake(0,0,450,450);
-          UIGraphicsBeginImageContext( rect.size );
-          [self.photoImageView.image drawInRect:rect];
-          UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
-          UIGraphicsEndImageContext();
+        CGRect rect = CGRectMake(0,0,450,450);
+        UIGraphicsBeginImageContext( rect.size );
+        [self.photoImageView.image drawInRect:rect];
+        UIImage * userPhoto = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
         
         NSData *imageData = UIImageJPEGRepresentation(userPhoto, 1.0);
         PFFile *photoFile = [PFFile fileWithData:imageData];
-        PFQuery * query = [PFQuery queryWithClassName:@"Player"];
-        [query whereKey:@"user" equalTo:[PFUser currentUser].objectId];
         
-        [query getFirstObjectInBackgroundWithBlock:^(PFObject *player, NSError * error){
-            
-            player[@"userName"] = self.userNameTextField.text;
-            player[@"name"] = self.realNameTextField.text;
-            player [@"photo"] = photoFile;
-            
-            PFUser * user = [PFUser currentUser];
-           
-            if (![self.emailTextField.text isEqualToString:user[@"email"]]) {
-                player[@"email"] = self.emailTextField.text;
-                user[@"email"] = self.emailTextField.text;
-                user[@"username"] = self.emailTextField.text;
-                [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        currentPlayer[@"photo"] = photoFile;
+        
+        [currentPlayer saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                PFFile * photo = currentPlayer[@"photo"];
+                currentPlayer[@"pictureUrl"] = photo.url;
+                [currentPlayer saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                     if (succeeded) {
-                        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"登入帳號已更新" message:@"請重新登入" preferredStyle:UIAlertControllerStyleAlert];
-                        UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                            
-                            [self logoutPressed:self.logoutButton];
-                            [alert dismissViewControllerAnimated:alert completion:nil];
-                        }];
-                        
-                        [alert addAction:ok];
-                        [self presentViewController:alert animated:YES completion:nil];
+                        [self checkEmail];
                     }
                 }];
             }
-            
-            [player saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                   PFFile * photo = player[@"photo"];
-                   player[@"pictureUrl"] = photo.url;
-                    [player saveInBackground];
-                }
-            }];
-            
         }];
+        
     }else{
-        PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
-        currentPlayer[@"username"] = self.userNameTextField.text;
-        currentPlayer[@"name"] = self.realNameTextField.text;
-        currentPlayer[@"email"] = self.emailTextField.text;
-        
-        PFUser * user = [PFUser currentUser];
-        user[@"email"] = self.emailTextField.text;
-        user[@"userName"] = self.emailTextField.text;
-        
-        [user saveInBackground];
-        [currentPlayer saveInBackground];
+        [currentPlayer saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                [self checkEmail];
+            }
+        }];
     }
+    
+}
+
+- (void)checkEmail{
+    
+    PFUser * user = [PFUser currentUser];
+    PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
+    
+    if (![self.emailTextField.text isEqualToString:user[@"email"]]){
+        currentPlayer[@"email"] = self.emailTextField.text;
+        user[@"email"] = self.emailTextField.text;
+        user[@"username"] = self.emailTextField.text;
+        [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (succeeded) {
+                UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Account Updated!!" message:@"Please Login again." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction * ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    
+                    [self logoutPressed:self.logoutButton];
+                    [alert dismissViewControllerAnimated:alert completion:nil];
+                }];
+                
+                [alert addAction:ok];
+                [self presentViewController:alert animated:YES completion:nil];
+            }
+        }];
+    }
+    
 }
 
 #pragma mark - Handle BarButtonItem states
@@ -267,8 +295,10 @@
 - (void)enableInteraction:(BOOL) enabled {
     
     self.userNameTextField.enabled = enabled;
-    self.realNameTextField.enabled = enabled;
+    self.firstNameTextField.enabled = enabled;
+    self.lastNameTextField.enabled = enabled;
     self.emailTextField.enabled = enabled;
+    self.genderSegmentedControl.enabled = enabled;
     [self.photoButton setUserInteractionEnabled:enabled];
     
 }
@@ -331,20 +361,20 @@
                                     
                                 }];
     UIAlertAction* cancel = [UIAlertAction
-                                actionWithTitle:@"取消"
-                                style:UIAlertActionStyleDefault
-                                handler:^(UIAlertAction * action)
-                                {
-                                    [view dismissViewControllerAnimated:YES completion:nil];
-                                    
-                                }];
+                             actionWithTitle:@"取消"
+                             style:UIAlertActionStyleDefault
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [view dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
     
     [view addAction:fromCamera];
     [view addAction:fromAlbum];
     [view addAction:cancel];
     [self presentViewController:view animated:YES completion:nil];
     
- 
+    
 }
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType{
@@ -387,7 +417,7 @@
     FBSDKLoginManager * loginManager = [[FBSDKLoginManager alloc]init];
     [loginManager logOut];
     
-   
+    
     [PFUser unpinAllObjects];
     [PFObject unpinAllObjects];
     [PFUser logOut];
