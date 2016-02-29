@@ -1400,7 +1400,7 @@ MYSCOREBOARD</string>
                                     </constraints>
                                 </imageView>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="bXV-sM-UcQ">
-                                    <rect key="frame" x="16" y="90" width="140" height="29"/>
+                                    <rect key="frame" x="16" y="93" width="140" height="29"/>
                                     <segments>
                                         <segment title="Male"/>
                                         <segment title="Female"/>
@@ -1411,7 +1411,7 @@ MYSCOREBOARD</string>
                             <constraints>
                                 <constraint firstItem="dBt-2N-YSj" firstAttribute="centerY" secondItem="icA-Tb-ZKM" secondAttribute="centerY" id="0ol-Mf-gMO"/>
                                 <constraint firstAttribute="bottom" secondItem="EGd-8M-UwN" secondAttribute="bottom" constant="30" id="1UV-9u-Nfc"/>
-                                <constraint firstItem="bXV-sM-UcQ" firstAttribute="top" secondItem="Knc-On-xWt" secondAttribute="bottom" constant="6" id="4Np-wM-YJ4"/>
+                                <constraint firstItem="bXV-sM-UcQ" firstAttribute="top" secondItem="Knc-On-xWt" secondAttribute="bottom" constant="9" id="4Np-wM-YJ4"/>
                                 <constraint firstItem="dBt-2N-YSj" firstAttribute="height" secondItem="icA-Tb-ZKM" secondAttribute="height" id="CpG-WZ-LFq"/>
                                 <constraint firstItem="dBt-2N-YSj" firstAttribute="width" secondItem="icA-Tb-ZKM" secondAttribute="width" id="DLf-v7-4Ic"/>
                                 <constraint firstItem="icA-Tb-ZKM" firstAttribute="centerX" secondItem="tVU-df-epj" secondAttribute="centerX" id="Jdh-aF-bFt"/>
@@ -1426,17 +1426,6 @@ MYSCOREBOARD</string>
                                 <constraint firstItem="dBt-2N-YSj" firstAttribute="leading" secondItem="4Jd-fY-jGh" secondAttribute="trailing" constant="6" id="t47-C6-7ih"/>
                                 <constraint firstItem="bXV-sM-UcQ" firstAttribute="width" secondItem="Knc-On-xWt" secondAttribute="width" id="xfo-Fx-o8z"/>
                             </constraints>
-                        </view>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="zku-Qp-bpA">
-                            <rect key="frame" x="0.0" y="404" width="320" height="79"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zcz-gf-7zT" userLabel="LineView">
-                                    <rect key="frame" x="0.0" y="1" width="320" height="1"/>
-                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                </view>
-                            </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <sections>
                             <tableViewSection id="c0D-aA-hf6">
@@ -1538,15 +1527,15 @@ MYSCOREBOARD</string>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="15" minY="0.0" maxX="16" maxY="0.0"/>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" id="cU1-ie-hUx">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="cU1-ie-hUx">
                                         <rect key="frame" x="0.0" y="360" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cU1-ie-hUx" id="zOX-X7-saA">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QVO-kk-4Yn">
-                                                    <rect key="frame" x="99" y="7" width="90" height="30"/>
+                                                    <rect key="frame" x="115" y="7" width="90" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="vFN-ZP-gvI"/>
                                                         <constraint firstAttribute="width" constant="90" id="yCp-nE-GA5"/>

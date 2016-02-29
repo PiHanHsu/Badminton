@@ -50,6 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.tableFooterView = [[UIView alloc]initWithFrame:CGRectZero];
     
     PFObject * currentPlayer = [DataSource sharedInstance].currentPlayer;
     self.userNameLabel.text = currentPlayer[@"userName"];
@@ -64,8 +65,6 @@
         self.isMale = NO;
         self.genderSegmentedControl.selectedSegmentIndex = 1;
     }
-    
-    
     //set up Photo Button
     self.photoButton.layer.borderWidth = 5.0f;
     self.photoButton.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
@@ -77,6 +76,10 @@
     self.photoImageView.layer.cornerRadius = 75.0;
     self.photoImageView.clipsToBounds = YES;
     
+    
+    [self.photoButton addTarget:self action:@selector(addPhtotButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // set up image
     if (currentPlayer[@"pictureUrl"]) {
         NSString * url = currentPlayer[@"pictureUrl"];
         NSURL * imageURL = [NSURL URLWithString:url];
@@ -88,9 +91,9 @@
             NSURL * imageURL = [NSURL URLWithString:photo.url];
             [self.photoImageView setImageWithURL:imageURL placeholderImage:[UIImage imageNamed:@"user_placeholder"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         }
-        
-        
     }
+    
+    // set  text fields enable status
     self.userNameTextField.enabled = NO;
     self.firstNameTextField.enabled = NO;
     self.lastNameTextField.enabled = NO;
@@ -99,14 +102,6 @@
     [self.photoButton setUserInteractionEnabled:NO];
     self.cameraImage.hidden = YES;
     
-    //set up Photo Button
-    self.photoButton.layer.borderWidth = 5.0f;
-    self.photoButton.layer.borderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor;
-    self.photoButton.layer.cornerRadius = 75.0;
-    self.photoButton.clipsToBounds = YES;
-    
-    [self.photoButton addTarget:self action:@selector(addPhtotButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
     //set barButton
     
     self.editBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editBtnPressed:)];
@@ -114,6 +109,12 @@
     
     self.cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelBtnPressed:)];
     self.navigationItem.leftBarButtonItem = nil;
+    
+    // set logout button
+    self.logoutButton.layer.borderWidth = 1.0f;
+    self.logoutButton.layer.borderColor = [UIColor blueColor].CGColor;
+    self.logoutButton.layer.cornerRadius = 5.0f;
+    self.logoutButton.clipsToBounds = YES;
     
 }
 
