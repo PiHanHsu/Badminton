@@ -606,7 +606,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pihanhsu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MyScoreBoard;
-				PROVISIONING_PROFILE = "9137285c-c37b-4b14-b9dd-98babf4be13a";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -622,7 +622,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pihanhsu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = MyScoreBoard;
-				PROVISIONING_PROFILE = "9137285c-c37b-4b14-b9dd-98babf4be13a";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
